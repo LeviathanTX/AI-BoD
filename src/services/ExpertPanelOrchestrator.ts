@@ -3,11 +3,22 @@
  * Coordinates multiple advisors for deep document analysis with cross-referencing and debate
  */
 
-import { Message, CelebrityAdvisor, CustomAdvisor, DocumentReference } from '../types';
+import { CelebrityAdvisor, CustomAdvisor, DocumentReference } from '../types';
 import { AdvisorAI } from './advisorAI';
 import { CrossDocumentAnalysisEngine, AnalysisResult } from './CrossDocumentAnalysisEngine';
 import { EnhancedDocumentAnalyzer } from './EnhancedDocumentAnalyzer';
 import { DocumentStorage } from './DocumentStorage';
+
+// Message interface for conversation history
+export interface Message {
+  id: string;
+  type: 'user' | 'advisor' | 'system' | 'analysis';
+  content: string;
+  timestamp?: Date | string;
+  advisor?: any;
+  attachments?: any[];
+  metadata?: any;
+}
 
 export interface ExpertPanelConfig {
   advisors: Array<CelebrityAdvisor | CustomAdvisor>;

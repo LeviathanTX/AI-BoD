@@ -1,5 +1,16 @@
 import { supabase } from './supabase';
-import { Message, DocumentReference } from '../types';
+import { DocumentReference } from '../types';
+
+// Message interface for conversation storage
+export interface ConversationMessage {
+  id: string;
+  type: 'user' | 'advisor' | 'system' | 'analysis';
+  content: string;
+  timestamp: string | Date;
+  advisor?: any;
+  attachments?: any[];
+  metadata?: any;
+}
 
 export interface ConversationData {
   id: string;
@@ -10,7 +21,7 @@ export interface ConversationData {
     type: 'celebrity' | 'custom';
     name?: string;
   }>;
-  messages: Message[];
+  messages: ConversationMessage[];
   files?: Array<{
     name: string;
     type: string;
