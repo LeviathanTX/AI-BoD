@@ -15,7 +15,7 @@ export interface ConversationMessage {
 export interface ConversationData {
   id: string;
   user_id: string;
-  mode: 'pitch_practice' | 'strategic_planning' | 'due_diligence' | 'quick_consultation';
+  mode: 'pitch_practice' | 'strategic_planning' | 'due_diligence' | 'quick_consultation' | 'general';
   advisors: Array<{
     id: string;
     type: 'celebrity' | 'custom';
@@ -45,7 +45,7 @@ export interface SavedConversationRow {
   user_id: string;
   advisor_id: string;
   advisor_type: 'celebrity' | 'custom';
-  mode: 'pitch_practice' | 'strategic_planning' | 'due_diligence' | 'quick_consultation';
+  mode: 'pitch_practice' | 'strategic_planning' | 'due_diligence' | 'quick_consultation' | 'general';
   messages: any;
   metadata: any;
   created_at: string;
