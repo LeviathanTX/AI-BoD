@@ -31,7 +31,7 @@ import { cn, formatDate } from '../../utils';
 interface SavedConversation {
   id: string;
   title: string;
-  mode: 'strategic_planning' | 'due_diligence' | 'quick_consultation' | 'general';
+  mode: 'pitch_practice' | 'strategic_planning' | 'due_diligence' | 'quick_consultation' | 'general';
   advisors: string[];
   lastMessage: string;
   lastUpdated: string;
