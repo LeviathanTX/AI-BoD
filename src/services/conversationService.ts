@@ -30,10 +30,8 @@ export interface ConversationData {
   }>;
   selectedDocuments?: DocumentReference[];
   conversationDocuments?: Array<{
-    id: string;
-    filename: string;
+    name: string;
     content: string;
-    metadata?: any;
   }>;
   title?: string;
   created_at?: string;
