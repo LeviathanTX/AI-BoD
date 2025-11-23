@@ -152,7 +152,7 @@ export function ConversationManager({ onBack }: ConversationManagerProps) {
         lastMessage: data.messages?.[data.messages.length - 1]?.content || 'No messages',
         lastUpdated: data.updated_at || data.created_at || new Date().toISOString(),
         messageCount: data.messages?.length || 0,
-        hasAttachments: data.files && data.files.length > 0,
+        hasAttachments: Boolean(data.files && data.files.length > 0),
         tags: [],
         isStarred: false,
         isArchived: false,
