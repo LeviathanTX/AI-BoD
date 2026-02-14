@@ -83,12 +83,13 @@ export class SecureAIServiceClient {
         try {
           return await this.makeDirectAPICall(messages, options);
         } catch (directError) {
-          console.log('Direct API call also failed, using intelligent mock response');
+          console.log('Direct API call also failed');
+          throw new Error('AI service temporarily unavailable - please retry in a moment');
         }
       }
 
-      // Final fallback: use mock responses (but now they're document-aware)
-      return this.generateSecureMockResponse(messages, options);
+      // No API key available and backend proxy failed
+      throw new Error('AI service temporarily unavailable - please retry in a moment');
     }
   }
 
@@ -166,18 +167,17 @@ export class SecureAIServiceClient {
 
       if (error instanceof Error) {
         if (error.name === 'AbortError') {
-          console.log('Request timeout - falling back to mock response');
-          return this.generateSecureMockResponse(messages, options);
+          console.log('Request timeout');
+          throw new Error('AI service temporarily unavailable - please retry in a moment');
         }
         if (error.message.includes('fetch') || error.message.includes('ERR_CONNECTION_REFUSED')) {
-          console.log('Network error - backend not available, using mock response');
-          return this.generateSecureMockResponse(messages, options);
+          console.log('Network error - backend not available');
+          throw new Error('AI service temporarily unavailable - please retry in a moment');
         }
       }
 
       console.error('Secure AI API call failed:', error);
-      console.log('Falling back to mock response due to API error');
-      return this.generateSecureMockResponse(messages, options);
+      throw new Error('AI service temporarily unavailable - please retry in a moment');
     }
   }
 
@@ -201,8 +201,7 @@ export class SecureAIServiceClient {
       }
     } catch (error) {
       console.error('Direct API call failed:', error);
-      console.log('Falling back to mock response due to direct API error');
-      return this.generateSecureMockResponse(messages, options);
+      throw new Error('AI service temporarily unavailable - please retry in a moment');
     }
   }
 
