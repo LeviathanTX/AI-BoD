@@ -78,7 +78,8 @@ function LandingPage({
 
       {isDemoMode && (
         <div className="fixed top-0 left-0 right-0 bg-gradient-to-r from-yellow-500 to-orange-500 text-black text-center py-2 px-4 text-sm font-medium z-50">
-          🎭 DEMO MODE - Try with demo credentials: <strong>founder@demo.com</strong> / <strong>demo123</strong> or sign up with any email/password
+          🎭 DEMO MODE - Try with demo credentials: <strong>founder@demo.com</strong> /{' '}
+          <strong>demo123</strong> or sign up with any email/password
         </div>
       )}
 

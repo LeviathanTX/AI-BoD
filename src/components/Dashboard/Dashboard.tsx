@@ -151,7 +151,9 @@ export const Dashboard: React.FC<DashboardProps> = ({ onModeSelect }) => {
             </div>
             <div className="flex items-center space-x-4">
               {/* User info - always visible */}
-              <div className="text-sm text-gray-600 hidden sm:block">Welcome, {user?.full_name || user?.email}</div>
+              <div className="text-sm text-gray-600 hidden sm:block">
+                Welcome, {user?.full_name || user?.email}
+              </div>
               <span
                 className={cn(
                   'px-3 py-1 rounded-full text-xs font-medium hidden sm:inline-block',
@@ -239,9 +241,19 @@ export const Dashboard: React.FC<DashboardProps> = ({ onModeSelect }) => {
               >
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   {showMobileMenu ? (
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M6 18L18 6M6 6l12 12"
+                    />
                   ) : (
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M4 6h16M4 12h16M4 18h16"
+                    />
                   )}
                 </svg>
               </button>

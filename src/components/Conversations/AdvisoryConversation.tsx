@@ -835,7 +835,8 @@ Keep your response concise but valuable (2-3 paragraphs).`,
       await generateAdvisorResponses(inputMessage, currentFiles);
     } catch (error) {
       console.error('Error generating advisor responses:', error);
-      const errorMessage = error instanceof Error ? error.message : 'Failed to get response from advisors';
+      const errorMessage =
+        error instanceof Error ? error.message : 'Failed to get response from advisors';
       toast.error(errorMessage);
 
       // Add error message to conversation
@@ -1075,7 +1076,11 @@ Keep your response concise but valuable (2-3 paragraphs).`,
 
       // Multi-model routing: Use advisor's preferred service/model if available
       let aiService;
-      if (advisor.preferredService && advisor.preferredModel && advisor.preferredService in settings.aiServices) {
+      if (
+        advisor.preferredService &&
+        advisor.preferredModel &&
+        advisor.preferredService in settings.aiServices
+      ) {
         // Advisor has a preferred service/model - use it
         const preferredServiceConfig = settings.aiServices[advisor.preferredService as AIService];
         if (preferredServiceConfig) {
