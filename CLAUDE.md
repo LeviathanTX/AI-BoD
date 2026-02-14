@@ -216,10 +216,54 @@ This enables automated PR creation, merging, and status checks throughout the se
 - **Frontend**: React 19 + TypeScript + Tailwind
 - **State**: Zustand + TanStack Query
 - **Backend**: Supabase (PostgreSQL + Storage + Auth)
-- **AI**: OpenAI API (GPT-4, embeddings)
+- **AI**: Multi-model routing via AWS Bedrock + OpenAI API
 - **Documents**: PDF.js, Mammoth (Word), XLSX
 - **Deploy**: Vercel (main + PR previews)
 - **Monitoring**: Sentry
+
+## Multi-Model AI Architecture
+
+**Overview:**
+AI-BoD uses AWS Bedrock to route different advisors to different AI models, creating genuine diversity of opinion and reducing AI sycophancy while dramatically cutting costs (~84% savings vs GPT-4 for all advisors).
+
+**Tier System:**
+
+### TIER 1 — Premium Strategic Advisors
+- **Jeff (Host)**: Amazon Nova Micro ($0.035/1M in, $0.14/1M out)
+  - Ultra-low cost for platform routing and advisor selection
+- **Reed Pawffman**: OpenAI GPT-5.2 ($10/1M in, $30/1M out)
+  - Best quality for complex strategic network thinking
+- **Jason Clawcanis**: Mistral Large via Bedrock ($0.72/1M)
+  - Direct, contrarian angel investor persona
+- **Marc Beardreessen**: Claude Sonnet 4 via Bedrock ($3/1M in, $15/1M out)
+  - Technology-optimist depth and long-form reasoning
+- **Cheryl Sandbearg**: Amazon Nova Pro ($0.80/1M in, $3.20/1M out)
+  - Analytical operational excellence for scaling companies
+
+### TIER 2 — Functional Advisors
+All strategic/functional advisors use **Meta Llama 3.3 70B** ($0.72/1M tokens):
+- Chief Strategy Advisor, Due Diligence Director, Market Intelligence, Financial Architecture, Operational Excellence
+- Technology Innovation, Human Capital, Legal/Regulatory, ESG, Customer Experience, Supply Chain, Data Analytics, International Expansion
+
+**Rationale**: Llama 3.3 provides direct, analytical advice with reduced sycophancy at excellent cost-performance.
+
+### TIER 3 — Industry Specialists
+All industry specialists use **Amazon Nova Pro** ($0.80/1M in, $3.20/1M out):
+- Technology/SaaS, Healthcare/Biotech, Financial Services, Manufacturing, Consumer/Retail, Energy/Sustainability
+
+**Rationale**: Nova Pro offers strong specialist knowledge at cost-optimized pricing.
+
+**Implementation:**
+- `api/generate.js` - Bedrock API handler (Converse API)
+- `src/types/index.ts` - `preferredService` and `preferredModel` fields on advisors
+- `src/contexts/AdvisorContext.tsx` - Model assignments per advisor
+- `src/components/Conversations/AdvisoryConversation.tsx` - Routing logic
+- AWS credentials: `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_REGION`
+
+**Cost Comparison:**
+- **Before** (GPT-4 for all): ~$195/month for 3,000 conversations
+- **After** (Multi-model): ~$32/month (84% reduction)
+- **With caching**: ~$15-20/month (90% reduction)
 
 ## Project-Specific Agents
 - `document-processor` - PDF/Word/Excel analysis
