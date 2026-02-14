@@ -1,6 +1,7 @@
 import { CelebrityAdvisor, CustomAdvisor, AIServiceConfig } from '../types';
 import { SecureAIServiceClient, AIMessage, createSecureAIClient } from './secureAIService';
 import { AudioFeatures, VocalDeliveryInsights } from './AudioAnalysisEngine';
+import { buildKnowledgePromptSection } from '../knowledge/knowledgeLoader';
 
 export class AdvisorAI {
   private client: SecureAIServiceClient;
@@ -568,6 +569,8 @@ Provide a focused, actionable response in 2-3 sentences that directly addresses 
   }
 
   private buildAdvisorSystemPrompt(advisor: CelebrityAdvisor, mode: string): string {
+    const knowledgeSection = buildKnowledgePromptSection(advisor.id, mode);
+
     const basePrompt = `You are ${advisor.name}, ${advisor.title} at ${advisor.company}.
 
 Your expertise includes: ${advisor.expertise.join(', ')}
@@ -577,7 +580,7 @@ Your communication style: ${advisor.communication_style}
 Background: ${advisor.bio}
 ${advisor.investment_thesis ? `Investment thesis: ${advisor.investment_thesis}` : ''}
 
-IMPORTANT: Always respond as ${advisor.name} would, using their known perspectives, language patterns, and business philosophy. Be direct and practical, focusing on actionable insights.`;
+IMPORTANT: Always respond as ${advisor.name} would, using their known perspectives, language patterns, and business philosophy. Be direct and practical, focusing on actionable insights.${knowledgeSection}`;
 
     const modeSpecificPrompts = {
       pitch_analysis: `
