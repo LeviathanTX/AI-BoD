@@ -5,7 +5,20 @@ import { useAuth } from '../../contexts/AuthContext';
 import { useAdvisor } from '../../contexts/AdvisorContext';
 import { AIService, AIServiceConfig } from '../../types';
 import { cn, calculatePercentage } from '../../utils';
-import { CheckCircle, XCircle, AlertCircle, Loader, User, CreditCard, Settings as SettingsIcon, Users, Plus, Edit2, Trash2, Star } from 'lucide-react';
+import {
+  CheckCircle,
+  XCircle,
+  AlertCircle,
+  Loader,
+  User,
+  CreditCard,
+  Settings as SettingsIcon,
+  Users,
+  Plus,
+  Edit2,
+  Trash2,
+  Star,
+} from 'lucide-react';
 import { Avatar } from '../Common/Avatar';
 import { QuickCreateAdvisorModal } from '../Modals/QuickCreateAdvisorModal';
 import { AdvisorEditModal } from '../Modals/AdvisorEditModal';
@@ -347,7 +360,9 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
                 <div className="bg-gray-50 rounded-lg p-4 space-y-3">
                   <div className="flex justify-between">
                     <span className="text-gray-600">Email</span>
-                    <span className="font-medium text-gray-900">{user?.email || 'Not logged in'}</span>
+                    <span className="font-medium text-gray-900">
+                      {user?.email || 'Not logged in'}
+                    </span>
                   </div>
                   {user?.full_name && (
                     <div className="flex justify-between">
@@ -441,7 +456,8 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
                     <h4 className="text-sm font-medium text-gray-500 mb-2">Pitch Sessions</h4>
                     <div className="text-xl font-bold text-gray-900 mb-2">
                       {usage.pitch_practice_sessions_used}
-                      {limits.pitch_practice_sessions !== -1 && ` / ${limits.pitch_practice_sessions}`}
+                      {limits.pitch_practice_sessions !== -1 &&
+                        ` / ${limits.pitch_practice_sessions}`}
                       {limits.pitch_practice_sessions === -1 && ' (unlimited)'}
                     </div>
                     {limits.pitch_practice_sessions !== -1 && (
@@ -485,11 +501,15 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
                   <div className="flex items-center justify-between">
                     <div>
                       <label className="font-medium text-gray-900">Pitch Practice Animation</label>
-                      <p className="text-sm text-gray-500">Choose the visual style for the Pitch Practice card</p>
+                      <p className="text-sm text-gray-500">
+                        Choose the visual style for the Pitch Practice card
+                      </p>
                     </div>
                     <select
                       value={pitchAnimation}
-                      onChange={(e) => handlePitchAnimationChange(e.target.value as PitchAnimationStyle)}
+                      onChange={e =>
+                        handlePitchAnimationChange(e.target.value as PitchAnimationStyle)
+                      }
                       className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     >
                       <option value="sound-waves">Sound Waves</option>
@@ -506,9 +526,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">Billing</h3>
                 <div className="bg-gray-50 rounded-lg p-6 text-center">
                   <CreditCard className="w-12 h-12 text-gray-400 mx-auto mb-3" />
-                  <p className="text-gray-600 mb-4">
-                    Manage your subscription and payment methods
-                  </p>
+                  <p className="text-gray-600 mb-4">Manage your subscription and payment methods</p>
                   <button
                     disabled
                     className="px-6 py-2 bg-gray-300 text-gray-500 rounded-lg font-medium cursor-not-allowed"
@@ -522,155 +540,161 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
 
           {/* AI Services Tab Content */}
           {activeTab === 'services' && (
-          <div className="mb-8">
-            <h3 className="text-xl font-semibold text-gray-900 mb-4">AI Service Configuration</h3>
-            <p className="text-gray-600 mb-6">
-              Configure API keys for AI services. If multiple services are configured, you can
-              assign specific services to individual advisors.
-            </p>
+            <div className="mb-8">
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">AI Service Configuration</h3>
+              <p className="text-gray-600 mb-6">
+                Configure API keys for AI services. If multiple services are configured, you can
+                assign specific services to individual advisors.
+              </p>
 
-            {/* Current Services */}
-            <div className="mb-6">
-              <div className="flex items-center justify-between mb-3">
-                <h4 className="text-lg font-medium text-gray-900">Configured Services</h4>
-                {Object.keys(settings.aiServices).length > 0 && (
-                  <button
-                    onClick={() => {
-                      Object.entries(settings.aiServices).forEach(([serviceId, service]) => {
-                        checkServiceStatus(serviceId, service);
-                      });
-                    }}
-                    className="px-3 py-1 text-sm text-green-600 hover:bg-green-50 rounded border border-green-200"
-                  >
-                    Test All Services
-                  </button>
-                )}
-              </div>
-              {Object.keys(settings.aiServices).length === 0 ? (
-                <div className="p-4 bg-gray-50 rounded-lg text-center">
-                  <p className="text-gray-500">No AI services configured</p>
+              {/* Current Services */}
+              <div className="mb-6">
+                <div className="flex items-center justify-between mb-3">
+                  <h4 className="text-lg font-medium text-gray-900">Configured Services</h4>
+                  {Object.keys(settings.aiServices).length > 0 && (
+                    <button
+                      onClick={() => {
+                        Object.entries(settings.aiServices).forEach(([serviceId, service]) => {
+                          checkServiceStatus(serviceId, service);
+                        });
+                      }}
+                      className="px-3 py-1 text-sm text-green-600 hover:bg-green-50 rounded border border-green-200"
+                    >
+                      Test All Services
+                    </button>
+                  )}
                 </div>
-              ) : (
-                <div className="space-y-3">
-                  {Object.values(settings.aiServices).map(service => (
-                    <div key={service.id} className="p-4 border border-gray-200 rounded-lg">
-                      <div className="flex items-center justify-between">
-                        <div className="flex-1">
-                          <div className="flex items-center space-x-3">
-                            <h5 className="font-medium text-gray-900">{service.name}</h5>
-                            {settings.defaultAIService === service.id && (
-                              <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-medium">
-                                Default
-                              </span>
-                            )}
-                            {getStatusIndicator(service.id)}
+                {Object.keys(settings.aiServices).length === 0 ? (
+                  <div className="p-4 bg-gray-50 rounded-lg text-center">
+                    <p className="text-gray-500">No AI services configured</p>
+                  </div>
+                ) : (
+                  <div className="space-y-3">
+                    {Object.values(settings.aiServices).map(service => (
+                      <div key={service.id} className="p-4 border border-gray-200 rounded-lg">
+                        <div className="flex items-center justify-between">
+                          <div className="flex-1">
+                            <div className="flex items-center space-x-3">
+                              <h5 className="font-medium text-gray-900">{service.name}</h5>
+                              {settings.defaultAIService === service.id && (
+                                <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-medium">
+                                  Default
+                                </span>
+                              )}
+                              {getStatusIndicator(service.id)}
+                            </div>
+                            <p className="text-sm text-gray-500 mt-1">
+                              Model: {service.model} • API Key: {service.apiKey.substring(0, 8)}...
+                            </p>
                           </div>
-                          <p className="text-sm text-gray-500 mt-1">
-                            Model: {service.model} • API Key: {service.apiKey.substring(0, 8)}...
-                          </p>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                          <button
-                            onClick={() => checkServiceStatus(service.id, service)}
-                            disabled={serviceStatuses[service.id] === 'checking'}
-                            className="px-3 py-1 text-sm text-green-600 hover:bg-green-50 rounded disabled:opacity-50"
-                          >
-                            Test
-                          </button>
-                          {settings.defaultAIService !== service.id && (
+                          <div className="flex items-center space-x-2">
                             <button
-                              onClick={() => handleSetDefault(service.id)}
-                              className="px-3 py-1 text-sm text-blue-600 hover:bg-blue-50 rounded"
+                              onClick={() => checkServiceStatus(service.id, service)}
+                              disabled={serviceStatuses[service.id] === 'checking'}
+                              className="px-3 py-1 text-sm text-green-600 hover:bg-green-50 rounded disabled:opacity-50"
                             >
-                              Set Default
+                              Test
                             </button>
-                          )}
-                          <button
-                            onClick={() => removeAIService(service.id)}
-                            className="px-3 py-1 text-sm text-red-600 hover:bg-red-50 rounded"
-                          >
-                            Remove
-                          </button>
+                            {settings.defaultAIService !== service.id && (
+                              <button
+                                onClick={() => handleSetDefault(service.id)}
+                                className="px-3 py-1 text-sm text-blue-600 hover:bg-blue-50 rounded"
+                              >
+                                Set Default
+                              </button>
+                            )}
+                            <button
+                              onClick={() => removeAIService(service.id)}
+                              className="px-3 py-1 text-sm text-red-600 hover:bg-red-50 rounded"
+                            >
+                              Remove
+                            </button>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Add New Service */}
+              <div className="p-4 bg-gray-50 rounded-lg">
+                <h4 className="text-lg font-medium text-gray-900 mb-3">Add AI Service</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      AI Service
+                    </label>
+                    <select
+                      value={newService.id}
+                      onChange={e =>
+                        setNewService({ ...newService, id: e.target.value as AIService })
+                      }
+                      className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    >
+                      {AI_SERVICE_OPTIONS.map(option => (
+                        <option key={option.id} value={option.id}>
+                          {option.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">API Key</label>
+                    <input
+                      type="password"
+                      value={newService.apiKey}
+                      onChange={e => setNewService({ ...newService, apiKey: e.target.value })}
+                      placeholder={
+                        AI_SERVICE_OPTIONS.find(s => s.id === newService.id)?.placeholder
+                      }
+                      className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    />
+                  </div>
+                </div>
+                <div className="mt-4 flex justify-end">
+                  <button
+                    onClick={handleAddService}
+                    disabled={!newService.apiKey.trim()}
+                    className={cn(
+                      'px-4 py-2 rounded-lg font-medium',
+                      newService.apiKey.trim()
+                        ? 'bg-blue-600 text-white hover:bg-blue-700'
+                        : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                    )}
+                  >
+                    Add Service
+                  </button>
+                </div>
+              </div>
+
+              {/* Configuration Notes */}
+              <div className="mt-6 p-4 bg-blue-50 rounded-lg">
+                <h4 className="text-sm font-medium text-blue-900 mb-2">Configuration Notes</h4>
+                <ul className="text-sm text-blue-800 space-y-1">
+                  <li>• If only one service is configured, it will be used for all advisors</li>
+                  <li>
+                    • With multiple services, you can assign specific services to advisors in the
+                    advisor settings
+                  </li>
+                  <li>• The default service is used when no specific assignment is made</li>
+                  <li>
+                    • API keys are stored locally in your browser and never sent to our servers
+                  </li>
+                </ul>
+              </div>
+
+              {/* Demo Mode Notice */}
+              {!process.env.REACT_APP_SUPABASE_URL && (
+                <div className="p-4 bg-yellow-50 rounded-lg border border-yellow-200">
+                  <h4 className="text-sm font-medium text-yellow-900 mb-2">🚀 Demo Mode</h4>
+                  <p className="text-sm text-yellow-800">
+                    You're in demo mode. A default Claude API key has been pre-configured for
+                    testing. In production, you would need to provide your own API keys.
+                  </p>
                 </div>
               )}
             </div>
-
-            {/* Add New Service */}
-            <div className="p-4 bg-gray-50 rounded-lg">
-              <h4 className="text-lg font-medium text-gray-900 mb-3">Add AI Service</h4>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">AI Service</label>
-                  <select
-                    value={newService.id}
-                    onChange={e =>
-                      setNewService({ ...newService, id: e.target.value as AIService })
-                    }
-                    className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  >
-                    {AI_SERVICE_OPTIONS.map(option => (
-                      <option key={option.id} value={option.id}>
-                        {option.name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">API Key</label>
-                  <input
-                    type="password"
-                    value={newService.apiKey}
-                    onChange={e => setNewService({ ...newService, apiKey: e.target.value })}
-                    placeholder={AI_SERVICE_OPTIONS.find(s => s.id === newService.id)?.placeholder}
-                    className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  />
-                </div>
-              </div>
-              <div className="mt-4 flex justify-end">
-                <button
-                  onClick={handleAddService}
-                  disabled={!newService.apiKey.trim()}
-                  className={cn(
-                    'px-4 py-2 rounded-lg font-medium',
-                    newService.apiKey.trim()
-                      ? 'bg-blue-600 text-white hover:bg-blue-700'
-                      : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                  )}
-                >
-                  Add Service
-                </button>
-              </div>
-            </div>
-
-            {/* Configuration Notes */}
-            <div className="mt-6 p-4 bg-blue-50 rounded-lg">
-              <h4 className="text-sm font-medium text-blue-900 mb-2">Configuration Notes</h4>
-              <ul className="text-sm text-blue-800 space-y-1">
-                <li>• If only one service is configured, it will be used for all advisors</li>
-                <li>
-                  • With multiple services, you can assign specific services to advisors in the
-                  advisor settings
-                </li>
-                <li>• The default service is used when no specific assignment is made</li>
-                <li>• API keys are stored locally in your browser and never sent to our servers</li>
-              </ul>
-            </div>
-
-            {/* Demo Mode Notice */}
-            {!process.env.REACT_APP_SUPABASE_URL && (
-              <div className="p-4 bg-yellow-50 rounded-lg border border-yellow-200">
-                <h4 className="text-sm font-medium text-yellow-900 mb-2">🚀 Demo Mode</h4>
-                <p className="text-sm text-yellow-800">
-                  You're in demo mode. A default Claude API key has been pre-configured for testing.
-                  In production, you would need to provide your own API keys.
-                </p>
-              </div>
-            )}
-          </div>
           )}
 
           {/* Manage Advisors Tab Content */}
@@ -680,9 +704,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
               <div className="flex items-center justify-between">
                 <div>
                   <h3 className="text-xl font-semibold text-gray-900">Manage Advisors</h3>
-                  <p className="text-gray-600 mt-1">
-                    Create and manage your custom AI advisors
-                  </p>
+                  <p className="text-gray-600 mt-1">Create and manage your custom AI advisors</p>
                 </div>
                 <button
                   onClick={() => setShowCreateAdvisorModal(true)}
@@ -701,7 +723,9 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
                 {customAdvisors.length === 0 ? (
                   <div className="p-8 bg-gray-50 rounded-lg text-center">
                     <Users className="w-12 h-12 text-gray-400 mx-auto mb-3" />
-                    <p className="text-gray-500 mb-4">You haven't created any custom advisors yet</p>
+                    <p className="text-gray-500 mb-4">
+                      You haven't created any custom advisors yet
+                    </p>
                     <button
                       onClick={() => setShowCreateAdvisorModal(true)}
                       className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
@@ -712,7 +736,10 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
                 ) : (
                   <div className="space-y-3">
                     {customAdvisors.map(advisor => (
-                      <div key={advisor.id} className="p-4 border border-gray-200 rounded-lg hover:border-gray-300 transition-colors">
+                      <div
+                        key={advisor.id}
+                        className="p-4 border border-gray-200 rounded-lg hover:border-gray-300 transition-colors"
+                      >
                         <div className="flex items-center justify-between">
                           <div className="flex items-center space-x-3">
                             <Avatar
@@ -724,7 +751,9 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
                             />
                             <div>
                               <h5 className="font-medium text-gray-900">{advisor.name}</h5>
-                              <p className="text-sm text-gray-500">{advisor.role || advisor.title}</p>
+                              <p className="text-sm text-gray-500">
+                                {advisor.role || advisor.title}
+                              </p>
                             </div>
                           </div>
                           <div className="flex items-center space-x-2">
@@ -740,7 +769,9 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
                             </button>
                             <button
                               onClick={() => {
-                                if (window.confirm(`Are you sure you want to delete ${advisor.name}?`)) {
+                                if (
+                                  window.confirm(`Are you sure you want to delete ${advisor.name}?`)
+                                ) {
                                   deleteCustomAdvisor(advisor.id);
                                 }
                               }}
@@ -754,7 +785,10 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
                         {advisor.expertise && advisor.expertise.length > 0 && (
                           <div className="mt-3 flex flex-wrap gap-1">
                             {advisor.expertise.slice(0, 4).map((exp, i) => (
-                              <span key={i} className="px-2 py-1 bg-gray-100 text-gray-600 rounded text-xs">
+                              <span
+                                key={i}
+                                className="px-2 py-1 bg-gray-100 text-gray-600 rounded text-xs"
+                              >
                                 {exp}
                               </span>
                             ))}
@@ -782,13 +816,17 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
                 {/* Disclaimer */}
                 <div className="mb-4 p-3 bg-amber-50 border border-amber-200 rounded-lg">
                   <p className="text-xs text-amber-800">
-                    <strong>Note:</strong> Our AI advisors are original bear characters inspired by legendary business minds.
-                    They are not the actual celebrities and are not endorsed by or affiliated with any real individuals.
+                    <strong>Note:</strong> Our AI advisors are original bear characters inspired by
+                    legendary business minds. They are not the actual celebrities and are not
+                    endorsed by or affiliated with any real individuals.
                   </p>
                 </div>
                 <div className="space-y-2 max-h-64 overflow-y-auto">
                   {celebrityAdvisors.map(advisor => (
-                    <div key={advisor.id} className="p-3 border border-gray-200 rounded-lg hover:border-blue-300 transition-colors">
+                    <div
+                      key={advisor.id}
+                      className="p-3 border border-gray-200 rounded-lg hover:border-blue-300 transition-colors"
+                    >
                       <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-3">
                           <Avatar

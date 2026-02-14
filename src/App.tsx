@@ -34,34 +34,39 @@ function LandingPage({
   // Disciple testimonials
   const testimonials = [
     {
-      quote: "Entrepreneurs waste months trying to get 15 minutes with the right advisor. Bearable scales world-class guidance to everyone.",
-      name: "Reed Pawffman",
-      title: "The Network Bear",
-      avatar: "/images/advisors/reid-hoffman.jpg",
+      quote:
+        'Entrepreneurs waste months trying to get 15 minutes with the right advisor. Bearable scales world-class guidance to everyone.',
+      name: 'Reed Pawffman',
+      title: 'The Network Bear',
+      avatar: '/images/advisors/reid-hoffman.jpg',
     },
     {
-      quote: "What if you could get board-level advice from Marc Benioff, Reid Hoffman, or me - on demand, 24/7, for a fraction of what we charge? Bearable AI gives entrepreneurs access to digital twins of the world's top VCs who analyze your pitch and give you the same brutal honest feedback we'd give in our actual boardrooms.",
-      name: "Jason Clawcanis",
-      title: "The Angel Bear",
-      avatar: "/images/advisors/jason-calacanis.jpg",
+      quote:
+        "What if you could get board-level advice from Marc Benioff, Reid Hoffman, or me - on demand, 24/7, for a fraction of what we charge? Bearable AI gives entrepreneurs access to digital twins of the world's top VCs who analyze your pitch and give you the same brutal honest feedback we'd give in our actual boardrooms.",
+      name: 'Jason Clawcanis',
+      title: 'The Angel Bear',
+      avatar: '/images/advisors/jason-calacanis.jpg',
     },
     {
-      quote: "Now every entrepreneur can get a board meeting with the world's best investors and advisors - anytime, anywhere, for any decision.",
-      name: "Satya Nadellaw",
-      title: "The Cloud Bear",
-      avatar: "/images/advisors/satya-nadella.jpg",
+      quote:
+        "Now every entrepreneur can get a board meeting with the world's best investors and advisors - anytime, anywhere, for any decision.",
+      name: 'Satya Nadellaw',
+      title: 'The Cloud Bear',
+      avatar: '/images/advisors/satya-nadella.jpg',
     },
     {
-      quote: "Get a board meeting with Marc Benioff, Reid Hoffman, and Barbara Corcoran - without writing a single check or giving up equity.",
-      name: "Jamie Diamondpaw",
-      title: "The Finance Bear",
-      avatar: "/images/advisors/jamie-dimon.jpg",
+      quote:
+        'Get a board meeting with Marc Benioff, Reid Hoffman, and Barbara Corcoran - without writing a single check or giving up equity.',
+      name: 'Jamie Diamondpaw',
+      title: 'The Finance Bear',
+      avatar: '/images/advisors/jamie-dimon.jpg',
     },
     {
-      quote: "Get mentored by the world's most successful entrepreneurs and VCs - instantly, affordably, and on-demand through AI.",
-      name: "Whitney Wolfbear Herd",
-      title: "The Customer Bear",
-      avatar: "/images/advisors/whitney-wolfe-herd.jpg",
+      quote:
+        "Get mentored by the world's most successful entrepreneurs and VCs - instantly, affordably, and on-demand through AI.",
+      name: 'Whitney Wolfbear Herd',
+      title: 'The Customer Bear',
+      avatar: '/images/advisors/whitney-wolfe-herd.jpg',
     },
   ];
 
@@ -99,7 +104,8 @@ function LandingPage({
           </div>
 
           <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
-            Get billion-dollar advice<br />
+            Get billion-dollar advice
+            <br />
             <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
               without the billion-dollar connections
             </span>
@@ -109,14 +115,16 @@ function LandingPage({
             The world's best business minds, now available 24/7 in your pocket.
           </p>
           <p className="text-lg text-blue-200/80 mb-8 max-w-2xl mx-auto">
-            Bearable AI puts Marc Andreessen, Reid Hoffman, and other legendary investors in your pocket.
-            Get board-level advice from AI versions of the world's top VCs and entrepreneurs.
+            Bearable AI puts Marc Andreessen, Reid Hoffman, and other legendary investors in your
+            pocket. Get board-level advice from AI versions of the world's top VCs and
+            entrepreneurs.
           </p>
 
           {/* Hook Quote */}
           <div className="bg-white/5 backdrop-blur-sm rounded-xl p-6 max-w-2xl mx-auto mb-8 border border-white/10">
             <p className="text-lg text-white italic">
-              "Why wait 6 months for a 30-minute VC meeting when you can get their insights in 30 seconds?"
+              "Why wait 6 months for a 30-minute VC meeting when you can get their insights in 30
+              seconds?"
             </p>
           </div>
 
@@ -141,7 +149,9 @@ function LandingPage({
         <div className="grid md:grid-cols-3 gap-6 mb-16">
           <div className="bg-red-500/10 backdrop-blur-sm rounded-xl p-6 border border-red-400/20">
             <div className="text-red-400 text-sm font-bold mb-2">THE PROBLEM</div>
-            <p className="text-white font-medium">Great advice is gatekept by wealth and connections</p>
+            <p className="text-white font-medium">
+              Great advice is gatekept by wealth and connections
+            </p>
           </div>
           <div className="bg-blue-500/10 backdrop-blur-sm rounded-xl p-6 border border-blue-400/20">
             <div className="text-blue-400 text-sm font-bold mb-2">THE SOLUTION</div>
@@ -149,24 +159,32 @@ function LandingPage({
           </div>
           <div className="bg-green-500/10 backdrop-blur-sm rounded-xl p-6 border border-green-400/20">
             <div className="text-green-400 text-sm font-bold mb-2">THE PROOF</div>
-            <p className="text-white font-medium">Upload your pitch deck, get feedback like you're in the room with Sequoia</p>
+            <p className="text-white font-medium">
+              Upload your pitch deck, get feedback like you're in the room with Sequoia
+            </p>
           </div>
         </div>
 
         {/* Testimonials from Disciples */}
         <div className="mb-16">
-          <h2 className="text-2xl font-bold text-white text-center mb-8">What Our AI Advisors Say</h2>
+          <h2 className="text-2xl font-bold text-white text-center mb-8">
+            What Our AI Advisors Say
+          </h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {testimonials.slice(0, 3).map((testimonial, index) => (
-              <div key={index} className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10 hover:border-white/20 transition-all">
+              <div
+                key={index}
+                className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10 hover:border-white/20 transition-all"
+              >
                 <p className="text-blue-100 text-sm mb-4 italic">"{testimonial.quote}"</p>
                 <div className="flex items-center space-x-3">
                   <img
                     src={testimonial.avatar}
                     alt={testimonial.name}
                     className="w-10 h-10 rounded-full object-cover border-2 border-white/20"
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"><rect fill="%234F46E5" width="40" height="40" rx="20"/><text x="50%" y="55%" text-anchor="middle" fill="white" font-size="16">🐻</text></svg>';
+                    onError={e => {
+                      (e.target as HTMLImageElement).src =
+                        'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"><rect fill="%234F46E5" width="40" height="40" rx="20"/><text x="50%" y="55%" text-anchor="middle" fill="white" font-size="16">🐻</text></svg>';
                     }}
                   />
                   <div>
@@ -181,15 +199,19 @@ function LandingPage({
           {/* Second row of testimonials */}
           <div className="grid md:grid-cols-2 gap-6 mt-6 max-w-4xl mx-auto">
             {testimonials.slice(3).map((testimonial, index) => (
-              <div key={index} className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10 hover:border-white/20 transition-all">
+              <div
+                key={index}
+                className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10 hover:border-white/20 transition-all"
+              >
                 <p className="text-blue-100 text-sm mb-4 italic">"{testimonial.quote}"</p>
                 <div className="flex items-center space-x-3">
                   <img
                     src={testimonial.avatar}
                     alt={testimonial.name}
                     className="w-10 h-10 rounded-full object-cover border-2 border-white/20"
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"><rect fill="%234F46E5" width="40" height="40" rx="20"/><text x="50%" y="55%" text-anchor="middle" fill="white" font-size="16">🐻</text></svg>';
+                    onError={e => {
+                      (e.target as HTMLImageElement).src =
+                        'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"><rect fill="%234F46E5" width="40" height="40" rx="20"/><text x="50%" y="55%" text-anchor="middle" fill="white" font-size="16">🐻</text></svg>';
                     }}
                   />
                   <div>
@@ -209,8 +231,9 @@ function LandingPage({
               src="/images/advisors/jason-calacanis.jpg"
               alt="Jason Clawcanis"
               className="w-20 h-20 rounded-full object-cover border-4 border-purple-400/50"
-              onError={(e) => {
-                (e.target as HTMLImageElement).src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80"><rect fill="%238B5CF6" width="80" height="80" rx="40"/><text x="50%" y="55%" text-anchor="middle" fill="white" font-size="32">🐻</text></svg>';
+              onError={e => {
+                (e.target as HTMLImageElement).src =
+                  'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80"><rect fill="%238B5CF6" width="80" height="80" rx="40"/><text x="50%" y="55%" text-anchor="middle" fill="white" font-size="32">🐻</text></svg>';
               }}
             />
             <div>
@@ -236,17 +259,23 @@ function LandingPage({
           <div className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10 text-center">
             <div className="text-4xl mb-4">🎤</div>
             <h3 className="text-white font-bold mb-2">Pitch Practice</h3>
-            <p className="text-blue-200 text-sm">Record your pitch and get brutal honest feedback from AI VCs</p>
+            <p className="text-blue-200 text-sm">
+              Record your pitch and get brutal honest feedback from AI VCs
+            </p>
           </div>
           <div className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10 text-center">
             <div className="text-4xl mb-4">🐻</div>
             <h3 className="text-white font-bold mb-2">15+ Expert Advisors</h3>
-            <p className="text-blue-200 text-sm">AI disciples inspired by legendary business minds, available 24/7</p>
+            <p className="text-blue-200 text-sm">
+              AI disciples inspired by legendary business minds, available 24/7
+            </p>
           </div>
           <div className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10 text-center">
             <div className="text-4xl mb-4">📄</div>
             <h3 className="text-white font-bold mb-2">Document Analysis</h3>
-            <p className="text-blue-200 text-sm">Upload pitch decks and business plans for expert review</p>
+            <p className="text-blue-200 text-sm">
+              Upload pitch decks and business plans for expert review
+            </p>
           </div>
         </div>
 
@@ -291,10 +320,18 @@ function LandingPage({
                 <p className="text-purple-200 text-sm">Full access, no credit card</p>
               </div>
               <ul className="text-sm text-blue-100 space-y-2 mb-4">
-                <li className="flex items-center"><span className="text-green-400 mr-2">✓</span> Unlimited AI conversations</li>
-                <li className="flex items-center"><span className="text-green-400 mr-2">✓</span> Pitch practice with feedback</li>
-                <li className="flex items-center"><span className="text-green-400 mr-2">✓</span> Document analysis</li>
-                <li className="flex items-center"><span className="text-green-400 mr-2">✓</span> All 15+ expert advisors</li>
+                <li className="flex items-center">
+                  <span className="text-green-400 mr-2">✓</span> Unlimited AI conversations
+                </li>
+                <li className="flex items-center">
+                  <span className="text-green-400 mr-2">✓</span> Pitch practice with feedback
+                </li>
+                <li className="flex items-center">
+                  <span className="text-green-400 mr-2">✓</span> Document analysis
+                </li>
+                <li className="flex items-center">
+                  <span className="text-green-400 mr-2">✓</span> All 15+ expert advisors
+                </li>
               </ul>
               <button
                 onClick={onGetStarted}
@@ -383,17 +420,9 @@ function AuthenticatedApp() {
 
                 switch (selectedMode) {
                   case 'advisory_conversation':
-                    return (
-                      <ConversationManager
-                        onBack={handleBackToHome}
-                      />
-                    );
+                    return <ConversationManager onBack={handleBackToHome} />;
                   case 'pitch_practice':
-                    return (
-                      <PitchPracticeMode
-                        onBack={handleBackToHome}
-                      />
-                    );
+                    return <PitchPracticeMode onBack={handleBackToHome} />;
                   case 'advisor_management':
                     return <AdvisorManagement onBack={handleBackToHome} />;
                   default:

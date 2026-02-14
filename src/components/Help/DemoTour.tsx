@@ -89,9 +89,7 @@ const TOUR_STEPS: TourStep[] = [
             <div className="text-xs text-gray-500">The AI Bear</div>
           </div>
         </div>
-        <p className="text-sm text-blue-600">
-          💡 Select multiple advisors for a panel discussion!
-        </p>
+        <p className="text-sm text-blue-600">💡 Select multiple advisors for a panel discussion!</p>
       </div>
     ),
   },
@@ -104,9 +102,7 @@ const TOUR_STEPS: TourStep[] = [
     content: (
       <div>
         <h3 className="text-xl font-bold text-gray-900 mb-3">Choose Your Mode</h3>
-        <p className="text-gray-600 mb-4">
-          After selecting advisors, pick a conversation mode:
-        </p>
+        <p className="text-gray-600 mb-4">After selecting advisors, pick a conversation mode:</p>
         <div className="space-y-2">
           <div className="p-2 bg-blue-50 rounded-lg flex items-center">
             <span className="text-lg mr-2">🧠</span>
@@ -149,9 +145,7 @@ const TOUR_STEPS: TourStep[] = [
     content: (
       <div>
         <h3 className="text-xl font-bold text-gray-900 mb-3">Upload Documents</h3>
-        <p className="text-gray-600 mb-4">
-          Get expert analysis on your business documents:
-        </p>
+        <p className="text-gray-600 mb-4">Get expert analysis on your business documents:</p>
         <ul className="text-gray-700 space-y-2 mb-4">
           <li className="flex items-center">
             <span className="text-blue-500 mr-2">📄</span>
@@ -181,9 +175,7 @@ const TOUR_STEPS: TourStep[] = [
     content: (
       <div>
         <h3 className="text-xl font-bold text-gray-900 mb-3">Header Navigation</h3>
-        <p className="text-gray-600 mb-4">
-          Find these helpful buttons in the top-right corner:
-        </p>
+        <p className="text-gray-600 mb-4">Find these helpful buttons in the top-right corner:</p>
         <div className="space-y-3">
           <div className="flex items-center p-2 bg-gray-50 rounded">
             <span className="text-green-600 font-medium mr-3">Demo Tour</span>
@@ -217,9 +209,7 @@ const TOUR_STEPS: TourStep[] = [
         <div className="text-left space-y-3 mb-4">
           <div className="p-3 bg-blue-50 rounded-lg">
             <strong className="text-blue-700">1. Select an Advisor</strong>
-            <p className="text-sm text-blue-600">
-              Click on an advisor from the left panel
-            </p>
+            <p className="text-sm text-blue-600">Click on an advisor from the left panel</p>
           </div>
           <div className="p-3 bg-purple-50 rounded-lg">
             <strong className="text-purple-700">2. Choose a Mode</strong>
@@ -234,9 +224,7 @@ const TOUR_STEPS: TourStep[] = [
             </p>
           </div>
         </div>
-        <p className="text-sm text-gray-500">
-          Click "Complete Tour" to close and start exploring!
-        </p>
+        <p className="text-sm text-gray-500">Click "Complete Tour" to close and start exploring!</p>
       </div>
     ),
   },

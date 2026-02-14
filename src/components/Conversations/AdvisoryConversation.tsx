@@ -87,7 +87,7 @@ const PitchPracticeAnimation: React.FC<{ style: string }> = ({ style }) => {
   if (style === 'sound-waves') {
     return (
       <div className="flex items-end justify-center space-x-1 h-8 mt-2">
-        {[1, 2, 3, 4, 5].map((i) => (
+        {[1, 2, 3, 4, 5].map(i => (
           <div
             key={i}
             className="w-1.5 bg-white/80 rounded-full animate-pulse"
@@ -119,7 +119,8 @@ const PitchPracticeAnimation: React.FC<{ style: string }> = ({ style }) => {
         <div
           className="absolute inset-0 animate-gradient-shift"
           style={{
-            background: 'linear-gradient(45deg, rgba(168,85,247,0.3), rgba(236,72,153,0.3), rgba(249,115,22,0.3))',
+            background:
+              'linear-gradient(45deg, rgba(168,85,247,0.3), rgba(236,72,153,0.3), rgba(249,115,22,0.3))',
             backgroundSize: '200% 200%',
             animation: 'gradientShift 3s ease infinite',
           }}
@@ -140,7 +141,13 @@ export function AdvisoryConversation({
   const [pitchAnimationStyle, setPitchAnimationStyle] = React.useState(() => {
     return localStorage.getItem('pitch-card-animation') || 'sound-waves';
   });
-  const { celebrityAdvisors, customAdvisors, activeConversation, conversations, setActiveConversation } = useAdvisor();
+  const {
+    celebrityAdvisors,
+    customAdvisors,
+    activeConversation,
+    conversations,
+    setActiveConversation,
+  } = useAdvisor();
   const { user, signOut } = useAuth();
   const { currentTier } = useSubscription();
 
@@ -646,19 +653,27 @@ ${result.transcript || 'No transcript available'}
 
 **Duration:** ${Math.floor(result.duration / 60)} minutes ${result.duration % 60} seconds
 
-${result.audioFeatures ? `
+${
+  result.audioFeatures
+    ? `
 **Voice Analysis:**
 - Speaking pace: ${result.audioFeatures.rhythm?.speaking_rate || 'N/A'} words per minute
 - Voice quality score: ${result.audioFeatures.coaching_metrics?.professional_tone || 'N/A'}%
 - Confidence indicators: ${result.audioFeatures.emotional_markers?.confidence_level || 'N/A'}%
 - Energy level: ${result.audioFeatures.emotional_markers?.energy_level || 'N/A'}%
-` : ''}
+`
+    : ''
+}
 
-${result.vocalInsights ? `
+${
+  result.vocalInsights
+    ? `
 **Vocal Delivery Insights:**
 - Strengths: ${result.vocalInsights.strengths?.join(', ') || 'N/A'}
 - Areas for improvement: ${result.vocalInsights.improvement_areas?.join(', ') || 'N/A'}
-` : ''}
+`
+    : ''
+}
 
 Please provide specific, actionable feedback on this pitch from your perspective as an advisor.
 `;
@@ -740,11 +755,11 @@ Keep your response concise but valuable (2-3 paragraphs).`,
       const followUpMessage: ConversationMessage = {
         id: `system-followup-${Date.now()}`,
         type: 'system',
-        content: '💡 You can now ask follow-up questions about your pitch or request specific advice from your advisors.',
+        content:
+          '💡 You can now ask follow-up questions about your pitch or request specific advice from your advisors.',
         timestamp: new Date(),
       };
       setMessages(prev => [...prev, followUpMessage]);
-
     } catch (error) {
       console.error('Error processing pitch:', error);
       const errorMessage: ConversationMessage = {
@@ -1433,24 +1448,26 @@ The committee unanimously recommends proceeding with measured optimism while sys
 
               {/* Other Mode Buttons */}
               <div className="grid grid-cols-2 gap-2">
-                {conversationModes.filter(mode => mode.id !== 'pitch_practice').map(mode => (
-                  <button
-                    key={mode.id}
-                    onClick={() => {
-                      setSelectedMode(mode.id);
-                      setShowPitchRecorder(false);
-                    }}
-                    className={cn(
-                      'p-2 rounded-lg text-xs font-medium transition-all flex items-center space-x-1',
-                      selectedMode === mode.id
-                        ? `${mode.color} text-white`
-                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                    )}
-                  >
-                    {mode.icon}
-                    <span>{mode.name}</span>
-                  </button>
-                ))}
+                {conversationModes
+                  .filter(mode => mode.id !== 'pitch_practice')
+                  .map(mode => (
+                    <button
+                      key={mode.id}
+                      onClick={() => {
+                        setSelectedMode(mode.id);
+                        setShowPitchRecorder(false);
+                      }}
+                      className={cn(
+                        'p-2 rounded-lg text-xs font-medium transition-all flex items-center space-x-1',
+                        selectedMode === mode.id
+                          ? `${mode.color} text-white`
+                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                      )}
+                    >
+                      {mode.icon}
+                      <span>{mode.name}</span>
+                    </button>
+                  ))}
               </div>
 
               {/* Configuration Actions */}
@@ -1592,9 +1609,14 @@ The committee unanimously recommends proceeding with measured optimism while sys
                     {/* Advisor Info */}
                     <div className="flex-1 p-2 min-w-0 flex flex-col justify-center">
                       <div className="flex items-center space-x-1">
-                        <span className="font-medium text-gray-900 text-sm truncate">{advisor.name}</span>
+                        <span className="font-medium text-gray-900 text-sm truncate">
+                          {advisor.name}
+                        </span>
                         {isCelebrity && (
-                          <Star className="w-3 h-3 text-yellow-500 flex-shrink-0" fill="currentColor" />
+                          <Star
+                            className="w-3 h-3 text-yellow-500 flex-shrink-0"
+                            fill="currentColor"
+                          />
                         )}
                         {isSelected && (
                           <div className="w-4 h-4 bg-purple-500 rounded-full flex items-center justify-center flex-shrink-0">
@@ -1630,10 +1652,11 @@ The committee unanimously recommends proceeding with measured optimism while sys
                 <span className="text-sm font-medium text-gray-700">Recent Conversations</span>
               </div>
               <div className="space-y-2 max-h-48 overflow-y-auto">
-                {conversations.slice(0, 5).map((conv) => {
-                  const advisor = conv.advisor_type === 'celebrity'
-                    ? celebrityAdvisors.find(a => a.id === conv.advisor_id)
-                    : customAdvisors.find(a => a.id === conv.advisor_id);
+                {conversations.slice(0, 5).map(conv => {
+                  const advisor =
+                    conv.advisor_type === 'celebrity'
+                      ? celebrityAdvisors.find(a => a.id === conv.advisor_id)
+                      : customAdvisors.find(a => a.id === conv.advisor_id);
                   return (
                     <button
                       key={conv.id}
@@ -1663,7 +1686,8 @@ The committee unanimously recommends proceeding with measured optimism while sys
                           {advisor?.name || 'Unknown'}
                         </p>
                         <p className="text-xs text-gray-500 capitalize truncate">
-                          {(conv.mode || 'general').replace('_', ' ')} • {conv.messages?.length || 0} msgs
+                          {(conv.mode || 'general').replace('_', ' ')} •{' '}
+                          {conv.messages?.length || 0} msgs
                         </p>
                       </div>
                     </button>
@@ -1867,7 +1891,10 @@ ${messages.map(m => `${m.type === 'user' ? 'You' : 'Advisor'}: ${m.content}`).jo
                         const advisor = allAdvisors.find(a => a.id === advisorId);
                         if (!advisor) return null;
                         return (
-                          <div key={advisorId} className="flex items-center space-x-2 bg-purple-50 px-3 py-1.5 rounded-full">
+                          <div
+                            key={advisorId}
+                            className="flex items-center space-x-2 bg-purple-50 px-3 py-1.5 rounded-full"
+                          >
                             <Avatar
                               avatar_emoji={advisor.avatar_emoji}
                               avatar_image={advisor.avatar_image}
@@ -1875,7 +1902,9 @@ ${messages.map(m => `${m.type === 'user' ? 'You' : 'Advisor'}: ${m.content}`).jo
                               name={advisor.name}
                               size="sm"
                             />
-                            <span className="text-sm font-medium text-purple-800">{advisor.name}</span>
+                            <span className="text-sm font-medium text-purple-800">
+                              {advisor.name}
+                            </span>
                           </div>
                         );
                       })}
@@ -1905,7 +1934,8 @@ ${messages.map(m => `${m.type === 'user' ? 'You' : 'Advisor'}: ${m.content}`).jo
                 <div className="text-center">
                   <h2 className="text-2xl font-bold text-gray-900 mb-2">Your Advisory Panel</h2>
                   <p className="text-gray-600 mb-6">
-                    Ready to advise on: <span className="font-medium">{currentMode?.name || 'General Discussion'}</span>
+                    Ready to advise on:{' '}
+                    <span className="font-medium">{currentMode?.name || 'General Discussion'}</span>
                   </p>
 
                   {/* Advisor Cards Grid */}
@@ -1930,12 +1960,16 @@ ${messages.map(m => `${m.type === 'user' ? 'You' : 'Advisor'}: ${m.content}`).jo
                             />
                             <div className="mt-3">
                               <div className="flex items-center justify-center space-x-1">
-                                <h3 className="font-semibold text-gray-900 text-sm">{advisor.name}</h3>
+                                <h3 className="font-semibold text-gray-900 text-sm">
+                                  {advisor.name}
+                                </h3>
                                 {isCelebrity && (
                                   <Star className="w-3 h-3 text-yellow-500" fill="currentColor" />
                                 )}
                               </div>
-                              <p className="text-xs text-gray-600 mt-1">{advisor.role || advisor.title}</p>
+                              <p className="text-xs text-gray-600 mt-1">
+                                {advisor.role || advisor.title}
+                              </p>
                             </div>
                             {advisor.communication_style && (
                               <p className="text-xs text-gray-500 italic mt-2 line-clamp-2">
@@ -1983,7 +2017,8 @@ ${messages.map(m => `${m.type === 'user' ? 'You' : 'Advisor'}: ${m.content}`).jo
                   </div>
                   <h2 className="text-2xl font-bold text-gray-900 mb-2">Select Your Advisors</h2>
                   <p className="text-gray-600 mb-6 max-w-md mx-auto">
-                    Choose one or more advisors from the panel on the left to start your advisory session.
+                    Choose one or more advisors from the panel on the left to start your advisory
+                    session.
                   </p>
                 </div>
               )}
@@ -1991,12 +2026,15 @@ ${messages.map(m => `${m.type === 'user' ? 'You' : 'Advisor'}: ${m.content}`).jo
               {/* Continue where you left off */}
               {conversations.length > 0 && (
                 <div className="border-t border-gray-200 pt-6 mt-8">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Continue where you left off</h3>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                    Continue where you left off
+                  </h3>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                    {conversations.slice(0, 3).map((conv) => {
-                      const advisor = conv.advisor_type === 'celebrity'
-                        ? celebrityAdvisors.find(a => a.id === conv.advisor_id)
-                        : customAdvisors.find(a => a.id === conv.advisor_id);
+                    {conversations.slice(0, 3).map(conv => {
+                      const advisor =
+                        conv.advisor_type === 'celebrity'
+                          ? celebrityAdvisors.find(a => a.id === conv.advisor_id)
+                          : customAdvisors.find(a => a.id === conv.advisor_id);
                       return (
                         <button
                           key={conv.id}
@@ -2027,7 +2065,8 @@ ${messages.map(m => `${m.type === 'user' ? 'You' : 'Advisor'}: ${m.content}`).jo
                               {advisor?.name || 'Unknown Advisor'}
                             </p>
                             <p className="text-xs text-gray-500 capitalize">
-                              {(conv.mode || 'general').replace('_', ' ')} • {conv.messages?.length || 0} messages
+                              {(conv.mode || 'general').replace('_', ' ')} •{' '}
+                              {conv.messages?.length || 0} messages
                             </p>
                           </div>
                         </button>
@@ -2269,10 +2308,7 @@ ${messages.map(m => `${m.type === 'user' ? 'You' : 'Advisor'}: ${m.content}`).jo
       />
 
       {/* Settings Modal */}
-      <SettingsModal
-        isOpen={showSettingsModal}
-        onClose={() => setShowSettingsModal(false)}
-      />
+      <SettingsModal isOpen={showSettingsModal} onClose={() => setShowSettingsModal(false)} />
 
       {/* Help Modal */}
       <HelpModal

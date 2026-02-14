@@ -359,13 +359,11 @@ export const VoicePitchRecorder: React.FC<VoicePitchRecorderProps> = ({
               min="1"
               max="20"
               value={pitchDuration}
-              onChange={(e) => setPitchDuration(parseInt(e.target.value))}
+              onChange={e => setPitchDuration(parseInt(e.target.value))}
               className="flex-1"
               disabled={disabled}
             />
-            <span className="text-sm font-medium text-gray-900 w-16">
-              {pitchDuration} min
-            </span>
+            <span className="text-sm font-medium text-gray-900 w-16">{pitchDuration} min</span>
           </div>
         </div>
       )}
@@ -403,7 +401,11 @@ export const VoicePitchRecorder: React.FC<VoicePitchRecorderProps> = ({
         {/* Live Coaching Chart (during recording) */}
         {isRecording && liveMetrics.length > 5 && (
           <div className="w-full mb-4">
-            <LiveCoachingChart data={liveMetrics} isRecording={isRecording} duration={recordingTime} />
+            <LiveCoachingChart
+              data={liveMetrics}
+              isRecording={isRecording}
+              duration={recordingTime}
+            />
           </div>
         )}
 
@@ -502,10 +504,7 @@ export const VoicePitchRecorder: React.FC<VoicePitchRecorderProps> = ({
 
         {/* Cancel button */}
         {onCancel && !isRecording && (
-          <button
-            onClick={onCancel}
-            className="mt-4 text-sm text-gray-500 hover:text-gray-700"
-          >
+          <button onClick={onCancel} className="mt-4 text-sm text-gray-500 hover:text-gray-700">
             Cancel
           </button>
         )}

@@ -458,10 +458,7 @@ export const HelpModal: React.FC<HelpModalProps> = ({
             <div className="flex items-center justify-between">
               <div className="text-sm text-gray-600">
                 Need more help? Contact our support team at{' '}
-                <a
-                  href="mailto:jeff@bearableai.com"
-                  className="text-blue-600 hover:underline"
-                >
+                <a href="mailto:jeff@bearableai.com" className="text-blue-600 hover:underline">
                   jeff@bearableai.com
                 </a>
               </div>
