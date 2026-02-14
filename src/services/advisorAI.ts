@@ -157,7 +157,7 @@ Respond as ${advisor.name} with specific, actionable advice in 2-3 sentences. St
     console.log('AdvisorAI: About to call generateResponse');
     const response = await this.client.generateResponse(messages, {
       temperature: 0.8,
-      maxTokens: 300,
+      maxTokens: 1500,
     });
 
     return response.content;
@@ -561,7 +561,7 @@ Provide a focused, actionable response in 2-3 sentences that directly addresses 
     console.log('AdvisorAI: About to call generateResponse');
     const response = await this.client.generateResponse(messages, {
       temperature: 0.8,
-      maxTokens: 300,
+      maxTokens: 800,
     });
 
     return response.content;
