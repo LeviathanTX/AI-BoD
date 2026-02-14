@@ -1,6 +1,8 @@
 // Vercel Serverless Function for AI API Proxy
 // This handles CORS and securely calls AI APIs server-side
 
+import { BedrockRuntimeClient, ConverseCommand } from '@aws-sdk/client-bedrock-runtime';
+
 export default async function handler(req, res) {
   // Enable CORS with specific origin for security
   const allowedOrigins = [
@@ -48,7 +50,7 @@ export default async function handler(req, res) {
 
     // Environment check for production
     if (process.env.NODE_ENV === 'production') {
-      if (!process.env.CLAUDE_API_KEY && !process.env.OPENAI_API_KEY) {
+      if (!process.env.CLAUDE_API_KEY && !process.env.OPENAI_API_KEY && !process.env.AWS_ACCESS_KEY_ID) {
         return res.status(500).json({ error: 'No AI service API keys configured' });
       }
     }
@@ -59,6 +61,8 @@ export default async function handler(req, res) {
       apiResponse = await callClaudeAPI(model, messages, options);
     } else if (service === 'chatgpt') {
       apiResponse = await callOpenAIAPI(model, messages, options);
+    } else if (service === 'bedrock') {
+      apiResponse = await callBedrockAPI(model, messages, options);
     } else {
       return res.status(400).json({ error: `Unsupported AI service: ${service}` });
     }
@@ -181,4 +185,113 @@ async function callOpenAIAPI(model, messages, options = {}) {
       timestamp: new Date().toISOString()
     }
   };
+}
+
+async function callBedrockAPI(model, messages, options = {}) {
+  // Verify AWS credentials are configured
+  const accessKeyId = process.env.AWS_ACCESS_KEY_ID;
+  const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
+  const region = process.env.AWS_REGION || 'us-east-1';
+
+  if (!accessKeyId || !secretAccessKey) {
+    console.error('AWS credentials not configured');
+    throw new Error('AWS Bedrock credentials not configured');
+  }
+
+  // Supported Bedrock model IDs
+  const supportedModels = [
+    'amazon.nova-pro-v1:0',
+    'amazon.nova-lite-v1:0',
+    'amazon.nova-micro-v1:0',
+    'meta.llama3-3-70b-instruct-v1:0',
+    'meta.llama3-2-90b-instruct-v1:0',
+    'mistral.mistral-large-2407-v1:0',
+    'anthropic.claude-sonnet-4-20250514',
+    'anthropic.claude-haiku-4-5-20251001-v1:0'
+  ];
+
+  if (!supportedModels.includes(model)) {
+    console.warn(`Model ${model} not in supported list, attempting anyway`);
+  }
+
+  console.log('Calling Bedrock API with:', {
+    model,
+    messageCount: messages.length,
+    region,
+    maxTokens: options.maxTokens || 2000,
+    temperature: options.temperature || 0.7
+  });
+
+  try {
+    // Initialize Bedrock client
+    const client = new BedrockRuntimeClient({
+      region: region,
+      credentials: {
+        accessKeyId: accessKeyId,
+        secretAccessKey: secretAccessKey
+      }
+    });
+
+    // Separate system messages from conversation messages
+    const systemMessages = messages.filter(m => m.role === 'system');
+    const conversationMessages = messages.filter(m => m.role !== 'system');
+
+    // Format messages for Bedrock Converse API
+    const bedrockMessages = conversationMessages.map(msg => ({
+      role: msg.role,
+      content: [{ text: msg.content }]
+    }));
+
+    // Prepare the Converse command
+    const command = new ConverseCommand({
+      modelId: model,
+      messages: bedrockMessages,
+      system: systemMessages.length > 0 ? [{ text: systemMessages[0].content }] : undefined,
+      inferenceConfig: {
+        maxTokens: options.maxTokens || 2000,
+        temperature: options.temperature || 0.7
+      }
+    });
+
+    // Execute the API call
+    const response = await client.send(command);
+
+    // Extract response content
+    const content = response.output?.message?.content?.[0]?.text || '';
+
+    // Extract usage statistics
+    const usage = {
+      prompt_tokens: response.usage?.inputTokens || 0,
+      completion_tokens: response.usage?.outputTokens || 0,
+      total_tokens: (response.usage?.inputTokens || 0) + (response.usage?.outputTokens || 0)
+    };
+
+    return {
+      content: content,
+      usage: usage,
+      metadata: {
+        model: model,
+        service: 'bedrock',
+        timestamp: new Date().toISOString(),
+        stopReason: response.stopReason
+      }
+    };
+  } catch (error) {
+    console.error('Bedrock API error:', {
+      message: error.message,
+      name: error.name,
+      model: model
+    });
+
+    // Provide helpful error messages for common issues
+    if (error.name === 'ValidationException') {
+      throw new Error(`Bedrock validation error: ${error.message}. Check that model ${model} is available in region ${region}`);
+    } else if (error.name === 'AccessDeniedException') {
+      throw new Error('AWS credentials lack permission to invoke Bedrock models. Check IAM permissions.');
+    } else if (error.name === 'ResourceNotFoundException') {
+      throw new Error(`Model ${model} not found in region ${region}. Verify model ID and region.`);
+    } else {
+      throw new Error(`Bedrock API Error: ${error.message}`);
+    }
+  }
 }
