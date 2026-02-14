@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import toast from 'react-hot-toast';
 import {
   MessageCircle,
   Users,
@@ -833,6 +834,17 @@ Keep your response concise but valuable (2-3 paragraphs).`,
       await generateAdvisorResponses(inputMessage, currentFiles);
     } catch (error) {
       console.error('Error generating advisor responses:', error);
+      const errorMessage = error instanceof Error ? error.message : 'Failed to get response from advisors';
+      toast.error(errorMessage);
+
+      // Add error message to conversation
+      const errorMsg: ConversationMessage = {
+        id: `error-${Date.now()}`,
+        type: 'system',
+        content: `⚠️ Error: ${errorMessage}. Please check your settings and try again.`,
+        timestamp: new Date(),
+      };
+      setMessages(prev => [...prev, errorMsg]);
     } finally {
       setIsTyping(false);
       saveConversation();
