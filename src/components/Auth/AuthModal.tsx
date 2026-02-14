@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import toast from 'react-hot-toast';
 import { useAuth } from '../../contexts/AuthContext';
 import { cn } from '../../utils';
 import { analytics } from '../../services/analytics';
@@ -116,12 +117,14 @@ export const AuthModal: React.FC<AuthModalProps> = ({
       }
 
       if (result.error) {
-        setError(result.error.message);
+        const errorMessage = result.error.message;
+        setError(errorMessage);
+        toast.error(errorMessage);
         // Track failure
         if (mode === 'signup') {
-          analytics.trackAuth.signupFailed(result.error.message);
+          analytics.trackAuth.signupFailed(errorMessage);
         } else {
-          analytics.trackAuth.loginFailed(result.error.message);
+          analytics.trackAuth.loginFailed(errorMessage);
         }
       } else {
         // Track success
@@ -130,6 +133,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
           // Show verification message for signup
           setSignupSuccess(true);
           setSignupEmail(email);
+          toast.success('Account created! Check your email to verify.');
         } else {
           analytics.trackAuth.loginSuccess(result.data?.user?.id || 'unknown');
           // Close modal immediately for sign-in
@@ -138,7 +142,9 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         }
       }
     } catch (err) {
-      setError('An unexpected error occurred');
+      const errorMessage = 'An unexpected error occurred. Please try again.';
+      setError(errorMessage);
+      toast.error(errorMessage);
       // Track failure
       if (mode === 'signup') {
         analytics.trackAuth.signupFailed('Unexpected error');

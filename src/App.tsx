@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import toast, { Toaster } from 'react-hot-toast';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { AdvisorProvider } from './contexts/AdvisorContext';
 import { SubscriptionProvider } from './contexts/SubscriptionContext';
@@ -77,7 +78,7 @@ function LandingPage({
 
       {isDemoMode && (
         <div className="fixed top-0 left-0 right-0 bg-gradient-to-r from-yellow-500 to-orange-500 text-black text-center py-2 px-4 text-sm font-medium z-50">
-          DEMO MODE - Try the full experience! Sign up with any email/password.
+          🎭 DEMO MODE - Try with demo credentials: <strong>founder@demo.com</strong> / <strong>demo123</strong> or sign up with any email/password
         </div>
       )}
 
@@ -380,6 +381,19 @@ function AuthenticatedApp() {
   const { user, loading } = useAuth();
   // Default to advisory_conversation - this is now the main landing page
   const [selectedMode, setSelectedMode] = useState<ApplicationMode | null>('advisory_conversation');
+  const [hasShownWelcome, setHasShownWelcome] = useState(false);
+
+  // Show welcome toast on first login
+  useEffect(() => {
+    if (user && !hasShownWelcome) {
+      const firstName = user.full_name?.split(' ')[0] || 'there';
+      toast.success(`Welcome back, ${firstName}! 👋`, {
+        duration: 3000,
+        position: 'top-center',
+      });
+      setHasShownWelcome(true);
+    }
+  }, [user, hasShownWelcome]);
 
   // Mock user for development mode
   const mockUser = {
@@ -561,6 +575,28 @@ function AppContent() {
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
+      <Toaster
+        position="top-right"
+        toastOptions={{
+          duration: 4000,
+          style: {
+            background: '#333',
+            color: '#fff',
+          },
+          success: {
+            iconTheme: {
+              primary: '#10b981',
+              secondary: '#fff',
+            },
+          },
+          error: {
+            iconTheme: {
+              primary: '#ef4444',
+              secondary: '#fff',
+            },
+          },
+        }}
+      />
       <AuthProvider>
         <AppContent />
       </AuthProvider>

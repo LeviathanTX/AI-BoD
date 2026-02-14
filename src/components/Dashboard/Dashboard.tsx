@@ -37,6 +37,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onModeSelect }) => {
     markDemoTourComplete,
   } = useHelp();
   const [showSettings, setShowSettings] = useState(false);
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [showTestDocument, setShowTestDocument] = useState(false);
   const [showQuickStart, setShowQuickStart] = useState(false);
   const [localConversations, setLocalConversations] = useState<any[]>([]);
@@ -149,10 +150,11 @@ export const Dashboard: React.FC<DashboardProps> = ({ onModeSelect }) => {
               <h1 className="text-xl font-bold text-gray-900">Bearable Advisors</h1>
             </div>
             <div className="flex items-center space-x-4">
-              <div className="text-sm text-gray-600">Welcome, {user?.full_name || user?.email}</div>
+              {/* User info - always visible */}
+              <div className="text-sm text-gray-600 hidden sm:block">Welcome, {user?.full_name || user?.email}</div>
               <span
                 className={cn(
-                  'px-3 py-1 rounded-full text-xs font-medium',
+                  'px-3 py-1 rounded-full text-xs font-medium hidden sm:inline-block',
                   currentTier === 'founder' && 'bg-blue-100 text-blue-800',
                   currentTier === 'scale-up' && 'bg-purple-100 text-purple-800',
                   currentTier === 'enterprise' && 'bg-green-100 text-green-800'
@@ -160,67 +162,167 @@ export const Dashboard: React.FC<DashboardProps> = ({ onModeSelect }) => {
               >
                 {currentTier.charAt(0).toUpperCase() + currentTier.slice(1)} Plan
               </span>
+
+              {/* Desktop navigation - hidden on mobile */}
+              <div className="hidden md:flex items-center space-x-4">
+                <button
+                  onClick={() => onModeSelect('advisor_management')}
+                  className="text-purple-600 hover:text-purple-700 font-medium"
+                  data-tour="advisor-management"
+                  aria-label="Manage your AI advisors"
+                >
+                  Manage Advisors
+                </button>
+                <button
+                  onClick={() => setShowQuickStart(true)}
+                  className="text-blue-600 hover:text-blue-700 font-medium flex items-center"
+                  title="Quick Start Guide"
+                  aria-label="Open quick start guide"
+                >
+                  <HelpCircle className="w-4 h-4 mr-1" aria-hidden="true" />
+                  Quick Start
+                </button>
+                <button
+                  onClick={() => setShowDemoTour(true)}
+                  className="text-green-600 hover:text-green-700 font-medium"
+                  title="Take a guided tour of the platform"
+                  data-tour="demo-tour-button"
+                  aria-label="Start guided demo tour"
+                >
+                  Demo Tour
+                </button>
+                <button
+                  onClick={() => setShowHelpModal(true)}
+                  className="text-gray-500 hover:text-gray-700 font-medium"
+                  title="Help & Support"
+                  aria-label="Open help and support"
+                >
+                  Help
+                </button>
+                <button
+                  onClick={() => setShowSettings(true)}
+                  className="text-gray-500 hover:text-gray-700"
+                  data-tour="settings"
+                  aria-label="Open settings"
+                >
+                  Settings
+                </button>
+                <button
+                  onClick={async () => {
+                    console.log('🔴 Sign out button clicked');
+                    try {
+                      console.log('🔴 Calling signOut...');
+                      await signOut();
+                      console.log('🔴 signOut completed, reloading page...');
+                      // Force page reload to clear all state and show landing page
+                      window.location.reload();
+                    } catch (error) {
+                      console.error('🔴 Sign out error:', error);
+                      // Still reload on error to ensure clean state
+                      console.log('🔴 Reloading page after error...');
+                      window.location.reload();
+                    }
+                  }}
+                  className="text-gray-500 hover:text-gray-700"
+                  aria-label="Sign out of your account"
+                >
+                  Sign Out
+                </button>
+              </div>
+
+              {/* Mobile menu button */}
               <button
-                onClick={() => onModeSelect('advisor_management')}
-                className="text-purple-600 hover:text-purple-700 font-medium"
-                data-tour="advisor-management"
+                onClick={() => setShowMobileMenu(!showMobileMenu)}
+                className="md:hidden text-gray-600 hover:text-gray-900 p-2"
+                aria-label="Toggle mobile menu"
+                aria-expanded={showMobileMenu}
               >
-                Manage Advisors
-              </button>
-              <button
-                onClick={() => setShowQuickStart(true)}
-                className="text-blue-600 hover:text-blue-700 font-medium flex items-center"
-                title="Quick Start Guide"
-              >
-                <HelpCircle className="w-4 h-4 mr-1" />
-                Quick Start
-              </button>
-              <button
-                onClick={() => setShowDemoTour(true)}
-                className="text-green-600 hover:text-green-700 font-medium"
-                title="Take a guided tour of the platform"
-                data-tour="demo-tour-button"
-              >
-                Demo Tour
-              </button>
-              <button
-                onClick={() => setShowHelpModal(true)}
-                className="text-gray-500 hover:text-gray-700 font-medium"
-                title="Help & Support"
-              >
-                Help
-              </button>
-              <button
-                onClick={() => setShowSettings(true)}
-                className="text-gray-500 hover:text-gray-700"
-                data-tour="settings"
-              >
-                Settings
-              </button>
-              <button
-                onClick={async () => {
-                  console.log('🔴 Sign out button clicked');
-                  try {
-                    console.log('🔴 Calling signOut...');
-                    await signOut();
-                    console.log('🔴 signOut completed, reloading page...');
-                    // Force page reload to clear all state and show landing page
-                    window.location.reload();
-                  } catch (error) {
-                    console.error('🔴 Sign out error:', error);
-                    // Still reload on error to ensure clean state
-                    console.log('🔴 Reloading page after error...');
-                    window.location.reload();
-                  }
-                }}
-                className="text-gray-500 hover:text-gray-700"
-              >
-                Sign Out
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  {showMobileMenu ? (
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  ) : (
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                  )}
+                </svg>
               </button>
             </div>
           </div>
         </div>
       </header>
+
+      {/* Mobile menu dropdown */}
+      {showMobileMenu && (
+        <div className="md:hidden bg-white border-b border-gray-200 shadow-lg">
+          <div className="max-w-7xl mx-auto px-4 py-2 space-y-1">
+            <button
+              onClick={() => {
+                onModeSelect('advisor_management');
+                setShowMobileMenu(false);
+              }}
+              className="w-full text-left px-4 py-3 text-purple-600 hover:bg-purple-50 rounded-lg font-medium"
+              aria-label="Manage your AI advisors"
+            >
+              Manage Advisors
+            </button>
+            <button
+              onClick={() => {
+                setShowQuickStart(true);
+                setShowMobileMenu(false);
+              }}
+              className="w-full text-left px-4 py-3 text-blue-600 hover:bg-blue-50 rounded-lg font-medium"
+              aria-label="Open quick start guide"
+            >
+              Quick Start
+            </button>
+            <button
+              onClick={() => {
+                setShowDemoTour(true);
+                setShowMobileMenu(false);
+              }}
+              className="w-full text-left px-4 py-3 text-green-600 hover:bg-green-50 rounded-lg font-medium"
+              aria-label="Start guided demo tour"
+            >
+              Demo Tour
+            </button>
+            <button
+              onClick={() => {
+                setShowHelpModal(true);
+                setShowMobileMenu(false);
+              }}
+              className="w-full text-left px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg font-medium"
+              aria-label="Open help and support"
+            >
+              Help & Support
+            </button>
+            <button
+              onClick={() => {
+                setShowSettings(true);
+                setShowMobileMenu(false);
+              }}
+              className="w-full text-left px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg font-medium"
+              aria-label="Open settings"
+            >
+              Settings
+            </button>
+            <button
+              onClick={async () => {
+                setShowMobileMenu(false);
+                try {
+                  await signOut();
+                  window.location.reload();
+                } catch (error) {
+                  console.error('Sign out error:', error);
+                  window.location.reload();
+                }
+              }}
+              className="w-full text-left px-4 py-3 text-red-600 hover:bg-red-50 rounded-lg font-medium"
+              aria-label="Sign out of your account"
+            >
+              Sign Out
+            </button>
+          </div>
+        </div>
+      )}
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Email Verification Banner */}
@@ -329,6 +431,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onModeSelect }) => {
                   }
                 }}
                 className="bg-white rounded-xl p-6 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all text-left group border border-gray-200 hover:border-blue-300"
+                aria-label={`Select ${mode.title} mode: ${mode.description}`}
               >
                 <div className="flex items-start space-x-4">
                   <div
