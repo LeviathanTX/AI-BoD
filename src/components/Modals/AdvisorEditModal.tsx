@@ -543,8 +543,26 @@ Always maintain your persona and provide advice that reflects your expertise are
                   <option value="chatgpt">ChatGPT (OpenAI)</option>
                   <option value="gemini">Gemini (Google)</option>
                   <option value="deepseek">DeepSeek</option>
+                  <option value="bedrock">AWS Bedrock (Multi-Model)</option>
                 </select>
                 <p className="text-xs text-gray-500 mt-1">✅ Using platform API</p>
+
+                {/* Multi-Model Routing Info - Show if advisor has preferredService/Model */}
+                {(advisor as any)?.preferredService && (advisor as any)?.preferredModel && (
+                  <div className="mt-3 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Brain className="w-4 h-4 text-blue-600" />
+                      <span className="text-sm font-semibold text-blue-900">Multi-Model Routing Active</span>
+                    </div>
+                    <div className="text-xs space-y-1 text-blue-800">
+                      <div><strong>Service:</strong> {(advisor as any).preferredService}</div>
+                      <div><strong>Model:</strong> {(advisor as any).preferredModel}</div>
+                      <p className="text-blue-600 mt-2 text-xs">
+                        🎯 This advisor uses a specialized AI model for optimal performance and cost efficiency.
+                      </p>
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* System Prompt */}
