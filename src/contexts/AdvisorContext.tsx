@@ -125,6 +125,8 @@ Always be authentic, enthusiastic, and genuinely invested in helping users succe
     avatar_emoji: '👋',
     avatar_url: '/images/advisors/jeff-levine.jpg',
     ai_service: 'claude',
+    preferredService: 'bedrock',
+    preferredModel: 'amazon.nova-micro-v1:0', // Ultra-low cost for routing/platform guidance
     type: 'celebrity',
     mcp_enabled: true,
     mcp_folder_path: '/documents/advisors/jeff-host',
@@ -253,6 +255,8 @@ Always be thoughtful, strategic, and focused on helping founders think bigger an
     avatar_emoji: '🔗',
     avatar_url: '/images/advisors/reid-hoffman.jpg',
     ai_service: 'claude',
+    preferredService: 'chatgpt',
+    preferredModel: 'gpt-5.2', // Keep OpenAI for best strategic quality
     type: 'celebrity',
     mcp_enabled: true,
     mcp_folder_path: '/documents/advisors/reid-hoffman',
@@ -389,6 +393,8 @@ Always be genuinely enthusiastic, practical, and focused on helping founders win
     avatar_emoji: '🚀',
     avatar_url: '/images/advisors/jason-calacanis.jpg',
     ai_service: 'claude',
+    preferredService: 'bedrock',
+    preferredModel: 'mistral.mistral-large-2407-v1:0', // Mistral for direct/contrarian angel investor persona
     type: 'celebrity',
     mcp_enabled: true,
     mcp_folder_path: '/documents/advisors/jason-calacanis',
@@ -408,6 +414,8 @@ Always be genuinely enthusiastic, practical, and focused on helping founders win
     avatar_emoji: '📊',
     avatar_url: '/images/advisors/sheryl-sandberg.jpg',
     ai_service: 'claude',
+    preferredService: 'bedrock',
+    preferredModel: 'amazon.nova-pro-v1:0', // Nova Pro for analytical operational excellence
     type: 'celebrity',
   },
   {
@@ -492,6 +500,8 @@ You are genuinely excited about technology's potential to improve lives and solv
     avatar_emoji: '🌐',
     avatar_url: '/images/advisors/marc-andreessen.jpg',
     ai_service: 'claude',
+    preferredService: 'bedrock',
+    preferredModel: 'anthropic.claude-sonnet-4-20250514', // Claude via Bedrock for technology-optimist depth
     type: 'celebrity',
     mcp_enabled: true,
     mcp_folder_path: '/documents/advisors/marc-andreessen',
@@ -519,6 +529,8 @@ You are genuinely excited about technology's potential to improve lives and solv
     avatar_emoji: '🎯',
     avatar_url: '/images/advisors/michael-porter.jpg',
     ai_service: 'claude',
+    preferredService: 'bedrock',
+    preferredModel: 'meta.llama3-3-70b-instruct-v1:0', // Llama for direct, analytical functional advice
     type: 'celebrity',
   },
   {
@@ -543,6 +555,8 @@ You are genuinely excited about technology's potential to improve lives and solv
     avatar_emoji: '🔍',
     avatar_url: '/images/advisors/sarah-chen.jpg',
     ai_service: 'claude',
+    preferredService: 'bedrock',
+    preferredModel: 'meta.llama3-3-70b-instruct-v1:0', // Llama for direct, analytical functional advice
     type: 'celebrity',
   },
   {
@@ -567,6 +581,8 @@ You are genuinely excited about technology's potential to improve lives and solv
     avatar_emoji: '📈',
     avatar_url: '/images/advisors/david-kim.jpg',
     ai_service: 'claude',
+    preferredService: 'bedrock',
+    preferredModel: 'meta.llama3-3-70b-instruct-v1:0', // Llama for direct, analytical functional advice
     type: 'celebrity',
   },
   {
@@ -591,6 +607,8 @@ You are genuinely excited about technology's potential to improve lives and solv
     avatar_emoji: '💰',
     avatar_url: '/images/advisors/rebecca-goldman.jpg',
     ai_service: 'claude',
+    preferredService: 'bedrock',
+    preferredModel: 'meta.llama3-3-70b-instruct-v1:0', // Llama for direct, analytical functional advice
     type: 'celebrity',
   },
   {
@@ -615,6 +633,8 @@ You are genuinely excited about technology's potential to improve lives and solv
     avatar_emoji: '⚙️',
     avatar_url: '/images/advisors/james-wilson.jpg',
     ai_service: 'claude',
+    preferredService: 'bedrock',
+    preferredModel: 'meta.llama3-3-70b-instruct-v1:0', // Llama for direct, analytical functional advice
     type: 'celebrity',
   },
   // Tier 2: Functional Specialists
@@ -640,6 +660,8 @@ You are genuinely excited about technology's potential to improve lives and solv
     avatar_emoji: '🚀',
     avatar_url: '/images/advisors/fei-fei-li.jpg',
     ai_service: 'claude',
+    preferredService: 'bedrock',
+    preferredModel: 'meta.llama3-3-70b-instruct-v1:0', // Llama for direct, analytical functional advice
     type: 'celebrity',
   },
   {
@@ -664,6 +686,8 @@ You are genuinely excited about technology's potential to improve lives and solv
     avatar_emoji: '👥',
     avatar_url: '/images/advisors/adam-grant.jpg',
     ai_service: 'claude',
+    preferredService: 'bedrock',
+    preferredModel: 'meta.llama3-3-70b-instruct-v1:0', // Llama for direct, analytical functional advice
     type: 'celebrity',
   },
   {
@@ -688,6 +712,8 @@ You are genuinely excited about technology's potential to improve lives and solv
     avatar_emoji: '⚖️',
     avatar_url: '/images/advisors/patricia-williams.jpg',
     ai_service: 'claude',
+    preferredService: 'bedrock',
+    preferredModel: 'meta.llama3-3-70b-instruct-v1:0', // Llama for direct, analytical functional advice
     type: 'celebrity',
   },
   {
@@ -716,6 +742,8 @@ You are genuinely excited about technology's potential to improve lives and solv
     avatar_emoji: '🌱',
     avatar_url: '/images/advisors/marc-benioff.jpg',
     ai_service: 'claude',
+    preferredService: 'bedrock',
+    preferredModel: 'meta.llama3-3-70b-instruct-v1:0', // Llama for direct, analytical functional advice
     type: 'celebrity',
   },
   {
@@ -745,6 +773,8 @@ You are genuinely excited about technology's potential to improve lives and solv
     avatar_emoji: '💝',
     avatar_url: '/images/advisors/whitney-wolfe-herd.jpg',
     ai_service: 'claude',
+    preferredService: 'bedrock',
+    preferredModel: 'meta.llama3-3-70b-instruct-v1:0', // Llama for direct, analytical functional advice
     type: 'celebrity',
   },
   {
@@ -769,6 +799,8 @@ You are genuinely excited about technology's potential to improve lives and solv
     avatar_emoji: '🔗',
     avatar_url: '/images/advisors/tim-cook.jpg',
     ai_service: 'claude',
+    preferredService: 'bedrock',
+    preferredModel: 'meta.llama3-3-70b-instruct-v1:0', // Llama for direct, analytical functional advice
     type: 'celebrity',
   },
   {
@@ -793,6 +825,8 @@ You are genuinely excited about technology's potential to improve lives and solv
     avatar_emoji: '📊',
     avatar_url: '/images/advisors/dj-patil.jpg',
     ai_service: 'claude',
+    preferredService: 'bedrock',
+    preferredModel: 'meta.llama3-3-70b-instruct-v1:0', // Llama for direct, analytical functional advice
     type: 'celebrity',
   },
   {
@@ -817,6 +851,8 @@ You are genuinely excited about technology's potential to improve lives and solv
     avatar_emoji: '🌍',
     avatar_url: '/images/advisors/masayoshi-son.jpg',
     ai_service: 'claude',
+    preferredService: 'bedrock',
+    preferredModel: 'meta.llama3-3-70b-instruct-v1:0', // Llama for direct, analytical functional advice
     type: 'celebrity',
   },
   // Tier 3: Industry Specialists
@@ -842,6 +878,8 @@ You are genuinely excited about technology's potential to improve lives and solv
     avatar_emoji: '💻',
     avatar_url: '/images/advisors/jensen-huang.jpg',
     ai_service: 'claude',
+    preferredService: 'bedrock',
+    preferredModel: 'amazon.nova-pro-v1:0', // Nova Pro for cost-optimized specialist advice
     type: 'celebrity',
   },
   {
@@ -866,6 +904,8 @@ You are genuinely excited about technology's potential to improve lives and solv
     avatar_emoji: '🧬',
     avatar_url: '/images/advisors/jennifer-doudna.jpg',
     ai_service: 'claude',
+    preferredService: 'bedrock',
+    preferredModel: 'amazon.nova-pro-v1:0', // Nova Pro for cost-optimized specialist advice
     type: 'celebrity',
   },
   {
@@ -895,6 +935,8 @@ You are genuinely excited about technology's potential to improve lives and solv
     avatar_emoji: '🏦',
     avatar_url: '/images/advisors/jamie-dimon.jpg',
     ai_service: 'claude',
+    preferredService: 'bedrock',
+    preferredModel: 'amazon.nova-pro-v1:0', // Nova Pro for cost-optimized specialist advice
     type: 'celebrity',
   },
   {
@@ -924,6 +966,8 @@ You are genuinely excited about technology's potential to improve lives and solv
     avatar_emoji: '🏭',
     avatar_url: '/images/advisors/mary-barra.jpg',
     ai_service: 'claude',
+    preferredService: 'bedrock',
+    preferredModel: 'amazon.nova-pro-v1:0', // Nova Pro for cost-optimized specialist advice
     type: 'celebrity',
   },
   {
@@ -953,6 +997,8 @@ You are genuinely excited about technology's potential to improve lives and solv
     avatar_emoji: '🛍️',
     avatar_url: '/images/advisors/satya-nadella.jpg',
     ai_service: 'claude',
+    preferredService: 'bedrock',
+    preferredModel: 'amazon.nova-pro-v1:0', // Nova Pro for cost-optimized specialist advice
     type: 'celebrity',
   },
   {
@@ -1099,6 +1145,8 @@ Be direct, technical, and focused on first principles. Push entrepreneurs to thi
     avatar_emoji: '⚡',
     avatar_url: '/images/advisors/elon-musk.jpg',
     ai_service: 'claude',
+    preferredService: 'bedrock',
+    preferredModel: 'amazon.nova-pro-v1:0', // Nova Pro for cost-optimized specialist advice
     type: 'celebrity',
     mcp_enabled: true,
     mcp_folder_path: '/documents/advisors/elon-musk',

@@ -47,6 +47,8 @@ export interface CelebrityAdvisor {
   investment_thesis?: string;
   system_prompt?: string; // Advanced AI system prompt for world-class advisory
   aiService?: AIService;
+  preferredService?: AIService; // Preferred AI service for this advisor (multi-model routing)
+  preferredModel?: string; // Specific model ID for this advisor (e.g., 'amazon.nova-pro-v1:0')
   mcp_folder_path?: string; // Path to MCP documents folder for this advisor
   mcp_enabled?: boolean; // Whether MCP functionality is enabled for this advisor
   // Additional properties for compatibility
@@ -187,7 +189,7 @@ export type ApplicationMode =
   | 'test_document'
   | 'general'; // Added for SavedConversation compatibility
 
-export type AIService = 'claude' | 'gemini' | 'chatgpt' | 'deepseek' | 'groq';
+export type AIService = 'claude' | 'gemini' | 'chatgpt' | 'deepseek' | 'groq' | 'bedrock';
 
 // Unified Advisor Types
 export type AdvisorRole =

@@ -50,6 +50,13 @@ const DEFAULT_SETTINGS: AppSettings = {
       baseUrl: 'https://api.groq.com',
       model: 'llama3-70b-8192',
     },
+    bedrock: {
+      id: 'bedrock',
+      name: 'AWS Bedrock',
+      apiKey: '', // Uses AWS credentials from env (AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY)
+      baseUrl: 'https://bedrock-runtime.us-east-1.amazonaws.com',
+      model: 'amazon.nova-pro-v1:0',
+    },
   },
   defaultAIService: 'claude',
 };
