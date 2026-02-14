@@ -44,6 +44,7 @@ import {
   saveConversation as saveConversationToDb,
   loadConversation as loadConversationFromService,
 } from '../../services/conversationService';
+import { AIService } from '../../types';
 import { Avatar } from '../Common/Avatar';
 import { VoicePitchRecorder, PitchRecordingResult } from '../PitchPractice';
 import { cn } from '../../utils';
@@ -1068,20 +1069,49 @@ Keep your response concise but valuable (2-3 paragraphs).`,
     try {
       console.log('Advisor response debug:', {
         hasClaudeService: !!settings.aiServices.claude,
+        advisorPreferredService: advisor.preferredService,
+        advisorPreferredModel: advisor.preferredModel,
       });
 
-      // Always use AI service - it will automatically use server-side proxy in production
-      const aiService = settings.aiServices.claude || {
-        id: 'claude',
-        name: 'Claude',
-        model: 'claude-3-sonnet-20240229',
-        apiKey: '',
-      };
-      console.log(
-        'Using AI service for',
-        advisor.name,
-        '(will use server-side proxy if no local key)'
-      );
+      // Multi-model routing: Use advisor's preferred service/model if available
+      let aiService;
+      if (advisor.preferredService && advisor.preferredModel && advisor.preferredService in settings.aiServices) {
+        // Advisor has a preferred service/model - use it
+        const preferredServiceConfig = settings.aiServices[advisor.preferredService as AIService];
+        if (preferredServiceConfig) {
+          aiService = {
+            ...preferredServiceConfig,
+            model: advisor.preferredModel, // Override with advisor's preferred model
+          };
+          console.log(
+            `🎯 Using ${advisor.preferredService} (${advisor.preferredModel}) for ${advisor.name} via multi-model routing`
+          );
+        } else {
+          // Preferred service not configured, fall back to default
+          console.warn(
+            `⚠️ Advisor ${advisor.name} prefers ${advisor.preferredService} but it's not configured. Falling back to default.`
+          );
+          aiService = settings.aiServices.claude || {
+            id: 'claude',
+            name: 'Claude',
+            model: 'claude-3-sonnet-20240229',
+            apiKey: '',
+          };
+        }
+      } else {
+        // No preferred service, use default
+        aiService = settings.aiServices.claude || {
+          id: 'claude',
+          name: 'Claude',
+          model: 'claude-3-sonnet-20240229',
+          apiKey: '',
+        };
+        console.log(
+          'Using default AI service for',
+          advisor.name,
+          '(will use server-side proxy if no local key)'
+        );
+      }
       const advisorAI = createAdvisorAI(aiService);
 
       // Enhanced prompt generation based on mode and advisor role
