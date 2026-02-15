@@ -46,9 +46,9 @@
 ## 2026-02-15 - Multi-Model AI Routing via AWS Bedrock - CLI (Final)
 
 **Branch:** `main`
-**Commits:** `619c037`, `aef27c8`, `ec37008`, `87c1156`, `bf1add0`, `6160773`, `e456f46`, `57a572a`, `7a3f7ad`, `c543f21`, `a1a265a`
+**Commits:** `619c037`, `aef27c8`, `ec37008`, `87c1156`, `bf1add0`, `6160773`, `e456f46`, `57a572a`, `7a3f7ad`, `c543f21`, `a1a265a`, `1ae5345`, `3f9cc21`
 **Deployed:** ✅ Production (https://ai-bod-one.vercel.app)
-**Bundle Hash:** `main.a4273dcd.js`
+**Bundle Hash:** `main.97f9bdce.js`
 
 ### Accomplished
 - [x] Fixed multi-model routing UI display in CelebrityAdvisorCustomizationModal
@@ -63,6 +63,7 @@
 - [x] Updated Help Modal (HelpModal.tsx) with multi-model routing FAQs
 - [x] Updated Quick Start Guide with multi-model routing benefits
 - [x] Fixed mode switching visual feedback with sticky mode indicator banner
+- [x] Fixed pitch recorder to always show in Pitch Practice mode (not just when messages.length === 0)
 
 ### Files Modified
 - `src/components/Modals/CelebrityAdvisorCustomizationModal.tsx` - Added multi-model routing UI
@@ -113,6 +114,7 @@ All models tested via AWS CLI and confirmed working.
 6. **Pitch Practice Mode Not Activating**: Fixed selectedMode initialization to use default 'general'
 7. **Pitch Practice Generic Responses**: Updated to use advisor's preferredService/preferredModel
 8. **Mode Switching No Visual Feedback**: Added sticky mode indicator banner showing current mode with color-coding
+9. **Pitch Recorder Disappearing After First Pitch**: Moved recorder outside messages.length===0 condition so users can record multiple pitches
 
 ### Tests/Verification
 - [x] Jeff (Nova Micro) - Working ✅
