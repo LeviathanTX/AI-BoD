@@ -190,9 +190,9 @@ async function callOpenAIAPI(model, messages, options = {}) {
 
 async function callBedrockAPI(model, messages, options = {}) {
   // Verify AWS credentials are configured
-  const accessKeyId = process.env.AWS_ACCESS_KEY_ID;
-  const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
-  const region = process.env.AWS_REGION || 'us-east-1';
+  const accessKeyId = (process.env.AWS_ACCESS_KEY_ID || '').trim();
+  const secretAccessKey = (process.env.AWS_SECRET_ACCESS_KEY || '').trim();
+  const region = (process.env.AWS_REGION || 'us-east-1').trim();
 
   if (!accessKeyId || !secretAccessKey) {
     console.error('AWS credentials not configured');
