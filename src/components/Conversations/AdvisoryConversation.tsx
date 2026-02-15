@@ -257,6 +257,11 @@ export function AdvisoryConversation({
     }
   }, [conversationId]);
 
+  // Debug: Track mode changes
+  useEffect(() => {
+    console.log(`📊 Selected mode changed to: ${selectedMode}`);
+  }, [selectedMode]);
+
   const loadConversation = async (id: string) => {
     console.log('Loading conversation:', id);
 
@@ -1480,9 +1485,13 @@ The committee unanimously recommends proceeding with measured optimism while sys
               {/* Pitch Practice - Special Button (first in list) */}
               <button
                 onClick={() => {
+                  console.log(`🎤 Switching to Pitch Practice mode from ${selectedMode}`);
                   setSelectedMode('pitch_practice');
                   if (selectedAdvisors.length > 0) {
                     setShowPitchRecorder(true);
+                    console.log('✅ Pitch recorder shown');
+                  } else {
+                    console.log('⚠️ No advisors selected, pitch recorder not shown');
                   }
                 }}
                 className={cn(
@@ -1507,8 +1516,10 @@ The committee unanimously recommends proceeding with measured optimism while sys
                     <button
                       key={mode.id}
                       onClick={() => {
+                        console.log(`🔄 Switching mode from ${selectedMode} to ${mode.id}`);
                         setSelectedMode(mode.id);
                         setShowPitchRecorder(false);
+                        console.log(`✅ Mode switched to ${mode.id}, pitch recorder hidden`);
                       }}
                       className={cn(
                         'p-2 rounded-lg text-xs font-medium transition-all flex items-center space-x-1',
