@@ -7,6 +7,7 @@ export default async function handler(req, res) {
   // Enable CORS with specific origin for security
   const allowedOrigins = [
     'https://ai-bod.vercel.app',
+    'https://ai-bod-one.vercel.app',
     'https://ai-bod-ochre.vercel.app',
     'https://bearable-ai-advisors.vercel.app',
     'https://elite-ai-advisory.vercel.app',
