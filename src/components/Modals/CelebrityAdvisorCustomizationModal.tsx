@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, Star, Bot, Settings, Save, RotateCcw } from 'lucide-react';
+import { X, Star, Bot, Settings, Save, RotateCcw, Brain } from 'lucide-react';
 import { useAdvisor } from '../../contexts/AdvisorContext';
 import { useSettings } from '../../contexts/SettingsContext';
 import { Advisor, AIService } from '../../types';
@@ -215,6 +215,33 @@ Always provide specific, actionable advice that reflects your unique perspective
                 );
               })}
             </div>
+
+            {/* Multi-Model Routing Info - Show if advisor has preferredService/Model */}
+            {(advisor as any)?.preferredService && (advisor as any)?.preferredModel && (
+              <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <div className="flex items-center gap-2 mb-3">
+                  <Brain className="w-5 h-5 text-blue-600" />
+                  <span className="text-sm font-semibold text-blue-900">
+                    Multi-Model AI Routing Active
+                  </span>
+                </div>
+                <div className="text-sm space-y-2 text-blue-800">
+                  <div className="flex justify-between">
+                    <span className="font-medium">Service:</span>
+                    <span className="capitalize">{(advisor as any).preferredService}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium">Model:</span>
+                    <span className="font-mono text-xs">{(advisor as any).preferredModel}</span>
+                  </div>
+                  <div className="mt-3 pt-3 border-t border-blue-200 text-xs text-blue-700">
+                    <p>
+                      💡 This advisor uses a specific AI model to provide diverse perspectives and reduce AI sycophancy. The AI Service Configuration above shows all available services, but conversations will use the assigned model.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* System Prompt Customization */}
