@@ -1958,61 +1958,85 @@ ${messages.map(m => `${m.type === 'user' ? 'You' : 'Advisor'}: ${m.content}`).jo
             </div>
           )}
 
-          {messages.length === 0 && (
-            <div className="py-8 px-4 max-w-4xl mx-auto">
-              {/* Pitch Practice Mode - Voice Recorder */}
-              {selectedMode === 'pitch_practice' && selectedAdvisors.length > 0 ? (
-                <div>
-                  {/* Selected Advisors for Pitch Feedback */}
-                  <div className="text-center mb-6">
-                    <h2 className="text-2xl font-bold text-gray-900 mb-2">Pitch Practice</h2>
-                    <p className="text-gray-600 mb-4">
-                      Record your pitch and get feedback from your selected advisors
-                    </p>
-                    <div className="flex flex-wrap justify-center gap-2 mb-4">
-                      {selectedAdvisors.map(advisorId => {
-                        const advisor = allAdvisors.find(a => a.id === advisorId);
-                        if (!advisor) return null;
-                        return (
-                          <div
-                            key={advisorId}
-                            className="flex items-center space-x-2 bg-purple-50 px-3 py-1.5 rounded-full"
-                          >
-                            <Avatar
-                              avatar_emoji={advisor.avatar_emoji}
-                              avatar_image={advisor.avatar_image}
-                              avatar_url={(advisor as any).avatar_url}
-                              name={advisor.name}
-                              size="sm"
-                            />
-                            <span className="text-sm font-medium text-purple-800">
-                              {advisor.name}
-                            </span>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-
-                  {/* Voice Pitch Recorder */}
-                  <VoicePitchRecorder
-                    onRecordingComplete={handlePitchRecordingComplete}
-                    onCancel={() => {
-                      setSelectedMode('general');
-                      setShowPitchRecorder(false);
-                    }}
-                    disabled={isAnalyzingPitch}
-                  />
-
-                  {/* Analyzing indicator */}
-                  {isAnalyzingPitch && (
-                    <div className="mt-6 text-center">
-                      <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-purple-600 mx-auto mb-3" />
-                      <p className="text-gray-600">Generating advisor feedback on your pitch...</p>
-                    </div>
-                  )}
+          {/* Pitch Practice Mode - Voice Recorder (Always visible in this mode) */}
+          {selectedMode === 'pitch_practice' && selectedAdvisors.length > 0 && (
+            <div className="py-4 px-4 max-w-4xl mx-auto mb-6 bg-gradient-to-r from-purple-50 via-pink-50 to-orange-50 rounded-lg border border-purple-200">
+              {/* Selected Advisors for Pitch Feedback */}
+              <div className="text-center mb-6">
+                <h2 className="text-2xl font-bold text-gray-900 mb-2">Pitch Practice</h2>
+                <p className="text-gray-600 mb-4">
+                  Record your pitch and get feedback from your selected advisors
+                </p>
+                <div className="flex flex-wrap justify-center gap-2 mb-4">
+                  {selectedAdvisors.map(advisorId => {
+                    const advisor = allAdvisors.find(a => a.id === advisorId);
+                    if (!advisor) return null;
+                    return (
+                      <div
+                        key={advisorId}
+                        className="flex items-center space-x-2 bg-purple-50 px-3 py-1.5 rounded-full border border-purple-200"
+                      >
+                        <Avatar
+                          avatar_emoji={advisor.avatar_emoji}
+                          avatar_image={advisor.avatar_image}
+                          avatar_url={(advisor as any).avatar_url}
+                          name={advisor.name}
+                          size="sm"
+                        />
+                        <span className="text-sm font-medium text-purple-800">
+                          {advisor.name}
+                        </span>
+                      </div>
+                    );
+                  })}
                 </div>
-              ) : selectedAdvisors.length > 0 ? (
+              </div>
+
+              {/* Voice Pitch Recorder */}
+              <VoicePitchRecorder
+                onRecordingComplete={handlePitchRecordingComplete}
+                onCancel={() => {
+                  setSelectedMode('general');
+                  setShowPitchRecorder(false);
+                }}
+                disabled={isAnalyzingPitch}
+              />
+
+              {/* Analyzing indicator */}
+              {isAnalyzingPitch && (
+                <div className="mt-6 text-center">
+                  <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-purple-600 mx-auto mb-3" />
+                  <p className="text-gray-600">Generating advisor feedback on your pitch...</p>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Pitch Practice Mode - No advisors selected */}
+          {selectedMode === 'pitch_practice' && selectedAdvisors.length === 0 && (
+            <div className="py-8 px-4 max-w-4xl mx-auto text-center">
+              <div className="w-20 h-20 bg-gradient-to-br from-purple-500 via-pink-500 to-orange-400 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Mic className="w-10 h-10 text-white" />
+              </div>
+              <h2 className="text-2xl font-bold text-gray-900 mb-2">Pitch Practice Mode</h2>
+              <p className="text-gray-600 mb-4 max-w-md mx-auto">
+                Record your pitch and get expert feedback from AI advisors.
+              </p>
+              <div className="bg-purple-50 border border-purple-200 rounded-lg p-4 max-w-md mx-auto">
+                <p className="text-purple-800 font-medium flex items-center justify-center">
+                  <Users className="w-5 h-5 mr-2" />
+                  Select advisors from the left panel to begin
+                </p>
+                <p className="text-purple-600 text-sm mt-2">
+                  Each advisor will provide unique feedback based on their expertise.
+                </p>
+              </div>
+            </div>
+          )}
+
+          {messages.length === 0 && selectedMode !== 'pitch_practice' && (
+            <div className="py-8 px-4 max-w-4xl mx-auto">
+              {selectedAdvisors.length > 0 ? (
                 /* Standard Mode - Show Advisory Panel */
                 <div className="text-center">
                   <h2 className="text-2xl font-bold text-gray-900 mb-2">Your Advisory Panel</h2>
@@ -2069,26 +2093,6 @@ ${messages.map(m => `${m.type === 'user' ? 'You' : 'Advisor'}: ${m.content}`).jo
                   <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
                     <p className="text-green-800 font-medium">
                       Type your message below to begin the conversation.
-                    </p>
-                  </div>
-                </div>
-              ) : selectedMode === 'pitch_practice' ? (
-                /* Pitch Practice selected but no advisors - Show specific guidance */
-                <div className="text-center">
-                  <div className="w-20 h-20 bg-gradient-to-br from-purple-500 via-pink-500 to-orange-400 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Mic className="w-10 h-10 text-white" />
-                  </div>
-                  <h2 className="text-2xl font-bold text-gray-900 mb-2">Pitch Practice Mode</h2>
-                  <p className="text-gray-600 mb-4 max-w-md mx-auto">
-                    Record your pitch and get expert feedback from AI advisors.
-                  </p>
-                  <div className="bg-purple-50 border border-purple-200 rounded-lg p-4 max-w-md mx-auto">
-                    <p className="text-purple-800 font-medium flex items-center justify-center">
-                      <Users className="w-5 h-5 mr-2" />
-                      Select advisors from the left panel to begin
-                    </p>
-                    <p className="text-purple-600 text-sm mt-2">
-                      Each advisor will provide unique feedback based on their expertise.
                     </p>
                   </div>
                 </div>
