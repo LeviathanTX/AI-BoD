@@ -20,6 +20,7 @@ import {
   Folder,
   HelpCircle,
   LogOut,
+  X,
 } from 'lucide-react';
 import { useAdvisor } from '../../contexts/AdvisorContext';
 import { useAuth } from '../../contexts/AuthContext';
@@ -1958,57 +1959,42 @@ ${messages.map(m => `${m.type === 'user' ? 'You' : 'Advisor'}: ${m.content}`).jo
             </div>
           )}
 
-          {/* Pitch Practice Mode - Voice Recorder (Always visible in this mode) */}
-          {selectedMode === 'pitch_practice' && selectedAdvisors.length > 0 && (
-            <div className="py-4 px-4 max-w-4xl mx-auto mb-6 bg-gradient-to-r from-purple-50 via-pink-50 to-orange-50 rounded-lg border border-purple-200">
-              {/* Selected Advisors for Pitch Feedback */}
-              <div className="text-center mb-6">
-                <h2 className="text-2xl font-bold text-gray-900 mb-2">Pitch Practice</h2>
-                <p className="text-gray-600 mb-4">
-                  Record your pitch and get feedback from your selected advisors
-                </p>
-                <div className="flex flex-wrap justify-center gap-2 mb-4">
-                  {selectedAdvisors.map(advisorId => {
-                    const advisor = allAdvisors.find(a => a.id === advisorId);
-                    if (!advisor) return null;
-                    return (
-                      <div
-                        key={advisorId}
-                        className="flex items-center space-x-2 bg-purple-50 px-3 py-1.5 rounded-full border border-purple-200"
-                      >
-                        <Avatar
-                          avatar_emoji={advisor.avatar_emoji}
-                          avatar_image={advisor.avatar_image}
-                          avatar_url={(advisor as any).avatar_url}
-                          name={advisor.name}
-                          size="sm"
-                        />
-                        <span className="text-sm font-medium text-purple-800">
-                          {advisor.name}
-                        </span>
-                      </div>
-                    );
-                  })}
-                </div>
+          {/* Pitch Practice Mode - Prompt to click microphone */}
+          {selectedMode === 'pitch_practice' && selectedAdvisors.length > 0 && messages.length === 0 && !showPitchRecorder && (
+            <div className="py-8 px-4 max-w-4xl mx-auto text-center">
+              <div className="w-20 h-20 bg-gradient-to-br from-purple-500 via-pink-500 to-orange-400 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Mic className="w-10 h-10 text-white" />
               </div>
-
-              {/* Voice Pitch Recorder */}
-              <VoicePitchRecorder
-                onRecordingComplete={handlePitchRecordingComplete}
-                onCancel={() => {
-                  setSelectedMode('general');
-                  setShowPitchRecorder(false);
-                }}
-                disabled={isAnalyzingPitch}
-              />
-
-              {/* Analyzing indicator */}
-              {isAnalyzingPitch && (
-                <div className="mt-6 text-center">
-                  <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-purple-600 mx-auto mb-3" />
-                  <p className="text-gray-600">Generating advisor feedback on your pitch...</p>
-                </div>
-              )}
+              <h2 className="text-2xl font-bold text-gray-900 mb-2">Pitch Practice Mode</h2>
+              <p className="text-gray-600 mb-4 max-w-md mx-auto">
+                Click the microphone button below to record your pitch
+              </p>
+              <div className="flex flex-wrap justify-center gap-2 mb-4">
+                {selectedAdvisors.map(advisorId => {
+                  const advisor = allAdvisors.find(a => a.id === advisorId);
+                  if (!advisor) return null;
+                  return (
+                    <div
+                      key={advisorId}
+                      className="flex items-center space-x-2 bg-purple-50 px-3 py-1.5 rounded-full border border-purple-200"
+                    >
+                      <Avatar
+                        avatar_emoji={advisor.avatar_emoji}
+                        avatar_image={advisor.avatar_image}
+                        avatar_url={(advisor as any).avatar_url}
+                        name={advisor.name}
+                        size="sm"
+                      />
+                      <span className="text-sm font-medium text-purple-800">
+                        {advisor.name}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+              <p className="text-sm text-gray-500">
+                Selected advisors will provide feedback on your pitch
+              </p>
             </div>
           )}
 
@@ -2326,13 +2312,24 @@ ${messages.map(m => `${m.type === 'user' ? 'You' : 'Advisor'}: ${m.content}`).jo
                 <Folder className="w-5 h-5" />
               </button>
               <button
-                onClick={() => setIsRecording(!isRecording)}
+                onClick={() => {
+                  if (selectedMode === 'pitch_practice') {
+                    // In Pitch Practice mode: toggle pitch recorder modal
+                    setShowPitchRecorder(!showPitchRecorder);
+                  } else {
+                    // In other modes: toggle voice input (future: could transcribe to text)
+                    setIsRecording(!isRecording);
+                  }
+                }}
                 className={cn(
                   'p-2 rounded-lg transition-colors',
-                  isRecording
-                    ? 'bg-red-100 hover:bg-red-200 text-red-600'
-                    : 'bg-gray-100 hover:bg-gray-200 text-gray-600'
+                  selectedMode === 'pitch_practice' && showPitchRecorder
+                    ? 'bg-purple-100 hover:bg-purple-200 text-purple-600'
+                    : isRecording
+                      ? 'bg-red-100 hover:bg-red-200 text-red-600'
+                      : 'bg-gray-100 hover:bg-gray-200 text-gray-600'
                 )}
+                title={selectedMode === 'pitch_practice' ? 'Record your pitch' : 'Voice input (coming soon)'}
               >
                 {isRecording ? <MicOff className="w-5 h-5" /> : <Mic className="w-5 h-5" />}
               </button>
@@ -2413,6 +2410,98 @@ ${messages.map(m => `${m.type === 'user' ? 'You' : 'Advisor'}: ${m.content}`).jo
           setShowDemoTour(false);
         }}
       />
+
+      {/* Pitch Recorder Modal */}
+      {showPitchRecorder && selectedMode === 'pitch_practice' && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            {/* Modal Header */}
+            <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
+              <div className="flex items-center space-x-3">
+                <div className="w-12 h-12 bg-gradient-to-br from-purple-500 via-pink-500 to-orange-400 rounded-full flex items-center justify-center">
+                  <Mic className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <h2 className="text-xl font-bold text-gray-900">Record Your Pitch</h2>
+                  <p className="text-sm text-gray-600">
+                    Get feedback from {selectedAdvisors.length} advisor{selectedAdvisors.length !== 1 ? 's' : ''}
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={() => setShowPitchRecorder(false)}
+                className="p-2 rounded-lg hover:bg-gray-100 text-gray-500 hover:text-gray-700"
+                title="Close"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Modal Content */}
+            <div className="p-6">
+              {/* Selected Advisors Display */}
+              {selectedAdvisors.length > 0 && (
+                <div className="mb-6">
+                  <h3 className="text-sm font-medium text-gray-700 mb-3">
+                    Your advisors will provide feedback:
+                  </h3>
+                  <div className="flex flex-wrap gap-3">
+                    {selectedAdvisors.map(advisorId => {
+                      const advisor = allAdvisors.find(a => a.id === advisorId);
+                      if (!advisor) return null;
+                      return (
+                        <div
+                          key={advisor.id}
+                          className="flex items-center space-x-2 bg-gray-50 rounded-lg px-3 py-2"
+                        >
+                          <Avatar
+                            avatar_emoji={advisor.avatar_emoji}
+                            avatar_image={advisor.avatar_image}
+                            avatar_url={advisor.avatar_url}
+                            name={advisor.name}
+                            size="sm"
+                            className="w-8 h-8"
+                          />
+                          <span className="text-sm font-medium text-gray-900">
+                            {advisor.name}
+                          </span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {/* Voice Pitch Recorder Component */}
+              {!isAnalyzingPitch && (
+                <VoicePitchRecorder
+                  onRecordingComplete={handlePitchRecordingComplete}
+                />
+              )}
+
+              {/* Analyzing State */}
+              {isAnalyzingPitch && (
+                <div className="py-12 text-center">
+                  <div className="w-16 h-16 bg-gradient-to-br from-purple-500 via-pink-500 to-orange-400 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
+                    <Mic className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">
+                    Analyzing Your Pitch...
+                  </h3>
+                  <p className="text-gray-600">
+                    Your advisors are reviewing your pitch and preparing feedback
+                  </p>
+                  <div className="mt-6 flex items-center justify-center space-x-2">
+                    <div className="w-2 h-2 bg-purple-500 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                    <div className="w-2 h-2 bg-pink-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                    <div className="w-2 h-2 bg-orange-500 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
