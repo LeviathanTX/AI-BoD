@@ -687,13 +687,19 @@ Please provide specific, actionable feedback on this pitch from your perspective
         setIsTyping(true);
 
         try {
+          // Use multi-model routing for pitch feedback (same as regular conversations)
+          const preferredService = (advisor as any).preferredService || 'bedrock';
+          const preferredModel = (advisor as any).preferredModel || 'amazon.nova-pro-v1:0';
+
+          console.log(`🎤 Getting pitch feedback from ${advisor.name} via ${preferredService} (${preferredModel})`);
+
           // Use the existing AI service to generate feedback
           const response = await fetch('/api/generate', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-              service: 'claude',
-              model: 'claude-sonnet-4-20250514',
+              service: preferredService,
+              model: preferredModel,
               messages: [
                 {
                   role: 'system',
