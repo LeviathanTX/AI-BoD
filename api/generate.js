@@ -199,16 +199,18 @@ async function callBedrockAPI(model, messages, options = {}) {
     throw new Error('AWS Bedrock credentials not configured');
   }
 
-  // Supported Bedrock model IDs
+  // Supported Bedrock model IDs (includes inference profiles)
   const supportedModels = [
     'amazon.nova-pro-v1:0',
     'amazon.nova-lite-v1:0',
     'amazon.nova-micro-v1:0',
-    'meta.llama3-3-70b-instruct-v1:0',
-    'meta.llama3-2-90b-instruct-v1:0',
     'mistral.mistral-large-2402-v1:0',
-    'anthropic.claude-sonnet-4-20250514-v1:0',
-    'anthropic.claude-haiku-4-5-20251001-v1:0'
+    // Inference profiles (required for Claude 4 and Llama 3.3)
+    'us.anthropic.claude-sonnet-4-20250514-v1:0',
+    'us.meta.llama3-3-70b-instruct-v1:0',
+    'us.meta.llama3-2-90b-instruct-v1:0',
+    'us.amazon.nova-pro-v1:0',
+    'us.amazon.nova-micro-v1:0'
   ];
 
   if (!supportedModels.includes(model)) {
