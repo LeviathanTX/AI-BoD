@@ -43,6 +43,50 @@
 
 <!-- New sessions go here, most recent first -->
 
+## 2026-02-15 - Pitch Recorder Modal UX Improvement - CLI
+
+**Branch:** `main`
+**Commit:** `4444b93`
+**Deployed:** ✅ Production (https://ai-bod-one.vercel.app)
+**Bundle Hash:** `main.0d2eccdb.js`
+
+### Accomplished
+- [x] Connected microphone button in chat input area to voice recording functionality
+- [x] Created modal overlay for pitch recorder (no longer always visible at top)
+- [x] Added close button (X) to dismiss pitch recorder modal
+- [x] Displayed selected advisors in modal with avatars and names
+- [x] Added animated analyzing state with spinner while processing pitch
+- [x] Removed always-visible pitch recorder from top of conversation area
+- [x] Added prompt message to guide users to click microphone button
+
+### Files Modified
+- `src/components/Conversations/AdvisoryConversation.tsx` - Complete pitch recorder modal implementation
+
+### User Feedback Addressed
+User requested: "that's a little better but not very user-friendly because the recording button stays at the top of the chat. We have a microphone button right near the chat window...When I hit that button, I would like it to allow me to give voice input."
+
+**Resolution:** Removed always-visible pitch recorder, created modal overlay triggered by microphone button in chat input area for more intuitive UX.
+
+### Technical Details
+- Modal overlay with backdrop (`bg-black bg-opacity-50`)
+- Conditional rendering based on `showPitchRecorder` state and `pitch_practice` mode
+- VoicePitchRecorder component integration with `handlePitchRecordingComplete` callback
+- Analyzing state displays animated spinner with bouncing dots
+- Added `X` icon import from lucide-react
+- Fixed Avatar component usage (passed individual props instead of advisor object)
+
+### Tests/Verification
+- [x] TypeScript compilation passed (`npm run type-check`)
+- [x] Deployed to production successfully
+- [x] Bundle hash updated: `main.0d2eccdb.js`
+
+### Next Session Should
+1. Test microphone button and pitch recorder modal in production
+2. Verify voice recording → AI feedback workflow works end-to-end
+3. Consider adding keyboard shortcuts (ESC to close modal)
+
+---
+
 ## 2026-02-15 - Multi-Model AI Routing via AWS Bedrock - CLI (Final)
 
 **Branch:** `main`
