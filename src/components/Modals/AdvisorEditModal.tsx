@@ -15,6 +15,7 @@ import { useAdvisor } from '../../contexts/AdvisorContext';
 import { useSettings } from '../../contexts/SettingsContext';
 import { Advisor, AdvisorExpertise, AdvisorRole } from '../../types';
 import { ConfirmationModal } from './ConfirmationModal';
+import { DocumentManagement } from '../MCP/DocumentManagement';
 
 interface AdvisorEditModalProps {
   advisor: Advisor | null;
@@ -114,6 +115,7 @@ export function AdvisorEditModal({ advisor, isOpen, onClose, onSave }: AdvisorEd
   const [newExpertise, setNewExpertise] = useState('');
   const [isCreating, setIsCreating] = useState(false);
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [showDocumentManagement, setShowDocumentManagement] = useState(false);
   const [avatarMode, setAvatarMode] = useState<'emoji' | 'image'>('emoji');
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -656,21 +658,30 @@ Always maintain your persona and provide advice that reflects your expertise are
                       </div>
                     </div>
 
-                    {/* Document Management Preview */}
-                    <div className="border border-gray-200 rounded-lg p-3">
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-sm font-medium text-gray-700 flex items-center">
-                          <FileText className="w-4 h-4 mr-1" />
-                          Documents
-                        </span>
-                        <span className="text-xs text-gray-500">0 files</span>
+                    {/* Document Management Access */}
+                    {!isCreating && advisor ? (
+                      <button
+                        type="button"
+                        onClick={() => setShowDocumentManagement(true)}
+                        className="w-full p-4 border-2 border-purple-200 rounded-lg bg-purple-50 hover:bg-purple-100 hover:border-purple-300 transition-all"
+                      >
+                        <div className="flex items-center justify-center space-x-2 text-purple-700">
+                          <Folder className="w-5 h-5" />
+                          <span className="font-medium">Manage Documents</span>
+                        </div>
+                        <p className="text-xs text-purple-600 mt-1">
+                          Upload and manage this advisor's knowledge base
+                        </p>
+                      </button>
+                    ) : (
+                      <div className="border border-gray-200 rounded-lg p-3">
+                        <div className="text-center py-4 text-gray-400">
+                          <Folder className="w-8 h-8 mx-auto mb-2 opacity-50" />
+                          <p className="text-sm">No documents uploaded yet</p>
+                          <p className="text-xs">Save this advisor to access document management</p>
+                        </div>
                       </div>
-                      <div className="text-center py-4 text-gray-400">
-                        <Folder className="w-8 h-8 mx-auto mb-2 opacity-50" />
-                        <p className="text-sm">No documents uploaded yet</p>
-                        <p className="text-xs">Save this advisor to access document management</p>
-                      </div>
-                    </div>
+                    )}
                   </div>
                 )}
 
@@ -735,6 +746,15 @@ Always maintain your persona and provide advice that reflects your expertise are
         cancelText="Cancel"
         type="danger"
       />
+
+      {/* Document Management Modal */}
+      {advisor && (
+        <DocumentManagement
+          advisor={advisor}
+          isOpen={showDocumentManagement}
+          onClose={() => setShowDocumentManagement(false)}
+        />
+      )}
     </div>
   );
 }

@@ -417,6 +417,8 @@ Always be genuinely enthusiastic, practical, and focused on helping founders win
     preferredService: 'bedrock',
     preferredModel: 'amazon.nova-pro-v1:0', // Nova Pro for analytical operational excellence
     type: 'celebrity',
+    mcp_enabled: true,
+    mcp_folder_path: '/documents/advisors/sheryl-sandberg',
   },
   {
     id: 'marc-andreessen',
@@ -532,6 +534,8 @@ You are genuinely excited about technology's potential to improve lives and solv
     preferredService: 'bedrock',
     preferredModel: 'us.meta.llama3-3-70b-instruct-v1:0', // Llama for direct, analytical functional advice (inference profile)
     type: 'celebrity',
+    mcp_enabled: true,
+    mcp_folder_path: '/documents/advisors/chief-strategy-advisor',
   },
   {
     id: 'due-diligence-director',
@@ -558,6 +562,8 @@ You are genuinely excited about technology's potential to improve lives and solv
     preferredService: 'bedrock',
     preferredModel: 'us.meta.llama3-3-70b-instruct-v1:0', // Llama for direct, analytical functional advice (inference profile)
     type: 'celebrity',
+    mcp_enabled: true,
+    mcp_folder_path: '/documents/advisors/due-diligence-director',
   },
   {
     id: 'market-intelligence-advisor',
@@ -584,6 +590,8 @@ You are genuinely excited about technology's potential to improve lives and solv
     preferredService: 'bedrock',
     preferredModel: 'us.meta.llama3-3-70b-instruct-v1:0', // Llama for direct, analytical functional advice (inference profile)
     type: 'celebrity',
+    mcp_enabled: true,
+    mcp_folder_path: '/documents/advisors/market-intelligence-advisor',
   },
   {
     id: 'financial-architecture-advisor',
@@ -610,6 +618,8 @@ You are genuinely excited about technology's potential to improve lives and solv
     preferredService: 'bedrock',
     preferredModel: 'us.meta.llama3-3-70b-instruct-v1:0', // Llama for direct, analytical functional advice (inference profile)
     type: 'celebrity',
+    mcp_enabled: true,
+    mcp_folder_path: '/documents/advisors/financial-architecture-advisor',
   },
   {
     id: 'operational-excellence-advisor',
@@ -636,6 +646,8 @@ You are genuinely excited about technology's potential to improve lives and solv
     preferredService: 'bedrock',
     preferredModel: 'us.meta.llama3-3-70b-instruct-v1:0', // Llama for direct, analytical functional advice (inference profile)
     type: 'celebrity',
+    mcp_enabled: true,
+    mcp_folder_path: '/documents/advisors/operational-excellence-advisor',
   },
   // Tier 2: Functional Specialists
   {
@@ -663,6 +675,8 @@ You are genuinely excited about technology's potential to improve lives and solv
     preferredService: 'bedrock',
     preferredModel: 'us.meta.llama3-3-70b-instruct-v1:0', // Llama for direct, analytical functional advice (inference profile)
     type: 'celebrity',
+    mcp_enabled: true,
+    mcp_folder_path: '/documents/advisors/technology-innovation-advisor',
   },
   {
     id: 'human-capital-advisor',
@@ -689,6 +703,8 @@ You are genuinely excited about technology's potential to improve lives and solv
     preferredService: 'bedrock',
     preferredModel: 'us.meta.llama3-3-70b-instruct-v1:0', // Llama for direct, analytical functional advice (inference profile)
     type: 'celebrity',
+    mcp_enabled: true,
+    mcp_folder_path: '/documents/advisors/human-capital-advisor',
   },
   {
     id: 'legal-regulatory-advisor',
@@ -715,6 +731,8 @@ You are genuinely excited about technology's potential to improve lives and solv
     preferredService: 'bedrock',
     preferredModel: 'us.meta.llama3-3-70b-instruct-v1:0', // Llama for direct, analytical functional advice (inference profile)
     type: 'celebrity',
+    mcp_enabled: true,
+    mcp_folder_path: '/documents/advisors/legal-regulatory-advisor',
   },
   {
     id: 'esg-sustainability-advisor',
@@ -745,6 +763,8 @@ You are genuinely excited about technology's potential to improve lives and solv
     preferredService: 'bedrock',
     preferredModel: 'us.meta.llama3-3-70b-instruct-v1:0', // Llama for direct, analytical functional advice (inference profile)
     type: 'celebrity',
+    mcp_enabled: true,
+    mcp_folder_path: '/documents/advisors/esg-sustainability-advisor',
   },
   {
     id: 'customer-experience-advisor',
@@ -776,6 +796,8 @@ You are genuinely excited about technology's potential to improve lives and solv
     preferredService: 'bedrock',
     preferredModel: 'us.meta.llama3-3-70b-instruct-v1:0', // Llama for direct, analytical functional advice (inference profile)
     type: 'celebrity',
+    mcp_enabled: true,
+    mcp_folder_path: '/documents/advisors/customer-experience-advisor',
   },
   {
     id: 'supply-chain-advisor',
@@ -802,6 +824,8 @@ You are genuinely excited about technology's potential to improve lives and solv
     preferredService: 'bedrock',
     preferredModel: 'us.meta.llama3-3-70b-instruct-v1:0', // Llama for direct, analytical functional advice (inference profile)
     type: 'celebrity',
+    mcp_enabled: true,
+    mcp_folder_path: '/documents/advisors/supply-chain-advisor',
   },
   {
     id: 'data-analytics-advisor',
@@ -828,6 +852,8 @@ You are genuinely excited about technology's potential to improve lives and solv
     preferredService: 'bedrock',
     preferredModel: 'us.meta.llama3-3-70b-instruct-v1:0', // Llama for direct, analytical functional advice (inference profile)
     type: 'celebrity',
+    mcp_enabled: true,
+    mcp_folder_path: '/documents/advisors/data-analytics-advisor',
   },
   {
     id: 'international-expansion-advisor',
@@ -854,6 +880,8 @@ You are genuinely excited about technology's potential to improve lives and solv
     preferredService: 'bedrock',
     preferredModel: 'us.meta.llama3-3-70b-instruct-v1:0', // Llama for direct, analytical functional advice (inference profile)
     type: 'celebrity',
+    mcp_enabled: true,
+    mcp_folder_path: '/documents/advisors/international-expansion-advisor',
   },
   // Tier 3: Industry Specialists
   {
@@ -881,6 +909,8 @@ You are genuinely excited about technology's potential to improve lives and solv
     preferredService: 'bedrock',
     preferredModel: 'amazon.nova-pro-v1:0', // Nova Pro for cost-optimized specialist advice
     type: 'celebrity',
+    mcp_enabled: true,
+    mcp_folder_path: '/documents/advisors/technology-saas-specialist',
   },
   {
     id: 'healthcare-biotech-specialist',
@@ -907,6 +937,8 @@ You are genuinely excited about technology's potential to improve lives and solv
     preferredService: 'bedrock',
     preferredModel: 'amazon.nova-pro-v1:0', // Nova Pro for cost-optimized specialist advice
     type: 'celebrity',
+    mcp_enabled: true,
+    mcp_folder_path: '/documents/advisors/healthcare-biotech-specialist',
   },
   {
     id: 'financial-services-specialist',
@@ -938,6 +970,8 @@ You are genuinely excited about technology's potential to improve lives and solv
     preferredService: 'bedrock',
     preferredModel: 'amazon.nova-pro-v1:0', // Nova Pro for cost-optimized specialist advice
     type: 'celebrity',
+    mcp_enabled: true,
+    mcp_folder_path: '/documents/advisors/financial-services-specialist',
   },
   {
     id: 'manufacturing-industrial-specialist',
@@ -969,6 +1003,8 @@ You are genuinely excited about technology's potential to improve lives and solv
     preferredService: 'bedrock',
     preferredModel: 'amazon.nova-pro-v1:0', // Nova Pro for cost-optimized specialist advice
     type: 'celebrity',
+    mcp_enabled: true,
+    mcp_folder_path: '/documents/advisors/manufacturing-industrial-specialist',
   },
   {
     id: 'consumer-retail-specialist',
@@ -1000,6 +1036,8 @@ You are genuinely excited about technology's potential to improve lives and solv
     preferredService: 'bedrock',
     preferredModel: 'amazon.nova-pro-v1:0', // Nova Pro for cost-optimized specialist advice
     type: 'celebrity',
+    mcp_enabled: true,
+    mcp_folder_path: '/documents/advisors/consumer-retail-specialist',
   },
   {
     id: 'energy-sustainability-specialist',
