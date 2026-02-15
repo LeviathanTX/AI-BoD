@@ -43,6 +43,82 @@
 
 <!-- New sessions go here, most recent first -->
 
+## 2026-02-15 - MCP Document Management Integration - CLI
+
+**Branch:** `main`
+**Commit:** `27bb05b`
+**Deployed:** ✅ Production (https://ai-bod-one.vercel.app)
+**Bundle Hash:** `main.c0c27833.js`
+
+### Accomplished
+- [x] Integrated DocumentManagement component into AdvisorEditModal
+- [x] Added "Manage Documents" button in MCP section (visible for existing advisors only)
+- [x] Enabled MCP for all 24 advisors (previously only 5 had it enabled)
+- [x] Created advisor-specific folder paths for all advisors (e.g., `/documents/advisors/reid-hoffman`)
+- [x] Users can now upload PDFs, DOCX, TXT, Markdown to advisor knowledge bases
+- [x] Document upload supports drag-and-drop and file browser
+- [x] Documents processed with DocumentProcessor for proper text extraction
+- [x] Documents stored in DocumentStorage service for conversation integration
+
+### Files Modified
+- `src/components/Modals/AdvisorEditModal.tsx` - Added DocumentManagement import and integration
+  - Added `showDocumentManagement` state
+  - Added "Manage Documents" button in MCP section
+  - Added DocumentManagement modal component
+- `src/contexts/AdvisorContext.tsx` - Enabled MCP for 19 additional advisors
+  - All 24 advisors now have `mcp_enabled: true`
+  - All advisors have `mcp_folder_path` configured
+
+### Advisors with MCP Enabled (24 total)
+
+**Tier 1 - Premium (5):**
+- Jeff (the-host)
+- Reed Pawffman (reid-hoffman)
+- Jason Clawcanis (jason-calacanis)
+- Marc Beardreessen (marc-andreessen)
+- Cheryl Sandbearg (sheryl-sandberg)
+
+**Tier 2 - Strategic/Functional (13):**
+- Chief Strategy Advisor, Due Diligence Director, Market Intelligence, Financial Architecture
+- Operational Excellence, Technology Innovation, Human Capital, Legal/Regulatory
+- ESG/Sustainability, Customer Experience, Supply Chain, Data Analytics, International Expansion
+
+**Tier 3 - Industry Specialists (6):**
+- Technology/SaaS, Healthcare/Biotech, Financial Services, Manufacturing, Consumer/Retail, Energy (Elon Fuzz)
+
+### Technical Details
+- **DocumentManagement Component:** Supports PDF, DOCX, TXT, Markdown (max 10MB per file)
+- **Drag-and-drop upload:** Users can drag files directly to upload area
+- **Text extraction:** Uses DocumentProcessor for proper content extraction
+- **Storage integration:** Documents stored via DocumentStorage service
+- **MCP folder structure:** `/documents/advisors/[advisor-id]`
+- **Modal workflow:** Edit Advisor → Enable MCP → Click "Manage Documents" → Upload files
+
+### Tests/Verification
+- [x] TypeScript compilation passed
+- [x] Deployed to production successfully
+- [x] Bundle hash updated: `main.c0c27833.js`
+- [ ] Test document upload in production (pending user testing)
+
+### User Feedback Addressed
+User requested: "We used to have an MCP folder for each Advisor that users could access via the 'Edit Advisor' modal to upload docs and stuff to create a specialized knowledge base. I don't see them anymore."
+
+**Resolution:** Found existing DocumentManagement component, integrated it into AdvisorEditModal with "Manage Documents" button, and enabled MCP for all advisors.
+
+### Next Session Should
+1. Test document upload functionality in production
+2. Verify documents are properly stored and accessible in conversations
+3. Consider adding document count display in advisor tiles
+4. Consider adding document preview/download functionality
+
+### Notes
+- MCP (Model Context Protocol) allows advisors to access uploaded documents during conversations
+- Documents are processed and indexed automatically for RAG (Retrieval Augmented Generation)
+- Each advisor has isolated document storage in their own folder
+- Document management only accessible for saved advisors (not during creation)
+
+---
+
 ## 2026-02-15 - Pitch Recorder Modal UX Improvement - CLI
 
 **Branch:** `main`
