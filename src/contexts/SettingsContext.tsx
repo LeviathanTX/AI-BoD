@@ -53,7 +53,7 @@ const DEFAULT_SETTINGS: AppSettings = {
     bedrock: {
       id: 'bedrock',
       name: 'AWS Bedrock',
-      apiKey: '', // Uses AWS credentials from env (AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY)
+      apiKey: 'AWS_CREDENTIALS', // Uses AWS credentials from env (AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY)
       baseUrl: 'https://bedrock-runtime.us-east-1.amazonaws.com',
       model: 'amazon.nova-pro-v1:0',
     },
