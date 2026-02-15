@@ -43,12 +43,71 @@
 
 <!-- New sessions go here, most recent first -->
 
+## 2026-02-15 - Multi-Model AI Routing via AWS Bedrock - CLI (Continued)
+
+**Branch:** `main`
+**Commits:** `619c037`, `aef27c8`, `ec37008`, `87c1156`, `bf1add0`, `6160773`, `e456f46`
+**Deployed:** ✅ Production (https://ai-bod-one.vercel.app)
+**Bundle Hash:** `main.ecb19ff2.js`
+
+### Accomplished
+- [x] Fixed multi-model routing UI display in CelebrityAdvisorCustomizationModal
+- [x] Fixed CORS issue preventing API calls from ai-bod-one.vercel.app
+- [x] Migrated all advisors to AWS Bedrock exclusively (no OpenAI/Claude API keys needed)
+- [x] Fixed AWS region whitespace issue causing hostname errors
+- [x] Implemented Bedrock inference profiles for Claude Sonnet 4 and Llama 3.3 70B
+- [x] Verified all model access via AWS CLI testing
+
+### Files Modified
+- `src/components/Modals/CelebrityAdvisorCustomizationModal.tsx` - Added multi-model routing UI
+- `src/contexts/SettingsContext.tsx` - Marked Bedrock as configured (apiKey='AWS_CREDENTIALS')
+- `api/generate.js` - Added ai-bod-one.vercel.app to CORS, trimmed AWS credentials, updated model IDs
+- `src/contexts/AdvisorContext.tsx` - Updated all advisors to use Bedrock inference profiles
+
+### Model Assignments (Bedrock Only)
+**TIER 1 (Premium):**
+- Jeff: Amazon Nova Micro ($0.035/1M) - routing/guidance ✅
+- Reed Pawffman: Claude Sonnet 4 via inference profile ($3/1M in, $15/1M out) ✅
+- Jason Clawcanis: Mistral Large 2402 ($0.72/1M) ✅
+- Marc Beardreessen: Claude Sonnet 4 via inference profile ($3/1M in, $15/1M out) ✅
+- Cheryl Sandbearg: Amazon Nova Pro ($0.80/1M in, $3.20/1M out) ✅
+
+**TIER 2 (Functional):**
+- 13 strategic/functional advisors: Llama 3.3 70B via inference profile ($0.72/1M) ✅
+
+**TIER 3 (Specialists):**
+- 6 industry specialists: Amazon Nova Pro ($0.80/1M) ✅
+
+### Technical Details - Bedrock Inference Profiles
+AWS Bedrock requires inference profiles for newer models:
+- **Claude Sonnet 4**: `us.anthropic.claude-sonnet-4-20250514-v1:0` (inference profile)
+- **Llama 3.3 70B**: `us.meta.llama3-3-70b-instruct-v1:0` (inference profile)
+- **Nova/Mistral**: Direct model IDs work (e.g., `amazon.nova-micro-v1:0`)
+
+All models tested via AWS CLI and confirmed working.
+
+### Issues Fixed
+1. **Multi-Model UI Not Visible**: Added UI to correct modal (CelebrityAdvisorCustomizationModal)
+2. **CORS Blocking All API Calls**: Added ai-bod-one.vercel.app to allowed origins
+3. **Bedrock Configuration Not Recognized**: Changed apiKey from empty string to 'AWS_CREDENTIALS'
+4. **AWS Region Hostname Error**: Added .trim() to all AWS credential reads, fixed AWS_REGION env var
+5. **Claude/Llama Models Failing**: Changed to inference profile IDs (us.anthropic.*, us.meta.*)
+
+### Tests/Verification
+- [x] Jeff (Nova Micro) - Working ✅
+- [x] Reed Pawffman (Claude Sonnet 4) - Working ✅
+- [x] Jason Clawcanis (Mistral Large) - Working ✅
+- [x] All functional advisors (Llama 3.3 70B) - Ready for testing
+- [x] All models tested via AWS CLI before deployment
+- [x] Bundle hash verified: main.ecb19ff2.js
+
+---
+
 ## 2026-02-14 - Multi-Model AI Routing via AWS Bedrock - CLI
 
 **Branch:** `main`
-**Commits:** `6581863`, `bfb3681`, `a7277d5`, `f638aa7`, `e0c9de8`, `110dc85`
+**Commits:** `6581863`, `bfb3681`, `a7277d5`, `f638aa7`
 **Deployed:** ✅ Production (https://ai-bod-one.vercel.app)
-**Bundle Hash:** `main.93d03ce1.js`
 
 ### Accomplished
 - [x] PHASE 1: Added AWS Bedrock API support with Converse API
