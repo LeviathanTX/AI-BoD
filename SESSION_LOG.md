@@ -46,9 +46,9 @@
 ## 2026-02-15 - Multi-Model AI Routing via AWS Bedrock - CLI (Final)
 
 **Branch:** `main`
-**Commits:** `619c037`, `aef27c8`, `ec37008`, `87c1156`, `bf1add0`, `6160773`, `e456f46`, `57a572a`, `7a3f7ad`
+**Commits:** `619c037`, `aef27c8`, `ec37008`, `87c1156`, `bf1add0`, `6160773`, `e456f46`, `57a572a`, `7a3f7ad`, `c543f21`, `a1a265a`
 **Deployed:** ✅ Production (https://ai-bod-one.vercel.app)
-**Bundle Hash:** `main.d3c8ac71.js`
+**Bundle Hash:** `main.a4273dcd.js`
 
 ### Accomplished
 - [x] Fixed multi-model routing UI display in CelebrityAdvisorCustomizationModal
@@ -62,6 +62,7 @@
 - [x] Updated Guided Tour (DemoTour.tsx) with multi-model routing explanation
 - [x] Updated Help Modal (HelpModal.tsx) with multi-model routing FAQs
 - [x] Updated Quick Start Guide with multi-model routing benefits
+- [x] Fixed mode switching visual feedback with sticky mode indicator banner
 
 ### Files Modified
 - `src/components/Modals/CelebrityAdvisorCustomizationModal.tsx` - Added multi-model routing UI
@@ -111,6 +112,7 @@ All models tested via AWS CLI and confirmed working.
 5. **Claude/Llama Models Failing**: Changed to inference profile IDs (us.anthropic.*, us.meta.*)
 6. **Pitch Practice Mode Not Activating**: Fixed selectedMode initialization to use default 'general'
 7. **Pitch Practice Generic Responses**: Updated to use advisor's preferredService/preferredModel
+8. **Mode Switching No Visual Feedback**: Added sticky mode indicator banner showing current mode with color-coding
 
 ### Tests/Verification
 - [x] Jeff (Nova Micro) - Working ✅
