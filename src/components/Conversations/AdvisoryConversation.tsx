@@ -166,7 +166,7 @@ export function AdvisoryConversation({
     isLoading: documentContextLoading,
   } = useDocumentContext();
 
-  const [selectedMode, setSelectedMode] = useState<ConversationMode['id']>(initialMode);
+  const [selectedMode, setSelectedMode] = useState<ConversationMode['id']>(initialMode || 'general');
   const [selectedAdvisors, setSelectedAdvisors] = useState<string[]>([]);
   const [messages, setMessages] = useState<ConversationMessage[]>([]);
   const [inputMessage, setInputMessage] = useState('');
