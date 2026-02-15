@@ -94,6 +94,54 @@ const TOUR_STEPS: TourStep[] = [
     ),
   },
   {
+    id: 'multi-model-routing',
+    title: 'Multi-Model AI Routing',
+    description: 'Each advisor uses a different AI model for diverse perspectives',
+    position: 'center',
+    action: 'none',
+    content: (
+      <div>
+        <h3 className="text-xl font-bold text-gray-900 mb-3">Genuine Diversity of Opinion</h3>
+        <p className="text-gray-600 mb-4">
+          Each advisor is powered by a different AI model via AWS Bedrock, creating authentic diversity:
+        </p>
+        <div className="space-y-2 mb-4">
+          <div className="p-2 bg-blue-50 rounded-lg flex items-center justify-between text-sm">
+            <div>
+              <strong className="text-blue-700">Reed Pawffman</strong>
+              <span className="text-gray-500 ml-2">Claude Sonnet 4</span>
+            </div>
+            <span className="text-xs text-blue-600">Premium quality</span>
+          </div>
+          <div className="p-2 bg-green-50 rounded-lg flex items-center justify-between text-sm">
+            <div>
+              <strong className="text-green-700">Jason Clawcanis</strong>
+              <span className="text-gray-500 ml-2">Mistral Large</span>
+            </div>
+            <span className="text-xs text-green-600">Contrarian</span>
+          </div>
+          <div className="p-2 bg-purple-50 rounded-lg flex items-center justify-between text-sm">
+            <div>
+              <strong className="text-purple-700">Strategic Advisors</strong>
+              <span className="text-gray-500 ml-2">Llama 3.3 70B</span>
+            </div>
+            <span className="text-xs text-purple-600">Direct & analytical</span>
+          </div>
+          <div className="p-2 bg-orange-50 rounded-lg flex items-center justify-between text-sm">
+            <div>
+              <strong className="text-orange-700">Industry Specialists</strong>
+              <span className="text-gray-500 ml-2">Amazon Nova Pro</span>
+            </div>
+            <span className="text-xs text-orange-600">Domain expertise</span>
+          </div>
+        </div>
+        <p className="text-sm text-blue-600">
+          🎯 Why it matters: Different AI models = genuinely different perspectives, reducing sycophancy
+        </p>
+      </div>
+    ),
+  },
+  {
     id: 'conversation-modes',
     title: 'Conversation Modes',
     description: 'Choose the right mode for your needs',

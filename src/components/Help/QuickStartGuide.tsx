@@ -14,13 +14,13 @@ const QUICK_START_STEPS = [
     id: 'start-conversation',
     title: 'Start Your First Advisory Conversation',
     description:
-      'Talk to The Angel Bear about your fundraising strategy. Founders average 3 actionable insights per conversation.',
+      'Talk to The Angel Bear about your fundraising strategy. Each advisor uses a different AI model (Claude, Mistral, Llama, Nova) for genuine diversity of opinion.',
     examples: [
       'How do I close my first 5 enterprise customers?',
       "What's a realistic revenue goal for my first year?",
       'Should I hire a salesperson or do sales myself?',
     ],
-    why: '73% of founders say AI advisor conversations helped clarify strategy within first week',
+    why: 'Multi-model routing reduces AI sycophancy - you get authentically different perspectives from each advisor',
     value: 'Equivalent to $500 business coaching session',
     icon: <MessageCircle className="w-6 h-6" />,
     color: 'bg-blue-100 text-blue-600',

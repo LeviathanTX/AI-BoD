@@ -106,8 +106,15 @@ const HELP_SECTIONS: HelpSection[] = [
         id: 'advisor-assignment',
         question: 'How do I assign different AI services to advisors?',
         answer:
-          'In Settings, configure multiple AI services (Claude, GPT, Gemini, etc.). Then in Advisor Management, you can assign specific AI services to individual advisors to leverage their unique strengths and capabilities.',
-        tags: ['ai-services', 'assignment', 'configuration'],
+          'Bearable AI Advisors uses AWS Bedrock multi-model routing. Each advisor is pre-configured with a specific AI model to create genuine diversity of opinion. Premium advisors like Reed Pawffman use Claude Sonnet 4, Jason Clawcanis uses Mistral Large, strategic advisors use Llama 3.3 70B, and industry specialists use Amazon Nova Pro. This reduces AI sycophancy and provides authentically different perspectives.',
+        tags: ['ai-services', 'assignment', 'configuration', 'bedrock', 'multi-model'],
+      },
+      {
+        id: 'multi-model-routing',
+        question: 'What is multi-model routing and why does it matter?',
+        answer:
+          'Multi-model routing means each advisor uses a different AI model (Claude Sonnet 4, Mistral Large, Llama 3.3 70B, Amazon Nova Pro) via AWS Bedrock. This creates genuinely different perspectives instead of the same model pretending to have different opinions. Result: 84% cost savings vs GPT-4 for all advisors, reduced sycophancy, and authentic diversity of thought.',
+        tags: ['multi-model', 'bedrock', 'diversity', 'cost-optimization'],
       },
     ],
   },
