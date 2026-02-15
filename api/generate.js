@@ -206,8 +206,8 @@ async function callBedrockAPI(model, messages, options = {}) {
     'amazon.nova-micro-v1:0',
     'meta.llama3-3-70b-instruct-v1:0',
     'meta.llama3-2-90b-instruct-v1:0',
-    'mistral.mistral-large-2407-v1:0',
-    'anthropic.claude-sonnet-4-20250514',
+    'mistral.mistral-large-2402-v1:0',
+    'anthropic.claude-sonnet-4-20250514-v1:0',
     'anthropic.claude-haiku-4-5-20251001-v1:0'
   ];
 

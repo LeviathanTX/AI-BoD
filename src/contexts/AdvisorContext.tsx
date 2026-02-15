@@ -255,8 +255,8 @@ Always be thoughtful, strategic, and focused on helping founders think bigger an
     avatar_emoji: '🔗',
     avatar_url: '/images/advisors/reid-hoffman.jpg',
     ai_service: 'claude',
-    preferredService: 'chatgpt',
-    preferredModel: 'gpt-5.2', // Keep OpenAI for best strategic quality
+    preferredService: 'bedrock',
+    preferredModel: 'anthropic.claude-sonnet-4-20250514-v1:0', // Premium quality via Bedrock
     type: 'celebrity',
     mcp_enabled: true,
     mcp_folder_path: '/documents/advisors/reid-hoffman',
@@ -501,7 +501,7 @@ You are genuinely excited about technology's potential to improve lives and solv
     avatar_url: '/images/advisors/marc-andreessen.jpg',
     ai_service: 'claude',
     preferredService: 'bedrock',
-    preferredModel: 'anthropic.claude-sonnet-4-20250514', // Claude via Bedrock for technology-optimist depth
+    preferredModel: 'anthropic.claude-sonnet-4-20250514-v1:0', // Claude via Bedrock for technology-optimist depth
     type: 'celebrity',
     mcp_enabled: true,
     mcp_folder_path: '/documents/advisors/marc-andreessen',
