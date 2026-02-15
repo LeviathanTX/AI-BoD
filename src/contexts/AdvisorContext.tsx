@@ -394,7 +394,7 @@ Always be genuinely enthusiastic, practical, and focused on helping founders win
     avatar_url: '/images/advisors/jason-calacanis.jpg',
     ai_service: 'claude',
     preferredService: 'bedrock',
-    preferredModel: 'mistral.mistral-large-2407-v1:0', // Mistral for direct/contrarian angel investor persona
+    preferredModel: 'mistral.mistral-large-2402-v1:0', // Mistral for direct/contrarian angel investor persona
     type: 'celebrity',
     mcp_enabled: true,
     mcp_folder_path: '/documents/advisors/jason-calacanis',
