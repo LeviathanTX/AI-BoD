@@ -651,7 +651,7 @@ Always maintain your persona and provide advice that reflects your expertise are
                 />
               </div>
 
-              {/* MCP Document Folder */}
+              {/* MCP Document Folder - Always Visible */}
               <div>
                 <div className="flex items-center justify-between mb-2">
                   <label className="block text-sm font-medium text-gray-700">
@@ -661,7 +661,7 @@ Always maintain your persona and provide advice that reflects your expertise are
                     <label className="relative inline-flex items-center cursor-pointer">
                       <input
                         type="checkbox"
-                        checked={formData.mcp_enabled || false}
+                        checked={formData.mcp_enabled !== false}
                         onChange={e =>
                           setFormData(prev => ({ ...prev, mcp_enabled: e.target.checked }))
                         }
@@ -670,12 +670,12 @@ Always maintain your persona and provide advice that reflects your expertise are
                       <div className="w-9 h-5 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-purple-600"></div>
                     </label>
                     <span className="text-xs text-gray-500">
-                      {formData.mcp_enabled ? 'Enabled' : 'Disabled'}
+                      {formData.mcp_enabled !== false ? 'Enabled' : 'Disabled'}
                     </span>
                   </div>
                 </div>
 
-                {formData.mcp_enabled && (
+                {formData.mcp_enabled !== false && (
                   <div className="space-y-3">
                     {/* Folder Path */}
                     <div>
@@ -748,7 +748,7 @@ Always maintain your persona and provide advice that reflects your expertise are
                   </div>
                 )}
 
-                {!formData.mcp_enabled && (
+                {formData.mcp_enabled === false && (
                   <div className="p-3 bg-gray-50 rounded-lg border border-gray-200">
                     <div className="flex items-center space-x-2 text-gray-600">
                       <Folder className="w-4 h-4" />
