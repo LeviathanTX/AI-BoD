@@ -124,7 +124,12 @@ export function AdvisorEditModal({ advisor, isOpen, onClose, onSave }: AdvisorEd
       setFormData({
         ...advisor,
         expertise: advisor.expertise || [],
-      });
+        mcp_enabled: (advisor as any).mcp_enabled !== undefined ? (advisor as any).mcp_enabled : true,
+        mcp_folder_path: (advisor as any).mcp_folder_path || `/documents/advisors/${advisor.id}`,
+        ai_service: advisor.ai_service || (advisor as any).preferredService || 'bedrock',
+        preferredService: (advisor as any).preferredService,
+        preferredModel: (advisor as any).preferredModel,
+      } as any);
       setAvatarMode(advisor.avatar_image ? 'image' : 'emoji');
       setIsCreating(false);
     } else if (isOpen) {
@@ -135,11 +140,13 @@ export function AdvisorEditModal({ advisor, isOpen, onClose, onSave }: AdvisorEd
         personality: '',
         avatar_emoji: '👨‍💼',
         background: '',
-        ai_service: 'claude',
+        ai_service: 'bedrock',
         system_prompt: '',
+        mcp_enabled: true,
+        mcp_folder_path: '',
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString(),
-      });
+      } as any);
       setAvatarMode('emoji');
       setIsCreating(true);
     }
@@ -206,6 +213,11 @@ Always maintain your persona and provide advice that reflects your expertise are
       return;
     }
 
+    // Auto-generate folder path if MCP is enabled but path is empty
+    const mcpFolderPath = formData.mcp_enabled && !formData.mcp_folder_path
+      ? `/documents/advisors/${formData.name.toLowerCase().replace(/\s+/g, '-')}`
+      : formData.mcp_folder_path;
+
     const advisorData: Advisor = {
       id: advisor?.id || `advisor-${Date.now()}`,
       name: formData.name!,
@@ -215,10 +227,20 @@ Always maintain your persona and provide advice that reflects your expertise are
       avatar_emoji: formData.avatar_emoji || '👨‍💼',
       avatar_image: formData.avatar_image,
       background: formData.background || '',
-      ai_service: formData.ai_service || 'claude',
+      ai_service: formData.ai_service || 'bedrock',
       system_prompt: formData.system_prompt || '',
       created_at: formData.created_at || new Date().toISOString(),
       updated_at: new Date().toISOString(),
+      ...(formData.mcp_enabled && {
+        mcp_enabled: true,
+        mcp_folder_path: mcpFolderPath,
+      } as any),
+      ...((formData as any).preferredService && {
+        preferredService: (formData as any).preferredService,
+      } as any),
+      ...((formData as any).preferredModel && {
+        preferredModel: (formData as any).preferredModel,
+      } as any),
     };
 
     if (isCreating) {
@@ -535,19 +557,55 @@ Always maintain your persona and provide advice that reflects your expertise are
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">AI Service</label>
                 <select
-                  value={formData.ai_service || 'claude'}
+                  value={formData.ai_service || 'bedrock'}
                   onChange={e =>
                     setFormData(prev => ({ ...prev, ai_service: e.target.value as any }))
                   }
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"
                 >
+                  <option value="bedrock">AWS Bedrock (Multi-Model)</option>
                   <option value="claude">Claude (Anthropic)</option>
                   <option value="chatgpt">ChatGPT (OpenAI)</option>
                   <option value="gemini">Gemini (Google)</option>
                   <option value="deepseek">DeepSeek</option>
-                  <option value="bedrock">AWS Bedrock (Multi-Model)</option>
                 </select>
                 <p className="text-xs text-gray-500 mt-1">✅ Using platform API</p>
+
+                {/* Bedrock Model Selection - Show when Bedrock is selected */}
+                {formData.ai_service === 'bedrock' && (
+                  <div className="mt-3">
+                    <label className="block text-xs font-medium text-gray-600 mb-1">
+                      Bedrock Model Override (Optional)
+                    </label>
+                    <select
+                      value={(formData as any).preferredModel || ''}
+                      onChange={e =>
+                        setFormData(prev => ({
+                          ...prev,
+                          preferredService: 'bedrock',
+                          preferredModel: e.target.value || undefined
+                        } as any))
+                      }
+                      className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"
+                    >
+                      <option value="">Use default for this advisor</option>
+                      <optgroup label="Premium Models">
+                        <option value="us.anthropic.claude-sonnet-4-20250514-v1:0">Claude Sonnet 4 ($3/$15 per 1M tokens)</option>
+                        <option value="us.anthropic.claude-3-5-sonnet-20241022-v2:0">Claude 3.5 Sonnet ($3/$15 per 1M tokens)</option>
+                      </optgroup>
+                      <optgroup label="Cost-Optimized Models">
+                        <option value="us.meta.llama3-3-70b-instruct-v1:0">Llama 3.3 70B ($0.72 per 1M tokens)</option>
+                        <option value="mistral.mistral-large-2402-v1:0">Mistral Large ($0.72 per 1M tokens)</option>
+                        <option value="amazon.nova-pro-v1:0">Amazon Nova Pro ($0.80/$3.20 per 1M tokens)</option>
+                        <option value="amazon.nova-lite-v1:0">Amazon Nova Lite ($0.06/$0.24 per 1M tokens)</option>
+                        <option value="amazon.nova-micro-v1:0">Amazon Nova Micro ($0.035/$0.14 per 1M tokens)</option>
+                      </optgroup>
+                    </select>
+                    <p className="text-xs text-gray-500 mt-1">
+                      Override the default model assignment for this advisor
+                    </p>
+                  </div>
+                )}
 
                 {/* Multi-Model Routing Info - Show if advisor has preferredService/Model */}
                 {(advisor as any)?.preferredService && (advisor as any)?.preferredModel && (

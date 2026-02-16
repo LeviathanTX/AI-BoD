@@ -19,6 +19,7 @@ interface QuickCreateAdvisorModalProps {
   isOpen: boolean;
   onClose: () => void;
   onAdvisorCreated?: (advisor: Advisor) => void;
+  onOpenFullEditor?: () => void;
 }
 
 interface AdvisorTemplate {
@@ -118,6 +119,7 @@ export function QuickCreateAdvisorModal({
   isOpen,
   onClose,
   onAdvisorCreated,
+  onOpenFullEditor,
 }: QuickCreateAdvisorModalProps) {
   const { addAdvisor } = useAdvisor();
   const { settings } = useSettings();
@@ -135,19 +137,24 @@ export function QuickCreateAdvisorModal({
 
     setIsCreating(true);
 
+    const advisorId = `advisor-${Date.now()}`;
     const newAdvisor: Advisor = {
-      id: `advisor-${Date.now()}`,
+      id: advisorId,
       name: customName || selectedTemplate.name,
       role: selectedTemplate.role,
       expertise: selectedTemplate.expertise,
       personality: selectedTemplate.personality,
       avatar_emoji: selectedTemplate.avatar_emoji,
       background: selectedTemplate.background,
-      ai_service: 'claude', // Default to Claude
+      ai_service: 'bedrock', // Default to AWS Bedrock for multi-model routing
       system_prompt: generateSystemPrompt(selectedTemplate, customName || selectedTemplate.name),
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
-    };
+      mcp_enabled: true,
+      mcp_folder_path: `/documents/advisors/${advisorId}`,
+      preferredService: 'bedrock',
+      preferredModel: 'us.meta.llama3-3-70b-instruct-v1:0', // Default to Llama 3.3 70B for cost-efficiency
+    } as any;
 
     try {
       addAdvisor(newAdvisor);
@@ -262,9 +269,10 @@ Always maintain your persona and provide advice that reflects your expertise are
               <div className="border-t border-gray-200 pt-6">
                 <button
                   onClick={() => {
-                    // Close this modal and open the full advisor edit modal
                     handleClose();
-                    // This would trigger opening the full AdvisorEditModal
+                    if (onOpenFullEditor) {
+                      onOpenFullEditor();
+                    }
                   }}
                   className="w-full p-4 rounded-xl border-2 border-dashed border-gray-300 hover:border-purple-300 transition-all text-center group"
                 >

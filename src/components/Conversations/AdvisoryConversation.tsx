@@ -2373,6 +2373,10 @@ ${messages.map(m => `${m.type === 'user' ? 'You' : 'Advisor'}: ${m.content}`).jo
         isOpen={showQuickCreateModal}
         onClose={closeAllModals}
         onAdvisorCreated={handleAdvisorCreated}
+        onOpenFullEditor={() => {
+          setEditingAdvisor(null);
+          setShowAdvisorEditModal(true);
+        }}
       />
 
       <CelebrityAdvisorCustomizationModal
