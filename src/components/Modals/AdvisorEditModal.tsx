@@ -121,12 +121,17 @@ export function AdvisorEditModal({ advisor, isOpen, onClose, onSave }: AdvisorEd
 
   useEffect(() => {
     if (advisor) {
+      // Determine AI service - prefer preferredService, fallback to ai_service, default to bedrock
+      const aiService = (advisor as any).preferredService || advisor.ai_service || 'bedrock';
+
       setFormData({
         ...advisor,
         expertise: advisor.expertise || [],
-        mcp_enabled: (advisor as any).mcp_enabled !== undefined ? (advisor as any).mcp_enabled : true,
+        // Always enable MCP by default for all advisors
+        mcp_enabled: true,
         mcp_folder_path: (advisor as any).mcp_folder_path || `/documents/advisors/${advisor.id}`,
-        ai_service: advisor.ai_service || (advisor as any).preferredService || 'bedrock',
+        // Set ai_service to match the actual service being used
+        ai_service: aiService,
         preferredService: (advisor as any).preferredService,
         preferredModel: (advisor as any).preferredModel,
       } as any);
