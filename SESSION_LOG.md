@@ -43,6 +43,89 @@
 
 <!-- New sessions go here, most recent first -->
 
+## 2026-02-15 - Advisor Management Fixes: MCP, Bedrock Models, Create New - CLI
+
+**Branch:** `main`
+**Commit:** `54471a8`
+**Deployed:** ✅ Production (https://ai-bod-one.vercel.app)
+**Bundle Hash:** `main.c57339c9.js`
+
+### Accomplished
+- [x] Fixed MCP visibility - now defaults to enabled for all advisors
+- [x] Added Bedrock model selection dropdown with all available models
+- [x] Users can override default AI model per advisor
+- [x] Fixed "Create Custom Advisor" button to open full editor
+- [x] QuickCreateAdvisorModal now defaults to Bedrock with MCP enabled
+- [x] Changed default AI service from Claude to Bedrock across the platform
+
+### Files Modified
+- `src/components/Modals/AdvisorEditModal.tsx`
+  - Added Bedrock model selection dropdown (9 models with pricing)
+  - Fixed MCP initialization - defaults to enabled, loads from advisor data
+  - Auto-generates MCP folder path if empty
+  - Saves preferredService and preferredModel fields
+  - Changed default ai_service from 'claude' to 'bedrock'
+
+- `src/components/Modals/QuickCreateAdvisorModal.tsx`
+  - Changed default from 'claude' to 'bedrock'
+  - Added MCP enabled by default
+  - Auto-assigns Llama 3.3 70B model for cost-efficiency
+  - Added onOpenFullEditor prop to trigger full editor modal
+  - Fixed "Create Custom Advisor" button functionality
+
+- `src/components/Conversations/AdvisoryConversation.tsx`
+  - Connected QuickCreateAdvisorModal's onOpenFullEditor to AdvisorEditModal
+
+### Bedrock Model Selection
+
+Users can now override the default model for any advisor from the Edit Modal:
+
+**Premium Models:**
+- Claude Sonnet 4 ($3/$15 per 1M tokens) - `us.anthropic.claude-sonnet-4-20250514-v1:0`
+- Claude 3.5 Sonnet ($3/$15 per 1M tokens) - `us.anthropic.claude-3-5-sonnet-20241022-v2:0`
+
+**Cost-Optimized Models:**
+- Llama 3.3 70B ($0.72 per 1M tokens) - `us.meta.llama3-3-70b-instruct-v1:0`
+- Mistral Large ($0.72 per 1M tokens) - `mistral.mistral-large-2402-v1:0`
+- Amazon Nova Pro ($0.80/$3.20 per 1M tokens) - `amazon.nova-pro-v1:0`
+- Amazon Nova Lite ($0.06/$0.24 per 1M tokens) - `amazon.nova-lite-v1:0`
+- Amazon Nova Micro ($0.035/$0.14 per 1M tokens) - `amazon.nova-micro-v1:0`
+
+### User Feedback Addressed
+
+1. **"I do not see the MCP folders in the Edit Modal"**
+   - **Resolution:** MCP now properly loads from advisor data and defaults to enabled
+   - MCP section now visible when editing any advisor
+   - Auto-generates folder path if not set
+
+2. **"Create New Advisor doesn't function properly"**
+   - **Resolution:** Fixed "Create Custom Advisor" button to actually open full editor
+   - Quick create now defaults to Bedrock with MCP enabled
+   - New advisors auto-assigned Llama 3.3 70B for cost-efficiency
+
+3. **"User should be able to override default AI selection"**
+   - **Resolution:** Added Bedrock model dropdown with all 9 available models
+   - Shows pricing for each model
+   - Saves preferredService and preferredModel to advisor
+
+### Technical Details
+- Default AI service changed from 'claude' to 'bedrock' platform-wide
+- All new advisors get MCP enabled automatically
+- Model selection dropdown only shows when Bedrock is selected
+- TypeScript compilation passes with proper type casting
+
+### Tests/Verification
+- [x] TypeScript compilation passed
+- [x] Deployed to production successfully
+- [x] Bundle hash updated: `main.c57339c9.js`
+
+### Next Session Should
+1. Test MCP document upload with new advisors
+2. Verify model overrides work in conversations
+3. Test "Create Custom Advisor" flow end-to-end
+
+---
+
 ## 2026-02-15 - MCP Document Management Integration - CLI
 
 **Branch:** `main`
