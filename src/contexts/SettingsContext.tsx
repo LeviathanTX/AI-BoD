@@ -52,13 +52,14 @@ const DEFAULT_SETTINGS: AppSettings = {
     },
     bedrock: {
       id: 'bedrock',
-      name: 'AWS Bedrock',
-      apiKey: 'AWS_CREDENTIALS', // Uses AWS credentials from env (AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY)
+      name: 'AWS Bedrock (Platform API)',
+      apiKey: 'PLATFORM_API', // Uses platform AWS credentials via backend
       baseUrl: 'https://bedrock-runtime.us-east-1.amazonaws.com',
       model: 'amazon.nova-pro-v1:0',
     },
   },
   defaultAIService: 'bedrock',
+  bedrockModel: 'amazon.nova-pro-v1:0', // Default Bedrock model
 };
 
 export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {

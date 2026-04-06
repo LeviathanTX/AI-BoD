@@ -541,9 +541,83 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
           {/* AI Services Tab Content */}
           {activeTab === 'services' && (
             <div className="mb-8">
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">AI Service Configuration</h3>
+              {/* Bedrock Model Selector (Primary) */}
+              <div className="mb-8 bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-200 rounded-xl p-6">
+                <div className="flex items-start justify-between mb-4">
+                  <div>
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2">AI Model Selection</h3>
+                    <p className="text-gray-600 text-sm">
+                      Choose which AI model powers your advisors. All models are included with your subscription.
+                    </p>
+                  </div>
+                  <div className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-medium">
+                    Included ✓
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Bedrock Model
+                    </label>
+                    <select
+                      value={settings.bedrockModel || 'amazon.nova-pro-v1:0'}
+                      onChange={(e) => {
+                        const newModel = e.target.value;
+                        updateSettings({
+                          ...settings,
+                          bedrockModel: newModel,
+                          aiServices: {
+                            ...settings.aiServices,
+                            bedrock: {
+                              ...settings.aiServices.bedrock,
+                              model: newModel,
+                            },
+                          },
+                        });
+                      }}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    >
+                      <optgroup label="Amazon Nova (Recommended)">
+                        <option value="amazon.nova-pro-v1:0">Nova Pro - Best balance of speed and quality</option>
+                        <option value="amazon.nova-lite-v1:0">Nova Lite - Faster, lower cost</option>
+                        <option value="amazon.nova-micro-v1:0">Nova Micro - Fastest, most economical</option>
+                      </optgroup>
+                      <optgroup label="Anthropic Claude">
+                        <option value="us.anthropic.claude-sonnet-4-20250514-v1:0">Claude Sonnet 4 - Advanced reasoning</option>
+                      </optgroup>
+                      <optgroup label="Meta Llama">
+                        <option value="us.meta.llama3-3-70b-instruct-v1:0">Llama 3.3 70B - Open source</option>
+                        <option value="us.meta.llama3-2-90b-instruct-v1:0">Llama 3.2 90B - Larger model</option>
+                      </optgroup>
+                      <optgroup label="Mistral">
+                        <option value="mistral.mistral-large-2402-v1:0">Mistral Large - Multilingual</option>
+                      </optgroup>
+                    </select>
+                  </div>
+
+                  <div className="text-xs text-gray-500 bg-white rounded-lg p-3">
+                    <strong>Current Selection:</strong> {settings.bedrockModel || 'amazon.nova-pro-v1:0'}
+                    <br />
+                    All requests are routed through our secure backend using platform credentials.
+                    No API keys required from you.
+                  </div>
+                </div>
+              </div>
+
+              {/* Advanced: Custom API Keys */}
+              <details className="mb-6">
+                <summary className="cursor-pointer text-lg font-semibold text-gray-900 mb-4 hover:text-blue-600">
+                  Advanced: Use Your Own API Keys (Optional)
+                </summary>
+                <p className="text-gray-600 mb-6">
+                  Optionally configure your own API keys for AI services. If configured, specific advisors can be assigned to use your keys instead of the platform API.
+                </p>
+              </details>
+
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">Custom AI Service Configuration</h3>
               <p className="text-gray-600 mb-6">
-                Configure API keys for AI services. If multiple services are configured, you can
+                Configure your own API keys for AI services. If multiple services are configured, you can
                 assign specific services to individual advisors.
               </p>
 

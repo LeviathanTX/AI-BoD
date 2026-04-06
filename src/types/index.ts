@@ -391,6 +391,7 @@ export interface AIServiceConfig {
 export interface AppSettings {
   aiServices: Record<AIService, AIServiceConfig>;
   defaultAIService?: AIService;
+  bedrockModel?: string; // Selected Bedrock model for platform API
 }
 
 // Collaboration
