@@ -6,19 +6,6 @@ const { createClient } = require('@supabase/supabase-js');
 
 const sfn = new SFNClient({ region: (process.env.AWS_REGION || 'us-east-1').trim() });
 
-// Initialize Supabase client (handle missing env vars gracefully)
-let supabase = null;
-if (process.env.REACT_APP_SUPABASE_URL && process.env.REACT_APP_SUPABASE_ANON_KEY) {
-  try {
-    supabase = createClient(
-      process.env.REACT_APP_SUPABASE_URL.trim(),
-      process.env.REACT_APP_SUPABASE_ANON_KEY.trim()
-    );
-  } catch (e) {
-    console.warn('[team-meeting] Failed to initialize Supabase:', e.message);
-  }
-}
-
 // State machine ARN (will be set after deployment)
 const STATE_MACHINE_ARN = process.env.TEAM_MEETING_STATE_MACHINE_ARN;
 
@@ -57,8 +44,14 @@ module.exports = async (req, res) => {
       team_size: 5,
     };
 
-    if (supabase) {
+    // Initialize Supabase client inside handler to ensure env vars are trimmed
+    if (process.env.REACT_APP_SUPABASE_URL && process.env.REACT_APP_SUPABASE_ANON_KEY) {
       try {
+        const supabase = createClient(
+          process.env.REACT_APP_SUPABASE_URL.trim(),
+          process.env.REACT_APP_SUPABASE_ANON_KEY.trim()
+        );
+
         const { data: companyProfile, error: profileError } = await supabase
           .from('company_profiles')
           .select('*')
@@ -69,7 +62,7 @@ module.exports = async (req, res) => {
           companyContext = companyProfile;
         }
       } catch (e) {
-        console.warn('[team-meeting] Failed to fetch company profile:', e.message);
+        console.warn('[team-meeting] Failed to init Supabase or fetch profile:', e.message);
       }
     }
 
