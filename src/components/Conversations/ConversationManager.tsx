@@ -36,6 +36,7 @@ interface SavedConversation {
     | 'strategic_planning'
     | 'due_diligence'
     | 'quick_consultation'
+    | 'team_meeting'
     | 'general';
   advisors: string[];
   lastMessage: string;

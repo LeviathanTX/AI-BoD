@@ -52,7 +52,7 @@ import { VoicePitchRecorder, PitchRecordingResult } from '../PitchPractice';
 import { cn } from '../../utils';
 
 interface ConversationMode {
-  id: 'strategic_planning' | 'due_diligence' | 'quick_consultation' | 'general' | 'pitch_practice';
+  id: 'strategic_planning' | 'due_diligence' | 'quick_consultation' | 'general' | 'pitch_practice' | 'team_meeting';
   name: string;
   icon: React.ReactNode;
   description: string;
@@ -209,6 +209,13 @@ export function AdvisoryConversation({
   const [isAnalyzingPitch, setIsAnalyzingPitch] = useState(false);
 
   const conversationModes: ConversationMode[] = [
+    {
+      id: 'team_meeting',
+      name: 'Team Meeting',
+      icon: <Users className="w-4 h-4" />,
+      description: 'Consult your AI executive team for decisions',
+      color: 'bg-indigo-600',
+    },
     {
       id: 'pitch_practice',
       name: 'Pitch Practice',
@@ -1510,14 +1517,21 @@ The committee unanimously recommends proceeding with measured optimism while sys
                     <button
                       key={mode.id}
                       onClick={() => {
-                        setSelectedMode(mode.id);
-                        setShowPitchRecorder(false);
+                        if (mode.id === 'team_meeting') {
+                          // Open Team Meeting modal instead of changing mode
+                          setShowTeamMeeting(true);
+                        } else {
+                          setSelectedMode(mode.id);
+                          setShowPitchRecorder(false);
+                        }
                       }}
                       className={cn(
                         'p-2 rounded-lg text-xs font-medium transition-all flex items-center space-x-1',
-                        selectedMode === mode.id
-                          ? `${mode.color} text-white`
-                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                        mode.id === 'team_meeting'
+                          ? 'bg-indigo-600 text-white hover:bg-indigo-700'
+                          : selectedMode === mode.id
+                            ? `${mode.color} text-white`
+                            : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                       )}
                     >
                       {mode.icon}
