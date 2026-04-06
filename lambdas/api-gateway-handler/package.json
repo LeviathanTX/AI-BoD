@@ -1,0 +1,9 @@
+{
+  "name": "api-gateway-handler",
+  "version": "1.0.0",
+  "description": "API Gateway handler for AI Employee Team Meeting",
+  "main": "index.js",
+  "dependencies": {
+    "@aws-sdk/client-sfn": "^3.990.0"
+  }
+}
