@@ -7,10 +7,10 @@ const bedrock = new BedrockRuntimeClient({ region: process.env.AWS_REGION || 'us
 
 // Advisory Board Model Mapping (from existing AI-BoD architecture)
 const ADVISOR_MODELS = {
-  'reed-pawffman': 'us.anthropic.claude-sonnet-4-20250514-v1:0', // GPT-5.2 equivalent via Bedrock
-  'jason-clawcanis': 'mistral.mistral-large-2407-v1:0',
+  'reed-pawffman': 'us.anthropic.claude-sonnet-4-6', // Claude Sonnet 4.6 (best strategic thinking)
+  'jason-clawcanis': 'mistral.mistral-large-3-675b-instruct', // Mistral Large 3
   'cheryl-sandbearg': 'amazon.nova-pro-v1:0',
-  'marc-beardreessen': 'us.anthropic.claude-sonnet-4-20250514-v1:0',
+  'marc-beardreessen': 'us.anthropic.claude-sonnet-4-6',
   'satya-nadellaw': 'amazon.nova-pro-v1:0',
   'jamie-diamondpaw': 'amazon.nova-pro-v1:0',
 };

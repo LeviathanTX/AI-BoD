@@ -134,9 +134,11 @@ async function testTeamMeeting() {
       console.log('═══════════════════════════════════════════════════════════\n');
 
       boardResponses.forEach(r => {
-        console.log(`🐻 ${r.advisor_name} (${r.advisor_role}):`);
-        console.log(`   ${r.response.substring(0, 200)}...`);
-        console.log();
+        if (r && r.advisor_name) {
+          console.log(`🐻 ${r.advisor_name} (${r.advisor_role}):`);
+          console.log(`   ${r.response ? r.response.substring(0, 200) : '[No response]'}...`);
+          console.log();
+        }
       });
 
       console.log('═══════════════════════════════════════════════════════════\n');
