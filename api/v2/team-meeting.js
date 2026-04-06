@@ -33,13 +33,9 @@ module.exports = async (req, res) => {
 
     console.log(`[team-meeting] Starting orchestration for user ${userId}`);
 
-    // Initialize SFN client inside handler
+    // Initialize SFN client inside handler (let SDK handle credentials from env)
     const sfn = new SFNClient({
       region: (process.env.AWS_REGION || 'us-east-1').trim(),
-      credentials: {
-        accessKeyId: (process.env.AWS_ACCESS_KEY_ID || '').trim(),
-        secretAccessKey: (process.env.AWS_SECRET_ACCESS_KEY || '').trim(),
-      }
     });
 
     // Use default company context for now (Supabase integration can be added later)
