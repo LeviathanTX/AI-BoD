@@ -4,11 +4,20 @@
 const { SFNClient, StartExecutionCommand, DescribeExecutionCommand } = require('@aws-sdk/client-sfn');
 const { createClient } = require('@supabase/supabase-js');
 
-const sfn = new SFNClient({ region: process.env.AWS_REGION || 'us-east-1' });
-const supabase = createClient(
-  process.env.REACT_APP_SUPABASE_URL,
-  process.env.REACT_APP_SUPABASE_ANON_KEY
-);
+const sfn = new SFNClient({ region: (process.env.AWS_REGION || 'us-east-1').trim() });
+
+// Initialize Supabase client (handle missing env vars gracefully)
+let supabase = null;
+if (process.env.REACT_APP_SUPABASE_URL && process.env.REACT_APP_SUPABASE_ANON_KEY) {
+  try {
+    supabase = createClient(
+      process.env.REACT_APP_SUPABASE_URL.trim(),
+      process.env.REACT_APP_SUPABASE_ANON_KEY.trim()
+    );
+  } catch (e) {
+    console.warn('[team-meeting] Failed to initialize Supabase:', e.message);
+  }
+}
 
 // State machine ARN (will be set after deployment)
 const STATE_MACHINE_ARN = process.env.TEAM_MEETING_STATE_MACHINE_ARN;
@@ -38,14 +47,8 @@ module.exports = async (req, res) => {
 
     console.log(`[team-meeting] Starting orchestration for user ${userId}`);
 
-    // Fetch user's company context from Supabase
-    const { data: companyProfile, error: profileError } = await supabase
-      .from('company_profiles')
-      .select('*')
-      .eq('user_id', userId)
-      .single();
-
-    const companyContext = companyProfile || {
+    // Fetch user's company context from Supabase (if available)
+    let companyContext = {
       company_stage: 'early-stage',
       industry: 'technology',
       runway_months: 12,
@@ -53,6 +56,22 @@ module.exports = async (req, res) => {
       mrr: 10000,
       team_size: 5,
     };
+
+    if (supabase) {
+      try {
+        const { data: companyProfile, error: profileError } = await supabase
+          .from('company_profiles')
+          .select('*')
+          .eq('user_id', userId)
+          .single();
+
+        if (companyProfile && !profileError) {
+          companyContext = companyProfile;
+        }
+      } catch (e) {
+        console.warn('[team-meeting] Failed to fetch company profile:', e.message);
+      }
+    }
 
     // Start Step Functions execution
     const executionName = `team-meeting-${userId}-${Date.now()}`;
