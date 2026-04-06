@@ -13,6 +13,7 @@ import { Dashboard } from './components/Dashboard/Dashboard';
 import { ConversationManager } from './components/Conversations/ConversationManager';
 import { AdvisorManagement } from './components/Advisory/AdvisorManagement';
 import { PitchPracticeMode } from './components/Modes/PitchPracticeMode';
+import { TeamMeetingModal } from './components/TeamMeeting/TeamMeetingModal';
 import TermsOfService from './components/Legal/TermsOfService';
 import PrivacyPolicy from './components/Legal/PrivacyPolicy';
 import { ApplicationMode } from './types';

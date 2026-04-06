@@ -186,6 +186,7 @@ export type ApplicationMode =
   | 'strategic_planning'
   | 'due_diligence'
   | 'quick_consultation'
+  | 'team_meeting'
   | 'test_document'
   | 'general'; // Added for SavedConversation compatibility
 

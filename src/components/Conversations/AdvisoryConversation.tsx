@@ -29,6 +29,7 @@ import { useSubscription } from '../../contexts/SubscriptionContext';
 import { SettingsModal } from '../Settings/SettingsModal';
 import { HelpModal } from '../Help/HelpModal';
 import { DemoTour } from '../Help/DemoTour';
+import { TeamMeetingModal } from '../TeamMeeting/TeamMeetingModal';
 import { useHelp } from '../../contexts/HelpContext';
 import { useDocumentContext } from '../../hooks/useDocumentContext';
 import { createAdvisorAI } from '../../services/advisorAI';
@@ -158,6 +159,7 @@ export function AdvisoryConversation({
   const [showSettingsModal, setShowSettingsModal] = useState(false);
   const [showHelpModal, setShowHelpModal] = useState(false);
   const [showDemoTour, setShowDemoTour] = useState(false);
+  const [showTeamMeeting, setShowTeamMeeting] = useState(false);
   const { settings, isConfigured } = useSettings();
   const { markDemoTourComplete } = useHelp();
   const {
@@ -1883,6 +1885,14 @@ ${messages.map(m => `${m.type === 'user' ? 'You' : 'Advisor'}: ${m.content}`).jo
                 <Download className="w-4 h-4" />
               </button>
               <div className="h-6 border-l border-gray-300"></div>
+              {/* Team Meeting button */}
+              <button
+                onClick={() => setShowTeamMeeting(true)}
+                className="px-3 py-1.5 rounded-lg hover:bg-blue-50 text-blue-600 hover:text-blue-700 text-sm font-medium"
+                title="Start an AI Employee Team Meeting"
+              >
+                👥 Team Meeting
+              </button>
               {/* Demo Tour button */}
               <button
                 onClick={() => setShowDemoTour(true)}
@@ -2413,6 +2423,13 @@ ${messages.map(m => `${m.type === 'user' ? 'You' : 'Advisor'}: ${m.content}`).jo
           markDemoTourComplete();
           setShowDemoTour(false);
         }}
+      />
+
+      {/* Team Meeting Modal */}
+      <TeamMeetingModal
+        isOpen={showTeamMeeting}
+        onClose={() => setShowTeamMeeting(false)}
+        userId={user?.id || 'demo-user'}
       />
 
       {/* Pitch Recorder Modal */}

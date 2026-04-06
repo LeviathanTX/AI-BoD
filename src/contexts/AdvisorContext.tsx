@@ -1758,6 +1758,11 @@ function generateAdvisorResponse(
       `${advisorName}: I'm ready to help you test document processing...`,
       `${advisorName}: Upload some documents and I'll analyze them for you...`,
     ],
+    team_meeting: [
+      `${advisorName}: Your executive team is ready to discuss this decision...`,
+      `${advisorName}: Let's get input from your AI employees and advisors...`,
+      `${advisorName}: I'll coordinate a team meeting to analyze this question...`,
+    ],
     general: [
       `${advisorName}: I'm here to help. What would you like to discuss?`,
       `${advisorName}: Let's work through this together...`,
