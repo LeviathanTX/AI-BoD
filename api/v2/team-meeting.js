@@ -4,9 +4,8 @@
 const { SFNClient, StartExecutionCommand, DescribeExecutionCommand } = require('@aws-sdk/client-sfn');
 // const { createClient } = require('@supabase/supabase-js'); // Disabled for now due to env var issues
 
-const sfn = new SFNClient({ region: (process.env.AWS_REGION || 'us-east-1').trim() });
-
-// State machine ARN (will be set after deployment)
+// Initialize AWS SFN client inside handler to ensure env vars are clean
+// State machine ARN is safe to read at module level
 const STATE_MACHINE_ARN = process.env.TEAM_MEETING_STATE_MACHINE_ARN;
 
 module.exports = async (req, res) => {
@@ -33,6 +32,15 @@ module.exports = async (req, res) => {
     }
 
     console.log(`[team-meeting] Starting orchestration for user ${userId}`);
+
+    // Initialize SFN client inside handler
+    const sfn = new SFNClient({
+      region: (process.env.AWS_REGION || 'us-east-1').trim(),
+      credentials: {
+        accessKeyId: (process.env.AWS_ACCESS_KEY_ID || '').trim(),
+        secretAccessKey: (process.env.AWS_SECRET_ACCESS_KEY || '').trim(),
+      }
+    });
 
     // Use default company context for now (Supabase integration can be added later)
     // TODO: Re-enable Supabase fetch once env var newline issues are resolved on Vercel
@@ -65,7 +73,7 @@ module.exports = async (req, res) => {
 
     // If polling requested, wait for completion
     if (poll) {
-      const result = await pollForCompletion(execution.executionArn, 60000); // 60 second timeout
+      const result = await pollForCompletion(sfn, execution.executionArn, 60000); // 60 second timeout
       return res.status(200).json({
         executionId: execution.executionArn,
         status: 'completed',
@@ -91,7 +99,7 @@ module.exports = async (req, res) => {
   }
 };
 
-async function pollForCompletion(executionArn, timeoutMs) {
+async function pollForCompletion(sfn, executionArn, timeoutMs) {
   const startTime = Date.now();
   const pollInterval = 2000; // 2 seconds
 
