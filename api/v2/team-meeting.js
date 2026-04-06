@@ -82,9 +82,11 @@ module.exports = async (req, res) => {
 
   } catch (error) {
     console.error('[team-meeting] Error:', error);
+    console.error('[team-meeting] Error stack:', error.stack);
     return res.status(500).json({
       error: error.message,
       type: error.name,
+      stack: error.stack,
     });
   }
 };
