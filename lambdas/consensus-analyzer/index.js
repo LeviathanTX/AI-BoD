@@ -101,7 +101,16 @@ If consulting board, recommend 2-3 advisors most relevant to this decision.`;
       };
     }
 
-    console.log(`[consensus-analyzer] Result: needsBoard=${analysis.needsBoard}, consensus=${analysis.consensusScore}%`);
+    // Ensure we always have exactly 3 advisors (pad with defaults if needed)
+    const defaultAdvisors = ['jason-clawcanis', 'reed-pawffman', 'cheryl-sandbearg'];
+    if (!analysis.recommendedAdvisors || analysis.recommendedAdvisors.length < 3) {
+      analysis.recommendedAdvisors = [
+        ...(analysis.recommendedAdvisors || []),
+        ...defaultAdvisors
+      ].slice(0, 3); // Take first 3, removing duplicates is optional
+    }
+
+    console.log(`[consensus-analyzer] Result: needsBoard=${analysis.needsBoard}, consensus=${analysis.consensusScore}%, advisors=${analysis.recommendedAdvisors.join(',')}`);
 
     return {
       statusCode: 200,

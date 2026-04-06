@@ -5,12 +5,13 @@ const { BedrockRuntimeClient, ConverseCommand } = require('@aws-sdk/client-bedro
 
 const bedrock = new BedrockRuntimeClient({ region: process.env.AWS_REGION || 'us-east-1' });
 
-// Advisory Board Model Mapping (from existing AI-BoD architecture)
+// Advisory Board Model Mapping (using proven, working models)
+// NOTE: Using Nova Pro for all advisors for now until marketplace subscriptions are configured
 const ADVISOR_MODELS = {
-  'reed-pawffman': 'us.anthropic.claude-sonnet-4-6', // Claude Sonnet 4.6 (best strategic thinking)
-  'jason-clawcanis': 'mistral.mistral-large-3-675b-instruct', // Mistral Large 3
+  'reed-pawffman': 'amazon.nova-pro-v1:0', // Was: us.anthropic.claude-sonnet-4-6
+  'jason-clawcanis': 'amazon.nova-pro-v1:0', // Was: mistral.mistral-large-3-675b-instruct
   'cheryl-sandbearg': 'amazon.nova-pro-v1:0',
-  'marc-beardreessen': 'us.anthropic.claude-sonnet-4-6',
+  'marc-beardreessen': 'amazon.nova-pro-v1:0', // Was: us.anthropic.claude-sonnet-4-6
   'satya-nadellaw': 'amazon.nova-pro-v1:0',
   'jamie-diamondpaw': 'amazon.nova-pro-v1:0',
 };

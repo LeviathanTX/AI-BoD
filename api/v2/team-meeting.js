@@ -63,6 +63,8 @@ module.exports = async (req, res) => {
       input: JSON.stringify({
         question,
         userId,
+        company_context: companyContext,
+        past_decisions: [], // TODO: Fetch from memory system in Phase 2
         timestamp: new Date().toISOString(),
       })
     }));
