@@ -2,7 +2,7 @@
 // Main API endpoint to trigger AI Employee Team Meeting orchestration
 
 const { SFNClient, StartExecutionCommand, DescribeExecutionCommand } = require('@aws-sdk/client-sfn');
-const { createClient } = require('@supabase/supabase-js');
+// const { createClient } = require('@supabase/supabase-js'); // Disabled for now due to env var issues
 
 const sfn = new SFNClient({ region: (process.env.AWS_REGION || 'us-east-1').trim() });
 
@@ -34,37 +34,17 @@ module.exports = async (req, res) => {
 
     console.log(`[team-meeting] Starting orchestration for user ${userId}`);
 
-    // Fetch user's company context from Supabase (if available)
-    let companyContext = {
-      company_stage: 'early-stage',
-      industry: 'technology',
+    // Use default company context for now (Supabase integration can be added later)
+    // TODO: Re-enable Supabase fetch once env var newline issues are resolved on Vercel
+    const companyContext = {
+      company_stage: 'seed',
+      industry: 'B2B SaaS',
       runway_months: 12,
       monthly_burn: 50000,
-      mrr: 10000,
+      mrr: 15000,
       team_size: 5,
+      growth_rate_mom: 15,
     };
-
-    // Initialize Supabase client inside handler to ensure env vars are trimmed
-    if (process.env.REACT_APP_SUPABASE_URL && process.env.REACT_APP_SUPABASE_ANON_KEY) {
-      try {
-        const supabase = createClient(
-          process.env.REACT_APP_SUPABASE_URL.trim(),
-          process.env.REACT_APP_SUPABASE_ANON_KEY.trim()
-        );
-
-        const { data: companyProfile, error: profileError } = await supabase
-          .from('company_profiles')
-          .select('*')
-          .eq('user_id', userId)
-          .single();
-
-        if (companyProfile && !profileError) {
-          companyContext = companyProfile;
-        }
-      } catch (e) {
-        console.warn('[team-meeting] Failed to init Supabase or fetch profile:', e.message);
-      }
-    }
 
     // Start Step Functions execution
     const executionName = `team-meeting-${userId}-${Date.now()}`;
