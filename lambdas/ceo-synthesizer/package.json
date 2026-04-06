@@ -1,0 +1,9 @@
+{
+  "name": "ceo-synthesizer",
+  "version": "1.0.0",
+  "description": "CEO Agent final synthesis - combines team + board into decision",
+  "main": "index.js",
+  "dependencies": {
+    "@aws-sdk/client-bedrock-runtime": "^3.709.0"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "consensus-analyzer",
+  "version": "1.0.0",
+  "description": "CEO Agent consensus analyzer - decides if advisory board consultation is needed",
+  "main": "index.js",
+  "dependencies": {
+    "@aws-sdk/client-bedrock-runtime": "^3.709.0"
+  }
+}

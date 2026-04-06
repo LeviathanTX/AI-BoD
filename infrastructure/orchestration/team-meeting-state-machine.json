@@ -1,0 +1,375 @@
+{
+  "Comment": "AI Employee Team Meeting Orchestration - Two-tier system (internal team + advisory board)",
+  "StartAt": "FetchCompanyContext",
+  "States": {
+    "FetchCompanyContext": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "${MemoryRetrieverFunctionArn}",
+        "Payload": {
+          "userId.$": "$.userId",
+          "question.$": "$.question"
+        }
+      },
+      "ResultPath": "$.contextResult",
+      "ResultSelector": {
+        "company_context.$": "$.Payload.body.company_context",
+        "past_decisions.$": "$.Payload.body.past_decisions"
+      },
+      "Next": "SelectRelevantEmployees",
+      "Catch": [{
+        "ErrorEquals": ["States.ALL"],
+        "ResultPath": "$.contextError",
+        "Next": "SelectRelevantEmployees"
+      }]
+    },
+
+    "SelectRelevantEmployees": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "${EmployeeSelectorFunctionArn}",
+        "Payload": {
+          "question.$": "$.question",
+          "company_context.$": "$.contextResult.company_context"
+        }
+      },
+      "ResultPath": "$.employeeSelection",
+      "ResultSelector": {
+        "employees.$": "$.Payload.body.selected_employees",
+        "rationale.$": "$.Payload.body.rationale"
+      },
+      "Next": "InternalTeamMeeting"
+    },
+
+    "InternalTeamMeeting": {
+      "Type": "Parallel",
+      "Branches": [
+        {
+          "StartAt": "CallCEO",
+          "States": {
+            "CallCEO": {
+              "Type": "Task",
+              "Resource": "arn:aws:states:::lambda:invoke",
+              "Parameters": {
+                "FunctionName": "${AIEmployeeCallerFunctionArn}",
+                "Payload": {
+                  "employee_role": "CEO",
+                  "question.$": "$.question",
+                  "company_context.$": "$.contextResult.company_context",
+                  "past_decisions.$": "$.contextResult.past_decisions"
+                }
+              },
+              "ResultSelector": {
+                "employee_role.$": "$.Payload.body.employee_role",
+                "employee_name.$": "$.Payload.body.employee_name",
+                "response.$": "$.Payload.body.response"
+              },
+              "End": true
+            }
+          }
+        },
+        {
+          "StartAt": "CallCTO",
+          "States": {
+            "CallCTO": {
+              "Type": "Task",
+              "Resource": "arn:aws:states:::lambda:invoke",
+              "Parameters": {
+                "FunctionName": "${AIEmployeeCallerFunctionArn}",
+                "Payload": {
+                  "employee_role": "CTO",
+                  "question.$": "$.question",
+                  "company_context.$": "$.contextResult.company_context"
+                }
+              },
+              "ResultSelector": {
+                "employee_role.$": "$.Payload.body.employee_role",
+                "employee_name.$": "$.Payload.body.employee_name",
+                "response.$": "$.Payload.body.response"
+              },
+              "End": true
+            }
+          }
+        },
+        {
+          "StartAt": "CallCFO",
+          "States": {
+            "CallCFO": {
+              "Type": "Task",
+              "Resource": "arn:aws:states:::lambda:invoke",
+              "Parameters": {
+                "FunctionName": "${AIEmployeeCallerFunctionArn}",
+                "Payload": {
+                  "employee_role": "CFO",
+                  "question.$": "$.question",
+                  "company_context.$": "$.contextResult.company_context"
+                }
+              },
+              "ResultSelector": {
+                "employee_role.$": "$.Payload.body.employee_role",
+                "employee_name.$": "$.Payload.body.employee_name",
+                "response.$": "$.Payload.body.response"
+              },
+              "End": true
+            }
+          }
+        },
+        {
+          "StartAt": "CallVPSales",
+          "States": {
+            "CallVPSales": {
+              "Type": "Task",
+              "Resource": "arn:aws:states:::lambda:invoke",
+              "Parameters": {
+                "FunctionName": "${AIEmployeeCallerFunctionArn}",
+                "Payload": {
+                  "employee_role": "VP_SALES",
+                  "question.$": "$.question",
+                  "company_context.$": "$.contextResult.company_context"
+                }
+              },
+              "ResultSelector": {
+                "employee_role.$": "$.Payload.body.employee_role",
+                "employee_name.$": "$.Payload.body.employee_name",
+                "response.$": "$.Payload.body.response"
+              },
+              "End": true
+            }
+          }
+        },
+        {
+          "StartAt": "CallHeadOfProduct",
+          "States": {
+            "CallHeadOfProduct": {
+              "Type": "Task",
+              "Resource": "arn:aws:states:::lambda:invoke",
+              "Parameters": {
+                "FunctionName": "${AIEmployeeCallerFunctionArn}",
+                "Payload": {
+                  "employee_role": "HEAD_OF_PRODUCT",
+                  "question.$": "$.question",
+                  "company_context.$": "$.contextResult.company_context"
+                }
+              },
+              "ResultSelector": {
+                "employee_role.$": "$.Payload.body.employee_role",
+                "employee_name.$": "$.Payload.body.employee_name",
+                "response.$": "$.Payload.body.response"
+              },
+              "End": true
+            }
+          }
+        }
+      ],
+      "ResultPath": "$.teamResponses",
+      "Next": "AnalyzeConsensus"
+    },
+
+    "AnalyzeConsensus": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "${ConsensusAnalyzerFunctionArn}",
+        "Payload": {
+          "question.$": "$.question",
+          "employee_responses.$": "$.teamResponses[*][0]",
+          "company_context.$": "$.contextResult.company_context"
+        }
+      },
+      "ResultPath": "$.consensusResult",
+      "ResultSelector": {
+        "needsBoard.$": "$.Payload.body.needsBoard",
+        "rationale.$": "$.Payload.body.rationale",
+        "consensusScore.$": "$.Payload.body.consensusScore",
+        "recommendedAdvisors.$": "$.Payload.body.recommendedAdvisors",
+        "specificQuestion.$": "$.Payload.body.specificQuestion"
+      },
+      "Next": "CheckBoardNeeded"
+    },
+
+    "CheckBoardNeeded": {
+      "Type": "Choice",
+      "Choices": [{
+        "Variable": "$.consensusResult.needsBoard",
+        "BooleanEquals": true,
+        "Next": "ConsultAdvisoryBoard"
+      }],
+      "Default": "CEOFinalSynthesis"
+    },
+
+    "ConsultAdvisoryBoard": {
+      "Type": "Parallel",
+      "Branches": [
+        {
+          "StartAt": "CallAdvisor1",
+          "States": {
+            "CallAdvisor1": {
+              "Type": "Task",
+              "Resource": "arn:aws:states:::lambda:invoke",
+              "Parameters": {
+                "FunctionName": "${BoardAdvisorCallerFunctionArn}",
+                "Payload": {
+                  "advisor_id.$": "$.consensusResult.recommendedAdvisors[0]",
+                  "question.$": "$.consensusResult.specificQuestion",
+                  "company_context.$": "$.contextResult.company_context",
+                  "internal_team_discussion": "Team discussion attached"
+                }
+              },
+              "ResultSelector": {
+                "advisor_id.$": "$.Payload.body.advisor_id",
+                "advisor_name.$": "$.Payload.body.advisor_name",
+                "advisor_role.$": "$.Payload.body.advisor_role",
+                "response.$": "$.Payload.body.response"
+              },
+              "End": true,
+              "Catch": [{
+                "ErrorEquals": ["States.ALL"],
+                "ResultPath": "$.error",
+                "Next": "Advisor1Failed"
+              }]
+            },
+            "Advisor1Failed": {
+              "Type": "Pass",
+              "Result": {
+                "advisor_name": "Advisor 1",
+                "response": "Advisor consultation failed",
+                "error": true
+              },
+              "End": true
+            }
+          }
+        },
+        {
+          "StartAt": "CallAdvisor2",
+          "States": {
+            "CallAdvisor2": {
+              "Type": "Task",
+              "Resource": "arn:aws:states:::lambda:invoke",
+              "Parameters": {
+                "FunctionName": "${BoardAdvisorCallerFunctionArn}",
+                "Payload": {
+                  "advisor_id.$": "$.consensusResult.recommendedAdvisors[1]",
+                  "question.$": "$.consensusResult.specificQuestion",
+                  "company_context.$": "$.contextResult.company_context"
+                }
+              },
+              "ResultSelector": {
+                "advisor_id.$": "$.Payload.body.advisor_id",
+                "advisor_name.$": "$.Payload.body.advisor_name",
+                "advisor_role.$": "$.Payload.body.advisor_role",
+                "response.$": "$.Payload.body.response"
+              },
+              "End": true,
+              "Catch": [{
+                "ErrorEquals": ["States.ALL"],
+                "ResultPath": "$.error",
+                "Next": "Advisor2Failed"
+              }]
+            },
+            "Advisor2Failed": {
+              "Type": "Pass",
+              "Result": {
+                "advisor_name": "Advisor 2",
+                "response": "Advisor consultation failed",
+                "error": true
+              },
+              "End": true
+            }
+          }
+        },
+        {
+          "StartAt": "CallAdvisor3",
+          "States": {
+            "CallAdvisor3": {
+              "Type": "Task",
+              "Resource": "arn:aws:states:::lambda:invoke",
+              "Parameters": {
+                "FunctionName": "${BoardAdvisorCallerFunctionArn}",
+                "Payload": {
+                  "advisor_id.$": "$.consensusResult.recommendedAdvisors[2]",
+                  "question.$": "$.consensusResult.specificQuestion",
+                  "company_context.$": "$.contextResult.company_context"
+                }
+              },
+              "ResultSelector": {
+                "advisor_id.$": "$.Payload.body.advisor_id",
+                "advisor_name.$": "$.Payload.body.advisor_name",
+                "advisor_role.$": "$.Payload.body.advisor_role",
+                "response.$": "$.Payload.body.response"
+              },
+              "End": true,
+              "Catch": [{
+                "ErrorEquals": ["States.ALL"],
+                "ResultPath": "$.error",
+                "Next": "Advisor3Failed"
+              }]
+            },
+            "Advisor3Failed": {
+              "Type": "Pass",
+              "Result": {
+                "advisor_name": "Advisor 3",
+                "response": "Advisor consultation failed",
+                "error": true
+              },
+              "End": true
+            }
+          }
+        }
+      ],
+      "ResultPath": "$.boardResponses",
+      "Next": "CEOFinalSynthesis"
+    },
+
+    "CEOFinalSynthesis": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "${CEOSynthesizerFunctionArn}",
+        "Payload": {
+          "question.$": "$.question",
+          "employee_responses.$": "$.teamResponses[*][0]",
+          "board_responses.$": "$.boardResponses[*][0]",
+          "company_context.$": "$.contextResult.company_context"
+        }
+      },
+      "ResultPath": "$.finalDecision",
+      "ResultSelector": {
+        "decision.$": "$.Payload.body.decision",
+        "rationale.$": "$.Payload.body.rationale",
+        "key_insights.$": "$.Payload.body.key_insights",
+        "action_items.$": "$.Payload.body.action_items",
+        "contingencies.$": "$.Payload.body.contingencies",
+        "confidence_level.$": "$.Payload.body.confidence_level"
+      },
+      "Next": "UpdateMemory"
+    },
+
+    "UpdateMemory": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "${MemoryUpdaterFunctionArn}",
+        "Payload": {
+          "userId.$": "$.userId",
+          "question.$": "$.question",
+          "decision.$": "$.finalDecision",
+          "teamResponses.$": "$.teamResponses",
+          "boardResponses.$": "$.boardResponses"
+        }
+      },
+      "ResultPath": "$.memoryUpdate",
+      "Next": "Success",
+      "Catch": [{
+        "ErrorEquals": ["States.ALL"],
+        "ResultPath": "$.memoryError",
+        "Next": "Success"
+      }]
+    },
+
+    "Success": {
+      "Type": "Succeed"
+    }
+  }
+}

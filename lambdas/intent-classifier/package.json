@@ -1,0 +1,9 @@
+{
+  "name": "intent-classifier",
+  "version": "1.0.0",
+  "description": "Classifies user questions for routing optimization",
+  "main": "index.js",
+  "dependencies": {
+    "@aws-sdk/client-bedrock-runtime": "^3.709.0"
+  }
+}

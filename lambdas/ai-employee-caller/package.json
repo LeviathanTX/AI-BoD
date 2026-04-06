@@ -1,0 +1,9 @@
+{
+  "name": "ai-employee-caller",
+  "version": "1.0.0",
+  "description": "Lambda function to call AWS Bedrock for AI employees",
+  "main": "index.js",
+  "dependencies": {
+    "@aws-sdk/client-bedrock-runtime": "^3.709.0"
+  }
+}

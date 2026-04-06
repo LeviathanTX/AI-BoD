@@ -1,0 +1,7 @@
+{
+  "name": "employee-selector",
+  "version": "1.0.0",
+  "description": "Selects which AI employees should participate in the meeting",
+  "main": "index.js",
+  "dependencies": {}
+}

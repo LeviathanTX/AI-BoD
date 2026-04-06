@@ -1,0 +1,9 @@
+{
+  "name": "board-advisor-caller",
+  "version": "1.0.0",
+  "description": "Lambda function to call advisory board members (celebrity advisors)",
+  "main": "index.js",
+  "dependencies": {
+    "@aws-sdk/client-bedrock-runtime": "^3.709.0"
+  }
+}

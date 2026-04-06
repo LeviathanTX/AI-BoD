@@ -1,0 +1,7 @@
+{
+  "name": "memory-updater",
+  "version": "1.0.0",
+  "description": "Stores team meeting decisions to company memory",
+  "main": "index.js",
+  "dependencies": {}
+}
