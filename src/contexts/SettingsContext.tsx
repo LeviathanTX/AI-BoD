@@ -58,7 +58,7 @@ const DEFAULT_SETTINGS: AppSettings = {
       model: 'amazon.nova-pro-v1:0',
     },
   },
-  defaultAIService: 'claude',
+  defaultAIService: 'bedrock',
 };
 
 export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
