@@ -1,0 +1,32 @@
+# FMToolkit CI — add this file to your repo at:
+# .github/workflows/fmtoolkit-ci.yml
+#
+# Then set the FMTOOLKIT_API_KEY secret in your repository settings.
+
+name: FMToolkit CI
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  fmtoolkit:
+    uses: URSA-Inc/fmtoolkit-public/.github/workflows/fmtoolkit-ci-reusable.yml@v1
+    secrets:
+      fmtoolkit_api_key: ${{ secrets.FMTOOLKIT_API_KEY }}
+    with:
+      # File extensions to check — edit to match your codebase
+      file_patterns: "**/*.py"
+
+      # How to treat each result type:
+      #   "fail"  — marks the check failed (blocks merge if required)
+      #   "warn"  — shows in the summary but does not fail the check
+      #   "pass"  — silently ignored
+      on_not_equivalent: "fail"   # always fail on counterexamples
+      on_inconclusive:   "warn"   # FMToolkit ran but couldn't determine equivalence
+      on_skipped:        "pass"   # function could not be analyzed
+      on_error:          "warn"   # internal FMToolkit error
+
+      # Per-function analysis timeout in seconds
+
+      timeout: 30
